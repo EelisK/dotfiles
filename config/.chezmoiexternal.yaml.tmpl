@@ -1,0 +1,103 @@
+{{- /* "chezmoi" is present as work around for https://github.com/twpayne/chezmoi/discussions/1724 */ -}}
+{{- $cache := dict "chezmoi" .chezmoi -}}
+
+{{- template "read-versions-and-revisions-cache" $cache -}}
+
+".oh-my-zsh":
+  type: archive
+  {{ $omzVersion := includeTemplate "get-github-head-revision" (list "ohmyzsh/ohmyzsh" $cache) }}
+  url: "https://github.com/ohmyzsh/ohmyzsh/archive/{{ $omzVersion }}.tar.gz"
+  stripComponents: 1
+
+".oh-my-zsh/custom/plugins/zsh-syntax-highlighting":
+  type: archive
+  {{ $zshSyntaxHighlightingRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-syntax-highlighting" $cache) }}
+  url: "https://github.com/zsh-users/zsh-syntax-highlighting/archive/{{ $zshSyntaxHighlightingRevision }}.tar.gz"
+  stripComponents: 1
+  exact: true
+
+".oh-my-zsh/custom/plugins/zsh-autosuggestions":
+  type: archive
+  {{ $zshAutoSuggestionsRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-autosuggestions" $cache) }}
+  url: "https://github.com/zsh-users/zsh-autosuggestions/archive/{{ $zshAutoSuggestionsRevision }}.tar.gz"
+  stripComponents: 1
+  exact: true
+
+".oh-my-zsh/custom/plugins/zsh-completions":
+  type: archive
+  {{ $zshCompletionsRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-completions" $cache) }}
+  url: "https://github.com/zsh-users/zsh-completions/archive/{{ $zshCompletionsRevision }}.tar.gz"
+  stripComponents: 1
+  exact: true
+
+".oh-my-zsh/custom/themes/powerlevel10k":
+  type: archive
+  {{ $p10kRevision := includeTemplate "get-github-head-revision" (list "romkatv/powerlevel10k" $cache) }}
+  url: "https://github.com/romkatv/powerlevel10k/archive/{{ $p10kRevision }}.tar.gz"
+  stripComponents: 1
+
+".config/gitalias/gitalias.txt":
+  type: file
+  url: "https://github.com/GitAlias/gitalias/raw/main/gitalias.txt"
+
+".nvim":
+  type: archive
+  url: "https://github.com/neovim/neovim/releases/download/stable/nvim-{{ if eq .chezmoi.os "linux" }}linux64{{ else }}macos{{ end }}.tar.gz"
+  stripComponents: 1
+
+".config/nvim":
+  type: archive
+  {{ $nvchadVersion := includeTemplate "get-github-head-revision" (list "NvChad/NvChad" $cache) }}
+  url: "https://github.com/NvChad/NvChad/archive/{{ $nvchadVersion }}.tar.gz"
+  stripComponents: 1
+
+".local/bin/kubecolor":
+  type: archive-file
+  {{ $kubecolorVersion := includeTemplate "get-github-latest-version" (list "hidetatz/kubecolor" $cache) }}
+  url: "https://github.com/hidetatz/kubecolor/releases/download/v{{ $kubecolorVersion }}/kubecolor_{{ $kubecolorVersion }}_{{ .chezmoi.os | title  }}_{{ .chezmoi.arch }}.tar.gz"
+  path: kubecolor
+  executable: true
+
+".local/bin/kubectx":
+  type: archive-file
+  {{ $kubectxVersion := includeTemplate "get-github-latest-version" (list "ahmetb/kubectx" $cache) }}
+  {{ $kubectxRelease := printf "v%s_%s_%s"  $kubectxVersion .chezmoi.os .chezmoi.arch }}
+  url: "https://github.com/ahmetb/kubectx/releases/download/v{{ $kubectxVersion }}/kubectx_{{ $kubectxRelease }}.tar.gz"
+  path: kubectx
+  executable: true
+
+".local/bin/kubens":
+  type: archive-file
+  url: "https://github.com/ahmetb/kubectx/releases/download/v{{ $kubectxVersion }}/kubens_{{ $kubectxRelease }}.tar.gz"
+  path: kubens
+  executable: true
+
+".oh-my-zsh/custom/plugins/my-completions/_kubectx.zsh":
+  type: file
+  url: "https://github.com/ahmetb/kubectx/raw/v{{ $kubectxVersion }}/completion/_kubectx.zsh"
+
+".oh-my-zsh/custom/plugins/my-completions/_kubens.zsh":
+  type: file
+  url: "https://github.com/ahmetb/kubectx/raw/v{{ $kubectxVersion }}/completion/_kubens.zsh"
+
+# Required by kubectx and kubens
+".local/bin/fzf":
+  type: archive-file
+  {{ $fzfVersion := includeTemplate "get-github-latest-version" (list "junegunn/fzf" $cache) }}
+  url: "https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-{{ .chezmoi.os }}_{{ .chezmoi.arch }}.{{ if eq .chezmoi.os "darwin" }}zip{{ else }}tar.gz{{ end }}"
+  path: fzf
+  executable: true
+
+".local/bin/kubebuilder":
+  type: file
+  url: "https://go.kubebuilder.io/dl/latest/{{ .chezmoi.os }}/{{ .chezmoi.arch }}"
+  path: kubebuilder
+  executable: true
+
+".local/bin/kind":
+  type: file
+  url: "https://kind.sigs.k8s.io/dl/v0.20.0/kind-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
+  path: kind
+  executable: true
+
+{{- template "save-versions-and-revisions-cache" $cache -}}
