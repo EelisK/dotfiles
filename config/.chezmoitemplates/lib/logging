@@ -1,0 +1,64 @@
+#######################################
+# Logging base functions
+#######################################
+
+function log_color() {
+    local color_code="$1"
+    shift
+
+    printf "\033[${color_code}m%s\033[0m\n" "$*" >&2
+}
+
+function log_red() {
+    log_color "0;31" "$@"
+}
+
+function log_blue() {
+    log_color "0;34" "$@"
+}
+
+function log_green() {
+    log_color "1;32" "$@"
+}
+
+function log_yellow() {
+    log_color "1;33" "$@"
+}
+
+#######################################
+# Logging level functions
+#######################################
+
+function log_debug() {
+    if [[ "${DEBUG:-}" == "true" ]]; then
+        log_yellow "🐛" "$@"
+    fi
+}
+
+function log_info() {
+    log_blue "ℹ️" "$@"
+}
+
+function log_warning() {
+    log_yellow "⚠️" "$@"
+}
+
+function log_error() {
+    log_red "❌" "$@"
+}
+
+#######################################
+# Logging helper functions
+#######################################
+
+function log_task() {
+    log_blue "🔃" "$@"
+}
+
+function log_step() {
+    log_yellow "👉" "$@"
+}
+
+function log_done() {
+    log_green "✅" "$@"
+}
