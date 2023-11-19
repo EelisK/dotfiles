@@ -1,0 +1,23 @@
+[user]
+  name = {{ .name | quote }}
+  email = {{ .email | quote }}
+
+[core]
+  editor = {{ .editor | quote }}
+
+[init]
+  defaultBranch = main
+
+[alias]
+  ull = pull
+  ush = push
+  upll = pull
+  checkotu = checkout
+  pul = pull
+  psh = push
+
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+
+[include]
+path = ~/.config/gitalias/gitalias.txt
