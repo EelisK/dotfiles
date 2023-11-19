@@ -1,0 +1,97 @@
+{{- /* Checks if running interactively */ -}}
+{{- $interactive := stdinIsATTY -}}
+
+{{- $email := "" -}}
+{{- $name := "" -}}
+{{- $answer := "" -}}
+
+{{- if $interactive -}}
+{{-   writeToStdout "💡 Initializing chezmoi.\n" -}}
+{{- end -}}
+
+{{- /* Determine OS ID */ -}}
+{{- /* eg. darwin, debian */ -}}
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "idLike" -}}
+{{-   $osid = .chezmoi.osRelease.idLike -}}
+{{- else if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{- if hasKey . "name" -}}
+{{-   $name = .name -}}
+{{- else if $interactive -}}
+{{-   range $i := until 99 -}}
+{{-     $question := "❔ What is your full name" -}}
+{{-     $answer = promptString $question -}}
+{{-     if regexMatch "^[A-Z][-' a-zA-Z]+$" $answer -}}
+{{-       $name = $answer -}}
+{{-       writeToStdout (printf "✅ Name set as '%s'\n" $name) -}}
+{{-       break -}}
+{{-     end -}}
+{{-     writeToStdout (printf "❌ '%s' is an invalid name\n" $answer) -}}
+{{-     if eq $i 98 -}}
+{{-       writeToStdout "❌ ERROR: maximum tries exceeded\n" -}}
+{{-       exit 1 -}}
+{{-     end -}}
+{{-   end -}}
+{{- else -}}
+{{-   writeToStdout "❌ ERROR: name not set\n" -}}
+{{-   exit 1 -}}
+{{- end -}}
+
+{{- if hasKey . "email" -}}
+{{-   $email = .email -}}
+{{- else if $interactive -}}
+{{-   range $i := until 99 -}}
+{{-     $question := "❔ What is your email" -}}
+{{-     $answer = promptString $question -}}
+{{-     $answer = lower $answer -}}
+{{-     if regexMatch "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$" $answer -}}
+{{-       $email = $answer -}}
+{{-       writeToStdout (printf "✅ Email set as '%s'\n" $email) -}}
+{{-       break -}}
+{{-     end -}}
+{{-     writeToStdout (printf "❌ '%s' is an invalid email\n" $answer) -}}
+{{-     if eq $i 98 -}}
+{{-       writeToStdout "❌ ERROR: maximum tries exceeded\n" -}}
+{{-       exit 1 -}}
+{{-     end -}}
+{{-   end -}}
+{{- else -}}
+{{-   writeToStdout "❌ ERROR: email not set\n" -}}
+{{-   exit 1 -}}
+{{- end -}}
+
+verbose: true
+# https://github.com/twpayne/chezmoi/issues/3257
+pager: ""
+
+templateSymlinks: true
+
+diff:
+  exclude:
+    - scripts
+
+status:
+  exclude:
+    - always
+
+{{/* Here we "export" the variables, so we can access them outside this file */ -}}
+data:
+  osid: "{{ $osid }}"
+  name: "{{ $name }}"
+  email: "{{ $email }}"
+
+  editor: nvim
+
+edit:
+  command: nvim
+
+merge:
+  command: nvim
+  args:
+    - -d
+    - "{{ "{{ .Destination }}" }}"
+    - "{{ "{{ .Source }}" }}"
+    - "{{ "{{ .Target }}" }}"

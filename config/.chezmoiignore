@@ -1,0 +1,30 @@
+README.md
+install.sh
+Dockerfile
+.dockerignore
+.github
+
+*.txt   # ignore *.txt in the target directory
+*/*.txt # ignore *.txt in subdirectories of the target directory
+        # but not in subdirectories of subdirectories;
+        # so a/b/c.txt would *not* be ignored
+
+backups/   # ignore the backups folder, but not its contents
+backups/** # ignore the contents of backups folder but not the folder itself
+
+# waiting for chezmoi to leverage .gitignore from archives:
+# https://github.com/twpayne/chezmoi/issues/1421#issuecomment-964473844
+.oh-my-zsh/cache/*
+**/*.zwc
+
+# platform specific setups
+{{- if eq .chezmoi.os "linux"}}
+.chezmoiscripts/*-darwin.sh
+.chezmoiscripts/*-wsl.sh
+{{- else if eq .chezmoi.os "darwin" }}
+.chezmoiscripts/*-linux.sh
+.chezmoiscripts/*-wsl.sh
+{{- else }}
+.chezmoiscripts/*-linux.sh
+.chezmoiscripts/*-darwin.sh
+{{- end }}
