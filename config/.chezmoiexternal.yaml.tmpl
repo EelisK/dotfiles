@@ -1,5 +1,6 @@
 {{- /* "chezmoi" is present as work around for https://github.com/twpayne/chezmoi/discussions/1724 */ -}}
-{{- $cache := dict "chezmoi" .chezmoi -}}
+{{- /* cache github versions and revisions for 10 minutes */ -}}
+{{- $cache := dict "chezmoi" .chezmoi "expiration" (mul 60 10) -}}
 
 {{- template "read-versions-and-revisions-cache" $cache -}}
 
@@ -99,5 +100,11 @@
   url: "https://kind.sigs.k8s.io/dl/v0.20.0/kind-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
   path: kind
   executable: true
+
+".nvm":
+  type: archive
+  {{ $nvmVersion := includeTemplate "get-github-head-revision" (list "nvm-sh/nvm" $cache) }}
+  url: "https://github.com/nvm-sh/nvm/archive/{{ $nvmVersion }}.tar.gz"
+  stripComponents: 1
 
 {{- template "save-versions-and-revisions-cache" $cache -}}

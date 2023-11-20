@@ -1,7 +1,8 @@
-{{- /* Reads the revisions and versions from a cache file, and use them if they are newer than 10 minutes */ -}}
+{{- /* Reads the revisions and versions from a cache file, and use them if they are not expired */ -}}
 {{- $cache := . -}}
 {{- $cacheFile := joinPath .chezmoi.cacheDir "external/versions_and_revisions.yaml"  -}}
 {{- $currentTime := now | unixEpoch -}}
+{{- $cacheExpiration := get $cache "expiration" -}}
 {{- $saveCache := true -}}
 {{- $revisions := dict -}}
 {{- $versions := dict -}}
