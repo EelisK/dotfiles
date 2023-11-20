@@ -1,0 +1,128 @@
+# shellcheck shell=sh
+
+#==============================================================#
+##  ENVIRONMENT VARIABLES                                     ##
+#==============================================================#
+
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_STATE_HOME="${HOME}/.local/state"
+
+export VISUAL="{{ .editor }}"
+export EDITOR="{{ .editor }}"
+
+export LESS_TERMCAP_so="$(tput bold; tput setaf 6)"  # enter standout mode
+export LESS_TERMCAP_se="$(tput rmso; tput sgr0)"     # leave standout mode
+export LESS_TERMCAP_mb="$(tput blink; tput setaf 1)" # enter blinking mode
+export LESS_TERMCAP_md="$(tput bold; tput setaf 3)"  # enter double-bright mode
+export LESS_TERMCAP_me="$(tput sgr0)"                # turn off all appearance modes
+export LESS_TERMCAP_us="$(tput sitm; tput setaf 2)"  # turn on underline mode
+export LESS_TERMCAP_ue="$(tput ritm; tput sgr0)"     # turn off underline mode
+
+# {{- if eq .chezmoi.os "darwin" }}
+export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+# {{- end }}
+
+
+#==============================================================#
+##  PATH                                                      ##
+#==============================================================#
+
+if [ -d "${HOME}/.deno/bin" ]; then
+    export DENO_INSTALL="${HOME}/.deno"
+    export PATH="${DENO_INSTALL}/bin:${PATH}"
+fi
+
+if [ -r "${HOME}/.sdkman/bin/sdkman-init.sh" ]; then
+    export SDKMAN_DIR="${HOME}/.sdkman"
+    # shellcheck disable=SC1091
+    . "${HOME}/.sdkman/bin/sdkman-init.sh"
+fi
+
+if [ -d "${HOME}/.cargo/bin" ]; then
+    export PATH="${HOME}/.cargo/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/.nvm" ]; then
+    export NVM_DIR="${HOME}/.nvm"
+    # shellcheck disable=SC1091
+    . "${NVM_DIR}/nvm.sh"
+    if [ -d "${NVM_DIR}/bash_completion" ]; then
+        # shellcheck disable=SC1091
+        . "${NVM_DIR}/bash_completion"
+    fi
+fi
+
+if [ -d "${HOME}/go/bin" ]; then
+    export PATH="${HOME}/go/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/bin" ]; then
+    export PATH="${HOME}/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/.local/bin" ]; then
+    export PATH="${HOME}/.local/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/.nix-profile/bin" ]; then
+    export PATH="${HOME}/.nix-profile/bin:${PATH}"
+fi
+
+# {{- if eq .chezmoi.os "darwin" }}
+if [ -d "/usr/local/opt/coreutils/libexec/gnubin" ]; then
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+fi
+
+if [ -d "/opt/homebrew/bin" ]; then
+    export PATH="/opt/homebrew/bin:${PATH}"
+fi
+
+if [ -d "/opt/homebrew/sbin" ]; then
+    export PATH="/opt/homebrew/sbin:${PATH}"
+fi
+# {{- end }}
+
+
+#==============================================================#
+##  ALIASES                                                   ##
+#==============================================================#
+
+alias gs='git status'
+
+alias k='kubectl'
+alias kx='kubectx'
+alias kn='kubens'
+
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
+
+work() {
+    (cd ~/workspace/"$1" && nvim)
+}
+
+extract() {
+    case $1 in
+        *.tar.gz|*.tgz) tar xzvf "$1" ;;
+        *.tar.xz) tar Jxvf "$1" ;;
+        *.zip) unzip "$1" ;;
+        *.lzh) lha e "$1" ;;
+        *.tar.bz2|*.tbz) tar xjvf "$1" ;;
+        *.tar.Z) tar zxvf "$1" ;;
+        *.gz) gzip -d "$1" ;;
+        *.bz2) bzip2 -dc "$1" ;;
+        *.Z) uncompress "$1" ;;
+        *.tar) tar xvf "$1" ;;
+        *.arj) unarj "$1" ;;
+        *) echo "'$1' cannot be extracted via extract()" ;;
+    esac
+}
+# shellcheck disable=SC3009,SC2139
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
