@@ -82,7 +82,7 @@ data:
   osid: "{{ $osid }}"
   name: "{{ $name }}"
   email: "{{ $email }}"
-
+  unix_arch: "{{ output "uname" "-m" | trim }}"
   editor: nvim
 
 edit:
