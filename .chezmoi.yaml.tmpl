@@ -18,6 +18,14 @@
 {{-   $osid = .chezmoi.osRelease.id -}}
 {{- end -}}
 
+{{- /* Determine where to download fonts */ -}}
+{{- $fontDir := "" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $fontDir = "Library/Fonts" -}}
+{{- else -}}
+{{-   $fontDir = ".local/share/fonts" -}}
+{{- end -}}
+
 {{- if hasKey . "name" -}}
 {{-   $name = .name -}}
 {{- else if $interactive -}}
@@ -83,6 +91,7 @@ data:
   name: "{{ $name }}"
   email: "{{ $email }}"
   unix_arch: "{{ output "uname" "-m" | trim }}"
+  fontDir: "{{ $fontDir }}"
   editor: nvim
 
 edit:

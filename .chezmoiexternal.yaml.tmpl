@@ -4,6 +4,12 @@
 
 {{- template "read-versions-and-revisions-cache" $cache -}}
 
+"{{ .fontDir }}":
+  type: archive
+  {{ $hackNerdFontVersion := includeTemplate "get-github-latest-version" (list "ryanoasis/nerd-fonts" $cache) }}
+  url: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ $hackNerdFontVersion }}/Hack.zip"
+  exclude: ["LICENSE.md", "README.md"]
+
 ".oh-my-zsh":
   type: archive
   {{ $omzVersion := includeTemplate "get-github-head-revision" (list "ohmyzsh/ohmyzsh" $cache) }}
