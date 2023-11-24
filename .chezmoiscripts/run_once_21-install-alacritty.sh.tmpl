@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# {{ template "lib/logging" }}
+
+set -euo pipefail
+
+log_task "[alacritty]"
+
+if command -v alacritty >/dev/null 2>&1; then
+    log_step "[alacritty] Already installed"
+    exit 0
+fi
+
+log_step "[alacritty] Install - Start"
+
+cargo install alacritty
+
+log_step "[alacritty] Install - Complete"
+log_done "[alacritty] Install - Success"
