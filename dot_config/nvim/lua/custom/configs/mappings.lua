@@ -12,17 +12,18 @@ local M = {}
 -- l Insert + Command-Line + Lang-Arg Mode
 
 M.general = {
-  n = {
-    [";"] = { ":", "enter command mode", opts = { nowait = true } },
-    ["n"] = { "nzzzv" },
-    ["N"] = { "Nzzzv" },
-    ["<C-d>"] = { "<C-d>zz" },
-    ["<C-u>"] = { "<C-u>zz" },
-  },
-  v = {
-    [">"] = { ">gv", "indent" },
-    ["<"] = { "<gv", "unindent" },
-  },
+	n = {
+		[";"] = { ":", "enter command mode", opts = { nowait = true } },
+		["n"] = { "nzzzv" },
+		["N"] = { "Nzzzv" },
+		["<C-d>"] = { "<C-d>zz" },
+		["<C-u>"] = { "<C-u>zz" },
+		["€"] = { "$", "go to end of line" },
+	},
+	v = {
+		[">"] = { ">gv", "indent" },
+		["<"] = { "<gv", "unindent" },
+	},
 }
 
 return M
