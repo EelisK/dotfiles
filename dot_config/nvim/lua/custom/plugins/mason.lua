@@ -11,8 +11,6 @@ local M = {
       -- shell
       "shellcheck",
       "beautysh",
-      -- git
-      "gitsigns",
       -- lua
       "lua-language-server",
       "stylua",
@@ -37,7 +35,6 @@ local M = {
       -- go
       "gopls",
       "goimports",
-      "gofmt",
       "golines",
       -- ansible
       "ansible-language-server",
