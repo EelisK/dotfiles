@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# {{ template "lib/logging" }}
+
+set -euo pipefail
+
+log_task "[rustup]"
+
+if command -v rustup >/dev/null 2>&1; then
+    log_done "[rustup] Already installed"
+    exit 0
+fi
+
+log_step "[rustup] Install - Start"
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -- \
+    --default-toolchain stable \
+    --profile default \
+    --no-modify-path \
+    -y
+
+log_step "[rustup] Install - Complete"
+log_done "[rustup] Rust installed"
