@@ -11,14 +11,6 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 export VISUAL="{{ .editor }}"
 export EDITOR="{{ .editor }}"
 
-export LESS_TERMCAP_so="$(tput bold; tput setaf 6)"  # enter standout mode
-export LESS_TERMCAP_se="$(tput rmso; tput sgr0)"     # leave standout mode
-export LESS_TERMCAP_mb="$(tput blink; tput setaf 1)" # enter blinking mode
-export LESS_TERMCAP_md="$(tput bold; tput setaf 3)"  # enter double-bright mode
-export LESS_TERMCAP_me="$(tput sgr0)"                # turn off all appearance modes
-export LESS_TERMCAP_us="$(tput sitm; tput setaf 2)"  # turn on underline mode
-export LESS_TERMCAP_ue="$(tput ritm; tput sgr0)"     # turn off underline mode
-
 # {{- if eq .chezmoi.os "darwin" }}
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 # {{- end }}
@@ -125,4 +117,4 @@ extract() {
     esac
 }
 # shellcheck disable=SC3009,SC2139
-alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+alias {gz,tgz,zip,lzh,bz1,tbz,Z,tar,arj,xz}=extract
