@@ -7,7 +7,6 @@ fi
 
 # Load .profile
 if [[ -r "${HOME}/.profile" ]]; then
-    # Do not use emulate here, as SDKMAN! will produce errors otherwise
     source "${HOME}/.profile"
 fi
 
