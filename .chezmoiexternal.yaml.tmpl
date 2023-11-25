@@ -56,6 +56,12 @@
   url: "https://github.com/NvChad/NvChad/archive/{{ $nvchadVersion }}.tar.gz"
   stripComponents: 1
 
+".local/bin/kubectl":
+  type: file
+  {{- $kubectlVersion := includeTemplate "get-external-resource" (list "https://dl.k8s.io/release/stable.txt" $cfg) }}
+  url: "https://dl.k8s.io/release/{{ $kubectlVersion }}/bin/{{ .chezmoi.os }}/{{ .chezmoi.arch }}/kubectl"
+  executable: true
+
 ".local/bin/kubecolor":
   type: archive-file
   {{- $kubecolorVersion := includeTemplate "get-github-latest-release" (list "hidetatz/kubecolor" $cfg) }}
