@@ -19,12 +19,12 @@ backups/** # ignore the contents of backups folder but not the folder itself
 
 # platform specific setups
 {{- if eq .chezmoi.os "linux"}}
-.chezmoiscripts/darwin/
-.chezmoiscripts/windows/
+.chezmoiscripts/darwin/**
+.chezmoiscripts/windows/**
 {{- else if eq .chezmoi.os "darwin" }}
-.chezmoiscripts/linux/
-.chezmoiscripts/windows/
+.chezmoiscripts/linux/**
+.chezmoiscripts/windows/**
 {{- else }}
-.chezmoiscripts/linux/
-.chezmoiscripts/darwin/
+.chezmoiscripts/linux/**
+.chezmoiscripts/darwin/**
 {{- end }}
