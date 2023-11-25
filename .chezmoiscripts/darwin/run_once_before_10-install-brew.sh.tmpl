@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# {{ template "lib/logging" }}
+
+set -euo pipefail
+
+log_task "[brew]"
+
+if command -v brew >/dev/null 2>&1; then
+    log_done "[brew] Already installed"
+    exit 0
+fi
+
+log_info "[brew] Install - Start"
+
+NONINTERACTIVE=1 curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+
+log_step "[brew] Install - Complete"
+log_done "[brew] Install - Success"
