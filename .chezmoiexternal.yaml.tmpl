@@ -1,6 +1,6 @@
 {{- /* NOTE: "chezmoi" is present as work around for https://github.com/twpayne/chezmoi/discussions/1724 */ -}}
-{{- $cacheFile := joinPath .chezmoi.cacheDir "external/content-cache.yaml"  -}}
-{{- $cfg := dict "chezmoi" .chezmoi "cacheFile" $cacheFile "cacheExpiration" (mul 60 60 24) -}}
+{{- $cacheDir := joinPath .chezmoi.cacheDir "custom/external"  -}}
+{{- $cfg := dict "chezmoi" .chezmoi "cacheDir" $cacheDir "cacheExpiration" (mul 60 60 24) -}}
 
 "{{ .fontDir }}":
   type: archive
