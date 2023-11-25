@@ -38,7 +38,7 @@ cursor:
   style: Block
   unfocused_hollow: true
 
-{{- $commandKey := "Control" }}
+{{- $commandKey := "Control|Shift" }}
 {{- if eq .chezmoi.os "darwin" }}
 {{-   $commandKey = "Command" }}
 {{- end }}
