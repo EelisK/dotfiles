@@ -1,45 +1,43 @@
-{{- /* "chezmoi" is present as work around for https://github.com/twpayne/chezmoi/discussions/1724 */ -}}
-{{- /* cache github versions and revisions for 10 minutes */ -}}
-{{- $cache := dict "chezmoi" .chezmoi "expiration" (mul 60 10) -}}
-
-{{- template "read-versions-and-revisions-cache" $cache -}}
+{{- /* NOTE: "chezmoi" is present as work around for https://github.com/twpayne/chezmoi/discussions/1724 */ -}}
+{{- $cacheFile := joinPath .chezmoi.cacheDir "external/content-cache.yaml"  -}}
+{{- $cfg := dict "chezmoi" .chezmoi "cacheFile" $cacheFile "cacheExpiration" (mul 60 60 24) -}}
 
 "{{ .fontDir }}":
   type: archive
-  {{ $hackNerdFontVersion := includeTemplate "get-github-latest-version" (list "ryanoasis/nerd-fonts" $cache) }}
-  url: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ $hackNerdFontVersion }}/Hack.zip"
+  {{- $hackNerdFontVersion := includeTemplate "get-github-latest-release" (list "ryanoasis/nerd-fonts" $cfg) }}
+  url: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ $hackNerdFontVersion }}/Hack.zip"
   exclude: ["LICENSE.md", "README.md"]
 
 ".oh-my-zsh":
   type: archive
-  {{ $omzVersion := includeTemplate "get-github-head-revision" (list "ohmyzsh/ohmyzsh" $cache) }}
+  {{- $omzVersion := includeTemplate "get-github-head-revision" (list "ohmyzsh/ohmyzsh" $cfg) }}
   url: "https://github.com/ohmyzsh/ohmyzsh/archive/{{ $omzVersion }}.tar.gz"
   stripComponents: 1
 
 ".oh-my-zsh/custom/plugins/zsh-syntax-highlighting":
   type: archive
-  {{ $zshSyntaxHighlightingRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-syntax-highlighting" $cache) }}
+  {{- $zshSyntaxHighlightingRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-syntax-highlighting" $cfg) }}
   url: "https://github.com/zsh-users/zsh-syntax-highlighting/archive/{{ $zshSyntaxHighlightingRevision }}.tar.gz"
   stripComponents: 1
   exact: true
 
 ".oh-my-zsh/custom/plugins/zsh-autosuggestions":
   type: archive
-  {{ $zshAutoSuggestionsRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-autosuggestions" $cache) }}
+  {{- $zshAutoSuggestionsRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-autosuggestions" $cfg) }}
   url: "https://github.com/zsh-users/zsh-autosuggestions/archive/{{ $zshAutoSuggestionsRevision }}.tar.gz"
   stripComponents: 1
   exact: true
 
 ".oh-my-zsh/custom/plugins/zsh-completions":
   type: archive
-  {{ $zshCompletionsRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-completions" $cache) }}
+  {{- $zshCompletionsRevision := includeTemplate "get-github-head-revision" (list "zsh-users/zsh-completions" $cfg) }}
   url: "https://github.com/zsh-users/zsh-completions/archive/{{ $zshCompletionsRevision }}.tar.gz"
   stripComponents: 1
   exact: true
 
 ".oh-my-zsh/custom/themes/powerlevel10k":
   type: archive
-  {{ $p10kRevision := includeTemplate "get-github-head-revision" (list "romkatv/powerlevel10k" $cache) }}
+  {{- $p10kRevision := includeTemplate "get-github-head-revision" (list "romkatv/powerlevel10k" $cfg) }}
   url: "https://github.com/romkatv/powerlevel10k/archive/{{ $p10kRevision }}.tar.gz"
   stripComponents: 1
 
@@ -54,43 +52,43 @@
 
 ".config/nvim":
   type: archive
-  {{ $nvchadVersion := includeTemplate "get-github-head-revision" (list "NvChad/NvChad" $cache) }}
+  {{- $nvchadVersion := includeTemplate "get-github-head-revision" (list "NvChad/NvChad" $cfg) }}
   url: "https://github.com/NvChad/NvChad/archive/{{ $nvchadVersion }}.tar.gz"
   stripComponents: 1
 
 ".local/bin/kubecolor":
   type: archive-file
-  {{ $kubecolorVersion := includeTemplate "get-github-latest-version" (list "hidetatz/kubecolor" $cache) }}
-  url: "https://github.com/hidetatz/kubecolor/releases/download/v{{ $kubecolorVersion }}/kubecolor_{{ $kubecolorVersion }}_{{ .chezmoi.os | title  }}_{{ .unix_arch }}.tar.gz"
+  {{- $kubecolorVersion := includeTemplate "get-github-latest-release" (list "hidetatz/kubecolor" $cfg) }}
+  url: "https://github.com/hidetatz/kubecolor/releases/download/{{ $kubecolorVersion }}/kubecolor_{{ substr 1 (len $kubecolorVersion) $kubecolorVersion }}_{{ .chezmoi.os | title  }}_{{ .unix_arch }}.tar.gz"
   path: kubecolor
   executable: true
 
 ".local/bin/kubectx":
   type: archive-file
-  {{ $kubectxVersion := includeTemplate "get-github-latest-version" (list "ahmetb/kubectx" $cache) }}
-  {{ $kubectxRelease := printf "v%s_%s_%s"  $kubectxVersion .chezmoi.os .unix_arch }}
-  url: "https://github.com/ahmetb/kubectx/releases/download/v{{ $kubectxVersion }}/kubectx_{{ $kubectxRelease }}.tar.gz"
+  {{- $kubectxVersion := includeTemplate "get-github-latest-release" (list "ahmetb/kubectx" $cfg) }}
+  {{- $kubectxRelease := printf "%s_%s_%s"  $kubectxVersion .chezmoi.os .unix_arch }}
+  url: "https://github.com/ahmetb/kubectx/releases/download/{{ $kubectxVersion }}/kubectx_{{ $kubectxRelease }}.tar.gz"
   path: kubectx
   executable: true
 
 ".local/bin/kubens":
   type: archive-file
-  url: "https://github.com/ahmetb/kubectx/releases/download/v{{ $kubectxVersion }}/kubens_{{ $kubectxRelease }}.tar.gz"
+  url: "https://github.com/ahmetb/kubectx/releases/download/{{ $kubectxVersion }}/kubens_{{ $kubectxRelease }}.tar.gz"
   path: kubens
   executable: true
 
 ".oh-my-zsh/custom/plugins/external-completions/_kubectx.zsh":
   type: file
-  url: "https://github.com/ahmetb/kubectx/raw/v{{ $kubectxVersion }}/completion/_kubectx.zsh"
+  url: "https://github.com/ahmetb/kubectx/raw/{{ $kubectxVersion }}/completion/_kubectx.zsh"
 
 ".oh-my-zsh/custom/plugins/external-completions/_kubens.zsh":
   type: file
-  url: "https://github.com/ahmetb/kubectx/raw/v{{ $kubectxVersion }}/completion/_kubens.zsh"
+  url: "https://github.com/ahmetb/kubectx/raw/{{ $kubectxVersion }}/completion/_kubens.zsh"
 
 # Required by kubectx and kubens
 ".local/bin/fzf":
   type: archive-file
-  {{ $fzfVersion := includeTemplate "get-github-latest-version" (list "junegunn/fzf" $cache) }}
+  {{- $fzfVersion := includeTemplate "get-github-latest-release" (list "junegunn/fzf" $cfg) }}
   url: "https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-{{ .chezmoi.os }}_{{ .chezmoi.arch }}.{{ if eq .chezmoi.os "darwin" }}zip{{ else }}tar.gz{{ end }}"
   path: fzf
   executable: true
@@ -109,8 +107,6 @@
 
 ".nvm":
   type: archive
-  {{ $nvmVersion := includeTemplate "get-github-head-revision" (list "nvm-sh/nvm" $cache) }}
+  {{- $nvmVersion := includeTemplate "get-github-head-revision" (list "nvm-sh/nvm" $cfg) }}
   url: "https://github.com/nvm-sh/nvm/archive/{{ $nvmVersion }}.tar.gz"
   stripComponents: 1
-
-{{- template "save-versions-and-revisions-cache" $cache -}}

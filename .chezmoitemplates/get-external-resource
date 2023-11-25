@@ -1,0 +1,38 @@
+{{- /* Configurations of external content caching, including expiration, chezmoi context and the cache file */ -}}
+{{- $config := index . 1 -}}
+{{- $chezmoi := get $config "chezmoi" -}}
+{{- $cacheExpiration := get $config "cacheExpiration" -}}
+{{- $cacheFile := get $config "cacheFile" -}}
+
+{{- /* External content URL */ -}}
+{{- $url := index . 0 -}}
+
+{{- /* Read the current cache unless refreshing externals or cache expiry */ -}}
+{{- $currentTime := now | unixEpoch -}}
+{{- $cache := dict "resources" (dict) "time" $currentTime -}}
+{{- if stat $cacheFile -}}
+{{-   $currentCache := include $cacheFile | fromYaml -}}
+{{-   $currentCacheTime := get $currentCache "time" -}}
+{{-   $timeDiff := sub $currentTime $currentCacheTime -}}
+{{-   $refreshExternals := or (has "--refresh-externals" $chezmoi.args) (has "--refresh-externals=true" $chezmoi.args) (has "-R" $chezmoi.args) -}}
+{{-   if and (not $refreshExternals) (lt $timeDiff $cacheExpiration) -}}
+{{-     $cache = $currentCache -}}
+{{-   end -}}
+{{- end -}}
+
+{{- /* Fetch results, either from cache or from the URL via curl */ -}}
+{{- $result := "" -}}
+{{- $resources := get $cache "resources" -}}
+{{- if hasKey $resources $url -}}
+{{-   $result = get $resources $url -}}
+{{- else -}}
+{{-   $result = output "curl" "-fsSL" $url -}}
+{{-   $_ := set $resources $url $result -}}
+{{-   $_ := set $cache "resources" $resources -}}
+{{- end -}}
+
+{{- /* Save cache to file, note that it could be unchanged */ -}}
+{{- $_ := output "sh" "-c" (printf "mkdir -p '%s' && cat <<'EOF' > '%s'\n%s \nEOF" (dir $cacheFile) $cacheFile (toYaml $cache)) -}}
+
+{{- /* Return results */ -}}
+{{- $result -}}

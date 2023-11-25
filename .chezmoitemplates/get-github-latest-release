@@ -1,5 +1,5 @@
 {{- $repo := index . 0 -}}
 {{- $cfg := index . 1 -}}
-{{- $apiUrl := printf "https://api.github.com/repos/%s/commits/HEAD" $repo -}}
+{{- $apiUrl := printf "https://api.github.com/repos/%s/releases/latest" $repo -}}
 {{- $response := includeTemplate "get-external-resource" (list $apiUrl $cfg) -}}
-{{- ($response | fromJsonc).sha -}}
+{{- ($response | fromJsonc).tag_name -}}
