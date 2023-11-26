@@ -116,3 +116,15 @@
   {{- $nvmVersion := includeTemplate "get-github-head-revision" (list "nvm-sh/nvm" $cfg) }}
   url: "https://github.com/nvm-sh/nvm/archive/{{ $nvmVersion }}.tar.gz"
   stripComponents: 1
+
+".rbenv":
+  type: archive
+  {{- $rbenvVersion := includeTemplate "get-github-latest-release" (list "rbenv/rbenv" $cfg) }}
+  url: "https://github.com/rbenv/rbenv/archive/refs/tags/{{ $rbenvVersion }}.tar.gz"
+  stripComponents: 1
+
+".rbenv/plugins/ruby-build":
+  type: archive
+  {{- $rubyBuildVersion := includeTemplate "get-github-latest-release" (list "rbenv/ruby-build" $cfg) }}
+  url: "https://github.com/rbenv/ruby-build/archive/refs/tags/{{ $rubyBuildVersion }}.tar.gz"
+  stripComponents: 1
