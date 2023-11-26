@@ -12,9 +12,8 @@
 {{- /* Determine OS ID */ -}}
 {{- /* eg. darwin, debian */ -}}
 {{- $osid := .chezmoi.os -}}
-{{- if hasKey .chezmoi.osRelease "idLike" -}}
 {{-   $osid = .chezmoi.osRelease.idLike -}}
-{{- else if hasKey .chezmoi.osRelease "id" -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
 {{-   $osid = .chezmoi.osRelease.id -}}
 {{- end -}}
 
