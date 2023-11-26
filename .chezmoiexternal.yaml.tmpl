@@ -127,6 +127,12 @@
   path: {{ .chezmoi.os }}-{{ .chezmoi.arch }}/helm
   executable: true
 
+".local/bin/stern":
+  type: archive-file
+  {{- $sternVersion := includeTemplate "get-github-latest-release" (list "stern/stern" $cfg) }}
+  url: "https://github.com/stern/stern/releases/download/{{ $sternVersion }}/stern_{{ substr 1 (len $sternVersion) $sternVersion }}_{{ .chezmoi.os }}_{{ .chezmoi.arch }}.tar.gz"
+  path: stern
+
 ".nvm":
   type: archive
   {{- $nvmVersion := includeTemplate "get-github-head-revision" (list "nvm-sh/nvm" $cfg) }}
