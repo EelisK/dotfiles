@@ -128,3 +128,9 @@
   {{- $rubyBuildVersion := includeTemplate "get-github-latest-release" (list "rbenv/ruby-build" $cfg) }}
   url: "https://github.com/rbenv/ruby-build/archive/refs/tags/{{ $rubyBuildVersion }}.tar.gz"
   stripComponents: 1
+
+"go":
+  type: archive
+  {{- $golangVersion := (index (fromJsonc (includeTemplate "get-external-resource" (list "https://go.dev/dl/?mode=json" $cfg))) 0).version }}
+  url: "https://go.dev/dl/{{ $golangVersion }}.{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+  stripComponents: 1
