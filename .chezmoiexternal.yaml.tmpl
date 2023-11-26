@@ -150,3 +150,9 @@
   {{- $golangVersion := (index (fromJsonc (includeTemplate "get-external-resource" (list "https://go.dev/dl/?mode=json" $cfg))) 0).version }}
   url: "https://go.dev/dl/{{ $golangVersion }}.{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
   stripComponents: 1
+
+".tmux/plugins/tpm":
+  type: archive
+  {{- $tpmVersion := includeTemplate "get-github-head-revision" (list "tmux-plugins/tpm" $cfg) }}
+  url: "https://github.com/tmux-plugins/tpm/archive/{{ $tpmVersion }}.tar.gz"
+  stripComponents: 1
