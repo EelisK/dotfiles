@@ -101,13 +101,15 @@
 
 ".local/bin/kubebuilder":
   type: file
-  url: "https://go.kubebuilder.io/dl/latest/{{ .chezmoi.os }}/{{ .chezmoi.arch }}"
+  {{- $kubebuilderVersion := includeTemplate "get-github-latest-release" (list "kubernetes-sigs/kubebuilder" $cfg) }}
+  url: "https://github.com/kubernetes-sigs/kubebuilder/releases/download/{{ $kubebuilderVersion }}/kubebuilder_{{ .chezmoi.os }}_{{ .chezmoi.arch }}"
   path: kubebuilder
   executable: true
 
 ".local/bin/kind":
   type: file
-  url: "https://kind.sigs.k8s.io/dl/v0.20.0/kind-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
+  {{- $kindVersion := includeTemplate "get-github-latest-release" (list "kubernetes-sigs/kind" $cfg) }}
+  url: "https://github.com/kubernetes-sigs/kind/releases/download/{{ $kindVersion }}/kind-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
   path: kind
   executable: true
 
