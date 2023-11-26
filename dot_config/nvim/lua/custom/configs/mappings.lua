@@ -19,6 +19,7 @@ M.general = {
 		["<C-d>"] = { "<C-d>zz" },
 		["<C-u>"] = { "<C-u>zz" },
 		["€"] = { "$", "go to end of line" },
+		["¤"] = { "$", "go to end of line" },
 	},
 	v = {
 		[">"] = { ">gv", "indent" },
