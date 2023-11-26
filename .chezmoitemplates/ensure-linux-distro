@@ -1,0 +1,12 @@
+{{- $valid := false }}
+{{- $current := (index . 0).osid }}
+{{- range (slice . 1 (len .)) }}
+{{-   if eq . $current }}
+{{-     $valid = true }}
+{{-     break }}
+{{-   end }}
+{{- end }}
+{{- if not $valid }}
+log_warning "Unexpected distro {{ $current }}"
+exit
+{{- end }}
