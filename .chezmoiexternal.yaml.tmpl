@@ -111,6 +111,13 @@
   path: kind
   executable: true
 
+".local/bin/k9s":
+  type: archive-file
+  {{- $k9sVersion := includeTemplate "get-github-latest-release" (list "derailed/k9s" $cfg) }}
+  url: "https://github.com/derailed/k9s/releases/download/{{ $k9sVersion }}/k9s_{{ .chezmoi.os | title }}_{{ .chezmoi.arch }}.tar.gz"
+  path: k9s
+  executable: true
+
 ".nvm":
   type: archive
   {{- $nvmVersion := includeTemplate "get-github-head-revision" (list "nvm-sh/nvm" $cfg) }}
