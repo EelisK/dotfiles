@@ -118,6 +118,13 @@
   path: k9s
   executable: true
 
+".local/bin/helm":
+  type: archive-file
+  {{- $helmVersion := includeTemplate "get-github-latest-release" (list "helm/helm" $cfg) }}
+  url: "https://get.helm.sh/helm-{{ $helmVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+  path: {{ .chezmoi.os }}-{{ .chezmoi.arch }}/helm
+  executable: true
+
 ".nvm":
   type: archive
   {{- $nvmVersion := includeTemplate "get-github-head-revision" (list "nvm-sh/nvm" $cfg) }}
