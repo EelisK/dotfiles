@@ -162,3 +162,9 @@
   {{- $tpmVersion := includeTemplate "get-github-head-revision" (list "tmux-plugins/tpm" $cfg) }}
   url: "https://github.com/tmux-plugins/tpm/archive/{{ $tpmVersion }}.tar.gz"
   stripComponents: 1
+
+".config/alacritty/themes":
+  type: archive
+  {{- $alacrittyThemesVersion := includeTemplate "get-github-head-revision" (list "alacritty/alacritty-theme" $cfg)}}
+  url: "https://github.com/alacritty/alacritty-theme/archive/{{ $alacrittyThemesVersion }}.tar.gz"
+  stripComponents: 1
