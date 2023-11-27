@@ -1,7 +1,7 @@
 ---@type UIConfig
 local M = {}
-M.theme = "jellybeans"
-M.theme_toggle = { "jellybeans", "one_light" }
+M.theme = "tomorrow_night"
+M.theme_toggle = { "tomorrow_night", "gruvbox" }
 
 M.nvdash = {
 	load_on_startup = true,
