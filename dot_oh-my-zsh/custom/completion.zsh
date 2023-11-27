@@ -18,8 +18,6 @@ command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init - zsh)"
 #==============================================================#
 
 _work() {
-    local state
-
     _arguments \
         '1:Repository:_path_files -W ${WORKSPACE_DIR} -/'
 }
