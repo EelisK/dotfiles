@@ -11,3 +11,17 @@ command -v chezmoi >/dev/null 2>&1 && source <(chezmoi completion zsh)
 command -v minikube >/dev/null 2>&1 && source <(minikube completion zsh)
 command -v stern >/dev/null 2>&1 && source <(stern --completion zsh)
 command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init - zsh)"
+
+
+#==============================================================#
+##          Custom completion                                 ##
+#==============================================================#
+
+_work() {
+    local state
+
+    _arguments \
+        '1:Repository:_path_files -W ${WORKSPACE_DIR} -/'
+}
+
+compdef _work work
