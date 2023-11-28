@@ -4,7 +4,7 @@ M.theme = "tomorrow_night"
 M.theme_toggle = { "tomorrow_night", "gruvbox" }
 
 M.nvdash = {
-	load_on_startup = true,
+	load_on_startup = false,
 }
 M.cheatsheet = {
 	theme = "grid",
