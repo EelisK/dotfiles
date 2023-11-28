@@ -157,10 +157,10 @@
   url: "https://go.dev/dl/{{ $golangVersion }}.{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
   stripComponents: 1
 
-".tmux/plugins/tpm":
+".config/tmux":
   type: archive
-  {{- $tpmVersion := includeTemplate "get-github-head-revision" (list "tmux-plugins/tpm" $cfg) }}
-  url: "https://github.com/tmux-plugins/tpm/archive/{{ $tpmVersion }}.tar.gz"
+  {{- $ohmytmuxVersion := includeTemplate "get-github-head-revision" (list "gpakosz/.tmux" $cfg) }}
+  url: "https://github.com/gpakosz/.tmux/archive/{{ $ohmytmuxVersion }}.tar.gz"
   stripComponents: 1
 
 ".config/alacritty/themes":
