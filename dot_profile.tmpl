@@ -105,7 +105,7 @@ work() {
 dotfiles() {
     # shellcheck disable=SC3043
     local difference
-    if (cd "$(chezmoi source-path)" && nvim); then
+    if (cd "$(chezmoi source-path)" && nvim "$@"); then
         difference="$(chezmoi diff)"
         # shellcheck disable=SC3060
         if [ -n "${difference// }" ] \
@@ -144,6 +144,8 @@ alias k='kubectl'
 alias kx='kubectx'
 alias kn='kubens'
 
+alias vim='nvim'
+alias vi='nvim'
 
 alias ..='cd ..'
 alias ...='cd ../..'
