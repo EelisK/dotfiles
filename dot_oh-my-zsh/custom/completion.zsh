@@ -23,3 +23,10 @@ _work() {
 }
 
 compdef _work work
+
+_dotfiles() {
+    _arguments \
+        '1:(optional) File to edit:_path_files -W "$(chezmoi source-path)"'
+}
+
+compdef _dotfiles dotfiles
