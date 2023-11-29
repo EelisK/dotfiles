@@ -20,6 +20,7 @@ M.general = {
 		["<C-u>"] = { "<C-u>zz" },
 		["€"] = { "$", "go to end of line" },
 		["¤"] = { "$", "go to end of line" },
+		["<leader>gg"] = { "<cmd>LazyGit<cr>", "open lazygit" },
 	},
 	v = {
 		[">"] = { ">gv", "indent" },
