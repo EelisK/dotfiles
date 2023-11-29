@@ -3,17 +3,17 @@
 {{ template "lib/logging" }}
 {{ template "ensure-linux-distro" (list . "ubuntu" "debian") }}
 
-{{- $sudo := "sudo " }}
-{{- if eq .chezmoi.username "root" }}
-{{-   $sudo = "" }}
-{{- end }}
-
-
+{{- $sudo := includeTemplate "get-sudo" . }}
 {{- $packages := list
         "autoconf"
         "bat"
         "btop"
         "build-essential"
+        "docker-ce"
+        "docker-ce-cli"
+        "containerd.io"
+        "docker-buildx-plugin"
+        "docker-compose-plugin"
         "cmake"
         "curl"
         "fd-find"

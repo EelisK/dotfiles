@@ -1,0 +1,5 @@
+{{- $sudo := "sudo " -}}
+{{- if eq .chezmoi.username "root" -}}
+{{-   $sudo = "" -}}
+{{- end -}}
+{{- $sudo -}}
