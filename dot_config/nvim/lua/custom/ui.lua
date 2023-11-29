@@ -9,6 +9,9 @@ M.nvdash = {
 M.cheatsheet = {
 	theme = "grid",
 }
+M.statusline = {
+	theme = "vscode",
+}
 
 -- Highlight overrides
 -- To find any highlight groups: "<cmd> Telescope highlights"
