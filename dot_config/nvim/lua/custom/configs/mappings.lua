@@ -21,6 +21,7 @@ M.general = {
 		["€"] = { "$", "go to end of line" },
 		["¤"] = { "$", "go to end of line" },
 		["<leader>gg"] = { "<cmd>LazyGit<cr>", "open lazygit" },
+		["<leader>tt"] = { "<cmd>lua require('base46').toggle_theme()<cr>", "toggle theme" },
 	},
 	v = {
 		[">"] = { ">gv", "indent" },
