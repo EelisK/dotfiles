@@ -88,8 +88,8 @@ fi
 
 ask() {
     while true; do
-        printf '%s [y/n] ' "$1"
-        read -r reply </dev/tty
+        printf '%s [y/n] ' "${1}"
+        read -r reply </dev/stdin
         # Check if the reply is valid
         case "$reply" in
             Y*|y*) return 0 ;;
@@ -109,8 +109,8 @@ dotfiles() {
         difference="$(chezmoi diff)"
         # shellcheck disable=SC3060
         if [ -n "${difference// }" ] \
-            && echo "$difference" \
-            && ask "Apply changes"; then
+            && echo "${difference}" \
+            && ask "Apply changes" </dev/stdin; then
             chezmoi apply
         fi
     fi
