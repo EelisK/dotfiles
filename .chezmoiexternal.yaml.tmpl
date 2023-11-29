@@ -168,3 +168,10 @@
   {{- $alacrittyThemesVersion := includeTemplate "get-github-head-revision" (list "alacritty/alacritty-theme" $cfg)}}
   url: "https://github.com/alacritty/alacritty-theme/archive/{{ $alacrittyThemesVersion }}.tar.gz"
   stripComponents: 1
+
+".local/bin/lazygit":
+  type: archive-file
+  {{- $lazygitVersion := includeTemplate "get-github-latest-release" (list "jesseduffield/lazygit" $cfg) }}
+  url: "https://github.com/jesseduffield/lazygit/releases/download/{{ $lazygitVersion }}/lazygit_{{ substr 1 (len $lazygitVersion) $lazygitVersion }}_{{ .chezmoi.os | title }}_{{ .unix_arch }}.tar.gz"
+  path: lazygit
+  executable: true
