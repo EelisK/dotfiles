@@ -28,3 +28,7 @@ backups/** # ignore the contents of backups folder but not the folder itself
 .chezmoiscripts/linux/**
 .chezmoiscripts/darwin/**
 {{- end }}
+
+# Dependencies for different package managers
+requirements/**
+requirements/

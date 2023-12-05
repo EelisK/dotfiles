@@ -1,0 +1,1 @@
+{{- output "sh" "-c" (printf "grep -vE \"^\\s*#\" %s | tr \"\\n\" \" \"" .) -}}
