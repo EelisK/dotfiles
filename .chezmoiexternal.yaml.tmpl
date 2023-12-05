@@ -175,10 +175,3 @@
   url: "https://github.com/jesseduffield/lazygit/releases/download/{{ $lazygitVersion }}/lazygit_{{ substr 1 (len $lazygitVersion) $lazygitVersion }}_{{ .chezmoi.os | title }}_{{ .unix_arch }}.tar.gz"
   path: lazygit
   executable: true
-
-".local/bin/shellcheck":
-  type: archive-file
-  {{- $shellcheckVersion := includeTemplate "get-github-latest-release" (list "koalaman/shellcheck" $cfg) }}
-  url: "https://github.com/koalaman/shellcheck/releases/download/{{ $shellcheckVersion }}/shellcheck-{{ $shellcheckVersion }}.{{ .chezmoi.os }}.{{ .unix_arch }}.tar.xz"
-  stripComponents: 1
-  path: shellcheck
