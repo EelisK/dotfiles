@@ -175,3 +175,10 @@
   url: "https://github.com/jesseduffield/lazygit/releases/download/{{ $lazygitVersion }}/lazygit_{{ substr 1 (len $lazygitVersion) $lazygitVersion }}_{{ .chezmoi.os | title }}_{{ .unix_arch }}.tar.gz"
   path: lazygit
   executable: true
+
+".local/bin/tran":
+  type: archive-file
+  {{- $tranVersion := includeTemplate "get-github-latest-release" (list "abdfnx/tran" $cfg) }}
+  url: "https://github.com/abdfnx/tran/releases/download/{{ $tranVersion }}/tran_{{ if eq .chezmoi.os "darwin" }}macos{{ else }}{{ .chezmoi.os }}{{ end }}_{{ $tranVersion }}_{{ .chezmoi.arch }}.zip"
+  stripComponents: 1
+  path: bin/tran
