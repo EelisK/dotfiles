@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Makefile hash: {{ include "dot_figlet/Makefile.tmpl" | sha256sum }}
+# {{ template "lib/logging" }}
+
+set -euo pipefail
+
+log_task "[figlet]"
+
+log_step "[figlet] Build - Start"
+
+pushd "${HOME}/.figlet"
+make install
+popd
+
+log_done "[figlet] Build - Complete"

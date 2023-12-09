@@ -182,3 +182,17 @@
   url: "https://github.com/abdfnx/tran/releases/download/{{ $tranVersion }}/tran_{{ if eq .chezmoi.os "darwin" }}macos{{ else }}{{ .chezmoi.os }}{{ end }}_{{ $tranVersion }}_{{ .chezmoi.arch }}.zip"
   stripComponents: 1
   path: bin/tran
+
+".figlet":
+  type: archive
+  {{- $figletVersion := includeTemplate "get-github-head-revision" (list "cmatsuoka/figlet" $cfg) }}
+  url: "https://github.com/cmatsuoka/figlet/archive/{{ $figletVersion }}.tar.gz"
+  stripComponents: 1
+  exclude: ["*/Makefile", "**/fonts/*"]
+
+".figlet/fonts":
+  type: archive
+  {{- $figletFontsVersion := includeTemplate "get-github-head-revision" (list "xero/figlet-fonts" $cfg) }}
+  url: "https://github.com/xero/figlet-fonts/archive/{{ $figletFontsVersion }}.tar.gz"
+  stripComponents: 1
+  exclude: ["*.md"]
