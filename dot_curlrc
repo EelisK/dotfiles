@@ -1,0 +1,8 @@
+# ABOUT: cli data transfer (http, ftp, ...)
+# REPO: https://github.com/curl/curl
+# HELP: https://everything.curl.dev/cmdline/configfile
+
+location
+show-error
+silent
+compressed
