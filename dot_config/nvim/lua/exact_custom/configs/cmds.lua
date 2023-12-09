@@ -25,3 +25,13 @@ cmd("Q", function()
 end, {
 	desc = "Close all buffers and exit",
 })
+
+cmd("FigCommentPrompt", function()
+	vim.ui.input({
+		prompt = "Comment: ",
+	}, function(value)
+		vim.cmd("FigComment " .. value)
+	end)
+end, {
+	desc = "Prompt for an input",
+})

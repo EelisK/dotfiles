@@ -31,7 +31,7 @@ M.general = {
 		["¤"] = { "$", "go to end of line" },
 		["<leader>gg"] = { "<cmd>LazyGit<cr>", "open lazygit" },
 		["<leader>tt"] = { "<cmd>lua require('base46').toggle_theme()<cr>", "toggle theme" },
-		["<leader>aa"] = { "<cmd>FigSelectComment<cr>", "ascii art" },
+		["<leader>aa"] = { "<cmd>FigCommentPrompt<cr>", "comment with ascii art" },
 	},
 	v = {
 		[">"] = { ">gv", "indent" },
