@@ -14,7 +14,8 @@ export EDITOR="{{ .editor }}"
 export WORKSPACE_DIR="${HOME}/workspace"
 
 # {{- if eq .chezmoi.os "darwin" }}
-export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+export SDKROOT
 # {{- end }}
 
 
