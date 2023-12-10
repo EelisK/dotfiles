@@ -41,6 +41,12 @@
   url: "https://github.com/romkatv/powerlevel10k/archive/{{ $p10kRevision }}.tar.gz"
   stripComponents: 1
 
+".bash_it":
+  type: archive
+  {{- $bashItVersion := includeTemplate "get-github-latest-release" (list "Bash-it/bash-it" $cfg) }}
+  url: "https://github.com/Bash-it/bash-it/archive/refs/tags/{{ $bashItVersion }}.tar.gz"
+  stripComponents: 1
+
 ".config/gitalias/gitalias.txt":
   type: file
   url: "https://github.com/GitAlias/gitalias/raw/main/gitalias.txt"
