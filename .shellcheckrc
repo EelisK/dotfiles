@@ -1,0 +1,9 @@
+external-sources=true
+# shellcheck --list-optional
+enable=add-default-case
+enable=avoid-nullary-conditions
+enable=check-extra-masked-returns
+enable=deprecate-which
+enable=quote-safe-variables
+enable=require-double-brackets
+enable=require-variable-braces

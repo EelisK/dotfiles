@@ -32,3 +32,6 @@ backups/** # ignore the contents of backups folder but not the folder itself
 # Dependencies for different package managers
 requirements/**
 requirements/
+
+# Development tools
+.shellcheckrc
