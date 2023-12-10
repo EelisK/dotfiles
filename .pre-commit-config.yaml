@@ -1,0 +1,22 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: detect-private-key
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.9.0
+    hooks:
+      - id: shellcheck
+        args: ["--severity=warning"]
+        types: ["file"]
+        files: .*(\.sh|\.zsh|profile|bashrc|zshrc)(\.tmpl)?

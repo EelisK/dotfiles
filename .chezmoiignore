@@ -34,4 +34,5 @@ requirements/**
 requirements/
 
 # Development tools
+.pre-commit-config.yaml
 .shellcheckrc
