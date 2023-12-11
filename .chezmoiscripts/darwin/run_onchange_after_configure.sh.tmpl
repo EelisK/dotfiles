@@ -26,6 +26,12 @@ defaults write com.apple.dock launchanim -bool false
 defaults write com.apple.dock orientation left
 defaults write com.apple.dock show-recents -bool false
 
+# 24 hour clock
+defaults write com.apple.menuextra.clock DateFormat -string 'EEE MMM d  H:mm:ss'
+defaults write com.apple.menuextra.clock ShowAMPM -bool false
+defaults write com.apple.menuextra.clock IsAnalog -bool false
+defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
+
 defaults write -g ApplePressAndHoldEnabled -bool false
 
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
