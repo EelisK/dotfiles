@@ -44,7 +44,7 @@ log_step "[packages] Updating"
 {{ $sudo }}apt-get update
 
 log_step "[packages] Install - Start"
-{{ $sudo }}apt-get install -y {{ $requirements }}
+{{ $sudo }}apt-get install -y {{ $requirements | join " " }}
 log_step "[packages] Install - Complete"
 
 log_done "[packages] Setup complete"
