@@ -1,6 +1,6 @@
 # ~/.Brewfile
 # =============================================================================
-# Project dependencies installed using `brew bundle` or `~/dotfiles.sh`.
+# Project dependencies installed using `brew bundle`
 #
 # See https://github.com/Homebrew/homebrew-bundle
 # =============================================================================
@@ -19,17 +19,16 @@ tap 'buo/cask-upgrade'
 
 
 
-#   ██████▓██   ██▓  ██████ ▄▄▄█████▓▓█████  ███▄ ▄███▓
-# ▒██    ▒ ▒██  ██▒▒██    ▒ ▓  ██▒ ▓▒▓█   ▀ ▓██▒▀█▀ ██▒
-# ░ ▓██▄    ▒██ ██░░ ▓██▄   ▒ ▓██░ ▒░▒███   ▓██    ▓██░
-#   ▒   ██▒ ░ ▐██▓░  ▒   ██▒░ ▓██▓ ░ ▒▓█  ▄ ▒██    ▒██
-# ▒██████▒▒ ░ ██▒▓░▒██████▒▒  ▒██▒ ░ ░▒████▒▒██▒   ░██▒
-# ▒ ▒▓▒ ▒ ░  ██▒▒▒ ▒ ▒▓▒ ▒ ░  ▒ ░░   ░░ ▒░ ░░ ▒░   ░  ░
-# ░ ░▒  ░ ░▓██ ░▒░ ░ ░▒  ░ ░    ░     ░ ░  ░░  ░      ░
-# ░  ░  ░  ▒ ▒ ░░  ░  ░  ░    ░         ░   ░      ░
-#       ░  ░ ░           ░              ░  ░       ░
-#          ░ ░
-
+# ▓█████▄ ▓█████ ██▒   █▓▄▄▄█████▓ ▒█████   ▒█████   ██▓      ██████
+# ▒██▀ ██▌▓█   ▀▓██░   █▒▓  ██▒ ▓▒▒██▒  ██▒▒██▒  ██▒▓██▒    ▒██    ▒
+# ░██   █▌▒███   ▓██  █▒░▒ ▓██░ ▒░▒██░  ██▒▒██░  ██▒▒██░    ░ ▓██▄
+# ░▓█▄   ▌▒▓█  ▄  ▒██ █░░░ ▓██▓ ░ ▒██   ██░▒██   ██░▒██░      ▒   ██▒
+# ░▒████▓ ░▒████▒  ▒▀█░    ▒██▒ ░ ░ ████▓▒░░ ████▓▒░░██████▒▒██████▒▒
+#  ▒▒▓  ▒ ░░ ▒░ ░  ░ ▐░    ▒ ░░   ░ ▒░▒░▒░ ░ ▒░▒░▒░ ░ ▒░▓  ░▒ ▒▓▒ ▒ ░
+#  ░ ▒  ▒  ░ ░  ░  ░ ░░      ░      ░ ▒ ▒░   ░ ▒ ▒░ ░ ░ ▒  ░░ ░▒  ░ ░
+#  ░ ░  ░    ░       ░░    ░      ░ ░ ░ ▒  ░ ░ ░ ▒    ░ ░   ░  ░  ░
+#    ░       ░  ░     ░               ░ ░      ░ ░      ░  ░      ░
+#  ░                 ░
 
 # Manage compile and link flags for libraries
 brew 'pkg-config'
@@ -62,7 +61,50 @@ brew 'freetype'
 # Generic library support script
 # INFO: In order to prevent conflicts with Apple's own libtool we have prepended a "g"
 brew 'libtool'
+# Git version control system
+brew 'git'
+# Git extension for versioning large files
+brew 'git-lfs'
+# GNU Compiler Collection
+brew 'gcc'
+# Next-generation compiler infrastructure
+brew 'llvm'
 
+
+# ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
+# ▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▒████▄    ▓██▒
+# ▒ ▓██░ ▒░▒███   ▓██ ░▄█ ▒▓██    ▓██░▒██▒▓██  ▀█ ██▒▒██  ▀█▄  ▒██░
+# ░ ▓██▓ ░ ▒▓█  ▄ ▒██▀▀█▄  ▒██    ▒██ ░██░▓██▒  ▐▌██▒░██▄▄▄▄██ ▒██░
+#   ▒██▒ ░ ░▒████▒░██▓ ▒██▒▒██▒   ░██▒░██░▒██░   ▓██░ ▓█   ▓██▒░██████▒
+#   ▒ ░░   ░░ ▒░ ░░ ▒▓ ░▒▓░░ ▒░   ░  ░░▓  ░ ▒░   ▒ ▒  ▒▒   ▓▒█░░ ▒░▓  ░
+#     ░     ░ ░  ░  ░▒ ░ ▒░░  ░      ░ ▒ ░░ ░░   ░ ▒░  ▒   ▒▒ ░░ ░ ▒  ░
+#   ░         ░     ░░   ░ ░      ░    ▒ ░   ░   ░ ░   ░   ▒     ░ ░
+#             ░  ░   ░            ░    ░           ░       ░  ░    ░  ░
+#
+
+
+## Terminal Emulator
+# Rust-based terminal
+cask 'warp' if OS.mac?
+# Terminal Emulator for macOS
+cask 'iterm2' if OS.mac?
+# A GPU-accelerated cross-platform terminal emulator and multiplexer
+cask 'wezterm'
+# GPU-accelerated terminal emulator
+cask 'alacritty'
+
+## Terminal multiplexer
+# A terminal workspace with batteries included
+brew 'zellij'
+# Terminal multiplexer with VT100/ANSI terminal emulation
+brew 'screen'
+# A terminal multiplexer, allowing to access multiple separate terminal sessions
+brew 'tmux'
+# Reattach process (e.g., tmux) to background
+brew 'reattach-to-user-namespace'
+# Share your terminal as a web application
+tap 'sorenisanerd/gotty'
+brew 'gotty'
 
 
 #   ██████  ██░ ██ ▓█████  ██▓     ██▓
@@ -92,41 +134,6 @@ brew 'zsh-lovers'
 
 
 
-# ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
-# ▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▒████▄    ▓██▒
-# ▒ ▓██░ ▒░▒███   ▓██ ░▄█ ▒▓██    ▓██░▒██▒▓██  ▀█ ██▒▒██  ▀█▄  ▒██░
-# ░ ▓██▓ ░ ▒▓█  ▄ ▒██▀▀█▄  ▒██    ▒██ ░██░▓██▒  ▐▌██▒░██▄▄▄▄██ ▒██░
-#   ▒██▒ ░ ░▒████▒░██▓ ▒██▒▒██▒   ░██▒░██░▒██░   ▓██░ ▓█   ▓██▒░██████▒
-#   ▒ ░░   ░░ ▒░ ░░ ▒▓ ░▒▓░░ ▒░   ░  ░░▓  ░ ▒░   ▒ ▒  ▒▒   ▓▒█░░ ▒░▓  ░
-#     ░     ░ ░  ░  ░▒ ░ ▒░░  ░      ░ ▒ ░░ ░░   ░ ▒░  ▒   ▒▒ ░░ ░ ▒  ░
-#   ░         ░     ░░   ░ ░      ░    ▒ ░   ░   ░ ░   ░   ▒     ░ ░
-#             ░  ░   ░            ░    ░           ░       ░  ░    ░  ░
-#
-
-
-## Terminal Emulator
-# Rust-based terminal
-cask 'warp' if OS.mac?
-# Terminal Emulator for macOS
-cask 'iterm2' if OS.mac?
-# A GPU-accelerated cross-platform terminal emulator and multiplexer
-cask 'wezterm'
-
-## Terminal multiplexer
-# A terminal workspace with batteries included
-brew 'zellij'
-# Terminal multiplexer with VT100/ANSI terminal emulation
-brew 'screen'
-# A terminal multiplexer, allowing to access multiple separate terminal sessions
-brew 'tmux'
-# Reattach process (e.g., tmux) to background
-brew 'reattach-to-user-namespace'
-# Share your terminal as a web application
-tap 'sorenisanerd/gotty'
-brew 'gotty'
-
-
-
 #  ▄████▄   ▒█████   ███▄    █ ▄▄▄█████▓ ▄▄▄       ██▓ ███▄    █ ▓█████  ██▀███
 # ▒██▀ ▀█  ▒██▒  ██▒ ██ ▀█   █ ▓  ██▒ ▓▒▒████▄    ▓██▒ ██ ▀█   █ ▓█   ▀ ▓██ ▒ ██▒
 # ▒▓█    ▄ ▒██░  ██▒▓██  ▀█ ██▒▒ ▓██░ ▒░▒██  ▀█▄  ▒██▒▓██  ▀█ ██▒▒███   ▓██ ░▄█ ▒
@@ -140,8 +147,6 @@ brew 'gotty'
 
 
 ## Docker
-# Docker Community Edition for Mac
-cask 'docker'
 # A tool for exploring each layer in a docker image
 brew 'dive'
 # The lazier way to manage everything docker
@@ -167,6 +172,10 @@ brew 'kustomize'
 brew 'skaffold'
 # Plugin manager for kubectl command-line tool
 brew 'krew'
+# Local development Kubernetes
+brew 'kind'
+# SDK for building Kubernetes applications
+brew 'kubebuilder'
 
 ## Access Control
 # Tool that can switch between kubectl contexts easily and create aliases
@@ -303,15 +312,15 @@ brew 'inetutils'
 cask 'linkliar' if OS.mac?
 
 
-#  █    ██ ▄▄▄█████▓ ██▓ ██▓      ██████
-#  ██  ▓██▒▓  ██▒ ▓▒▓██▒▓██▒    ▒██    ▒
-# ▓██  ▒██░▒ ▓██░ ▒░▒██▒▒██░    ░ ▓██▄
-# ▓▓█  ░██░░ ▓██▓ ░ ░██░▒██░      ▒   ██▒
-# ▒▒█████▓   ▒██▒ ░ ░██░░██████▒▒██████▒▒
-# ░▒▓▒ ▒ ▒   ▒ ░░   ░▓  ░ ▒░▓  ░▒ ▒▓▒ ▒ ░
-# ░░▒░ ░ ░     ░     ▒ ░░ ░ ▒  ░░ ░▒  ░ ░
-#  ░░░ ░ ░   ░       ▒ ░  ░ ░   ░  ░  ░
-#    ░               ░      ░  ░      ░
+# ▄▄▄█████▓ ▒█████   ▒█████   ██▓      ██████
+# ▓  ██▒ ▓▒▒██▒  ██▒▒██▒  ██▒▓██▒    ▒██    ▒
+# ▒ ▓██░ ▒░▒██░  ██▒▒██░  ██▒▒██░    ░ ▓██▄
+# ░ ▓██▓ ░ ▒██   ██░▒██   ██░▒██░      ▒   ██▒
+#   ▒██▒ ░ ░ ████▓▒░░ ████▓▒░░██████▒▒██████▒▒
+#   ▒ ░░   ░ ▒░▒░▒░ ░ ▒░▒░▒░ ░ ▒░▓  ░▒ ▒▓▒ ▒ ░
+#     ░      ░ ▒ ▒░   ░ ▒ ▒░ ░ ░ ▒  ░░ ░▒  ░ ░
+#   ░      ░ ░ ░ ▒  ░ ░ ░ ▒    ░ ░   ░  ░  ░
+#              ░ ░      ░ ░      ░  ░      ░
 #
 
 ## Mac OS X
@@ -331,6 +340,8 @@ cask 'suspicious-package' if OS.mac?
 brew 'coreutils'
 # Internet file retriever
 brew 'wget'
+# Get a file from an HTTP, HTTPS or FTP server
+brew 'curl'
 
 
 ## Filesystem
@@ -358,6 +369,8 @@ brew 'gawk'
 brew 'duf'
 # A more intuitive version of du in rust
 brew 'dust'
+# Lightweight and flexible command-line JSON processor
+brew 'jq'
 
 ## Compress
 # 7-Zip (high compression file archiver) implementation
@@ -386,12 +399,10 @@ brew 'iftop'
 brew 'ctop'
 # Glances an Eye on your system
 brew 'glances'
+# Top-like resource monitor for the command-line
+brew 'btop'
 
 ## MISC
-# Manage your dotfiles across multiple diverse machines, securely
-brew 'chezmoi'
-# Load/unload environment variables based on $PWD
-brew 'direnv'
 # Personal information dashboard for your Terminal
 brew 'wtfutil'
 # Simplified and community-driven man pages

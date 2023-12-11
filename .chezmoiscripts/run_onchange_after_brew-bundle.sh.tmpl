@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# {{ template "lib/logging" }}
+# {{ $brewFilePath := joinPath .chezmoi.homeDir ".Brewfile" }}
+# Brewfile hash: {{ include $brewFilePath | sha256sum }}
+
+set -euo pipefail
+
+log_task "[brewfile]"
+log_info "[brewfile] Install - Start"
+
+brew bundle
+
+log_done "[brewfile] Install - Complete"

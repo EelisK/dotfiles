@@ -1,0 +1,31 @@
+#!/bin/bash
+# shellcheck disable=all
+
+# {{ template "lib/logging" }}
+
+set -euo pipefail
+
+log_task "[brew|pre-install]"
+
+# {{ if eq .chezmoi.os "linux" }}
+# {{   $sudo := includeTemplate "get-sudo" . }}
+# {{   if or (eq .osid "debian") (eq .osid "ubuntu") }}
+log_step "[brew|pre-install] {{ .osid }}}"
+{{ $sudo }}apt-get install build-essential procps curl file git
+# {{   else if or (eq .osid "fedora") (eq .osid "centos") }}
+log_step "[brew|pre-install] {{ .osid }}}"
+{{ $sudo }}yum groupinstall 'Development Tools'
+{{ $sudo }}yum install procps-ng curl file git
+# {{   else if eq .osid "arch" }}
+{{ $sudo }}pacman -Syu base-devel procps-ng curl file git
+# {{   else }}
+log_error "[brew|pre-install] Unsupported linux distro: {{ .osid }}"
+exit 1
+# {{   end }}
+# {{ else if eq .chezmoi.os "darwin" }}
+log_warning "[brew|pre-install] MacOS is not supported"
+log_warning "[brew|pre-install] Make sure you have Xcode installed (xcode-select --install)"
+# {{ else }}
+log_error "[brew|pre-install] Unsupported OS: {{ .chezmoi.os }}"
+exit 1
+# {{ end }}

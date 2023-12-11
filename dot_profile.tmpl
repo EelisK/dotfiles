@@ -8,6 +8,8 @@ export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_STATE_HOME="${HOME}/.local/state"
 
+export HOMEBREW_BUNDLE_FILE="${HOME}/.Brewfile"
+
 export VISUAL="{{ .editor }}"
 export EDITOR="{{ .editor }}"
 
@@ -17,6 +19,14 @@ export WORKSPACE_DIR="${HOME}/workspace"
 SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 export SDKROOT
 # {{- end }}
+
+if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+    # shellcheck disable=SC2312
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
+    # shellcheck disable=SC2312
+    eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
+fi
 
 
 #==============================================================#

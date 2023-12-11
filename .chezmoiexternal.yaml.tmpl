@@ -62,12 +62,6 @@
   url: "https://github.com/NvChad/NvChad/archive/{{ $nvchadVersion }}.tar.gz"
   stripComponents: 1
 
-".local/bin/kubectl":
-  type: file
-  {{- $kubectlVersion := includeTemplate "get-external-resource" (list "https://dl.k8s.io/release/stable.txt" $cfg) }}
-  url: "https://dl.k8s.io/release/{{ $kubectlVersion }}/bin/{{ .chezmoi.os }}/{{ .chezmoi.arch }}/kubectl"
-  executable: true
-
 ".local/bin/kubecolor":
   type: archive-file
   {{- $kubecolorVersion := includeTemplate "get-github-latest-release" (list "hidetatz/kubecolor" $cfg) }}
@@ -104,40 +98,6 @@
   url: "https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-{{ .chezmoi.os }}_{{ .chezmoi.arch }}.{{ if eq .chezmoi.os "darwin" }}zip{{ else }}tar.gz{{ end }}"
   path: fzf
   executable: true
-
-".local/bin/kubebuilder":
-  type: file
-  {{- $kubebuilderVersion := includeTemplate "get-github-latest-release" (list "kubernetes-sigs/kubebuilder" $cfg) }}
-  url: "https://github.com/kubernetes-sigs/kubebuilder/releases/download/{{ $kubebuilderVersion }}/kubebuilder_{{ .chezmoi.os }}_{{ .chezmoi.arch }}"
-  path: kubebuilder
-  executable: true
-
-".local/bin/kind":
-  type: file
-  {{- $kindVersion := includeTemplate "get-github-latest-release" (list "kubernetes-sigs/kind" $cfg) }}
-  url: "https://github.com/kubernetes-sigs/kind/releases/download/{{ $kindVersion }}/kind-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
-  path: kind
-  executable: true
-
-".local/bin/k9s":
-  type: archive-file
-  {{- $k9sVersion := includeTemplate "get-github-latest-release" (list "derailed/k9s" $cfg) }}
-  url: "https://github.com/derailed/k9s/releases/download/{{ $k9sVersion }}/k9s_{{ .chezmoi.os | title }}_{{ .chezmoi.arch }}.tar.gz"
-  path: k9s
-  executable: true
-
-".local/bin/helm":
-  type: archive-file
-  {{- $helmVersion := includeTemplate "get-github-latest-release" (list "helm/helm" $cfg) }}
-  url: "https://get.helm.sh/helm-{{ $helmVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-  path: {{ .chezmoi.os }}-{{ .chezmoi.arch }}/helm
-  executable: true
-
-".local/bin/stern":
-  type: archive-file
-  {{- $sternVersion := includeTemplate "get-github-latest-release" (list "stern/stern" $cfg) }}
-  url: "https://github.com/stern/stern/releases/download/{{ $sternVersion }}/stern_{{ substr 1 (len $sternVersion) $sternVersion }}_{{ .chezmoi.os }}_{{ .chezmoi.arch }}.tar.gz"
-  path: stern
 
 ".nvm":
   type: archive

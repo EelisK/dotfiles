@@ -13,7 +13,7 @@ fi
 
 log_info "[brew] Install - Start"
 
-NONINTERACTIVE=1 curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | NONINTERACTIVE=1 /bin/bash
 
 log_step "[brew] Install - Complete"
 log_done "[brew] Install - Success"
