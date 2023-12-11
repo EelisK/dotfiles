@@ -1,0 +1,404 @@
+# ~/.Brewfile
+# =============================================================================
+# Project dependencies installed using `brew bundle` or `~/dotfiles.sh`.
+#
+# See https://github.com/Homebrew/homebrew-bundle
+# =============================================================================
+# Inspiration:
+#  - https://github.com/posquit0/brewfile
+
+cask_args appdir: '/Applications'
+
+# Alternate versions of Casks
+tap 'homebrew/cask-versions'
+# Integrates Homebrew formulae with macOS' `launchctl` manager
+tap 'homebrew/services'
+# A CLI tool upgrading every outdated app installed by Homebrew Cask
+# INFO: brew cu
+tap 'buo/cask-upgrade'
+
+
+
+#   ██████▓██   ██▓  ██████ ▄▄▄█████▓▓█████  ███▄ ▄███▓
+# ▒██    ▒ ▒██  ██▒▒██    ▒ ▓  ██▒ ▓▒▓█   ▀ ▓██▒▀█▀ ██▒
+# ░ ▓██▄    ▒██ ██░░ ▓██▄   ▒ ▓██░ ▒░▒███   ▓██    ▓██░
+#   ▒   ██▒ ░ ▐██▓░  ▒   ██▒░ ▓██▓ ░ ▒▓█  ▄ ▒██    ▒██
+# ▒██████▒▒ ░ ██▒▓░▒██████▒▒  ▒██▒ ░ ░▒████▒▒██▒   ░██▒
+# ▒ ▒▓▒ ▒ ░  ██▒▒▒ ▒ ▒▓▒ ▒ ░  ▒ ░░   ░░ ▒░ ░░ ▒░   ░  ░
+# ░ ░▒  ░ ░▓██ ░▒░ ░ ░▒  ░ ░    ░     ░ ░  ░░  ░      ░
+# ░  ░  ░  ▒ ▒ ░░  ░  ░  ░    ░         ░   ░      ░
+#       ░  ░ ░           ░              ░  ░       ░
+#          ░ ░
+
+
+# Manage compile and link flags for libraries
+brew 'pkg-config'
+# Text-based UI library
+brew 'ncurses'
+# GNU internationalization (i18n) and localization (l10n) library
+brew 'gettext'
+# Library for command-line editing
+brew 'readline'
+# Core application library for C
+brew 'glib'
+# GNU multiple precision arithmetic library
+brew 'gmp'
+# Collection of portable C++ source libraries
+brew 'boost'
+# Vector graphics library with cross-device output support
+brew 'cairo'
+# Open source graph visualization software
+brew 'graphviz'
+# Framework for layout and rendering of i18n text
+brew 'pango'
+# Image manipulation library
+brew 'jpeg'
+# Library for manipulating PNG images
+brew 'libpng'
+# TIFF library and utilities
+brew 'libtiff'
+# Software library to render fonts
+brew 'freetype'
+# Generic library support script
+# INFO: In order to prevent conflicts with Apple's own libtool we have prepended a "g"
+brew 'libtool'
+
+
+
+#   ██████  ██░ ██ ▓█████  ██▓     ██▓
+# ▒██    ▒ ▓██░ ██▒▓█   ▀ ▓██▒    ▓██▒
+# ░ ▓██▄   ▒██▀▀██░▒███   ▒██░    ▒██░
+#   ▒   ██▒░▓█ ░██ ▒▓█  ▄ ▒██░    ▒██░
+# ▒██████▒▒░▓█▒░██▓░▒████▒░██████▒░██████▒
+# ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒░░ ▒░ ░░ ▒░▓  ░░ ▒░▓  ░
+# ░ ░▒  ░ ░ ▒ ░▒░ ░ ░ ░  ░░ ░ ▒  ░░ ░ ▒  ░
+# ░  ░  ░   ░  ░░ ░   ░     ░ ░     ░ ░
+#       ░   ░  ░  ░   ░  ░    ░  ░    ░  ░
+#
+
+
+# Bourne-Again SHell, a UNIX command interpreter
+brew 'bash'
+# Programmable completion for Bash 4.1+
+brew 'bash-completion@2'
+# User-friendly command-line shell for UNIX-like operating systems
+# INFO: Need to add `/usr/local/bin/fish` to `/etc/shells`
+brew 'fish'
+# UNIX shell (command interpreter)
+# INFO: Need to add `/usr/local/bin/zsh` to `/etc/shells`
+brew 'zsh'
+# Tips, tricks, and examples for zsh
+brew 'zsh-lovers'
+
+
+
+# ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
+# ▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▒████▄    ▓██▒
+# ▒ ▓██░ ▒░▒███   ▓██ ░▄█ ▒▓██    ▓██░▒██▒▓██  ▀█ ██▒▒██  ▀█▄  ▒██░
+# ░ ▓██▓ ░ ▒▓█  ▄ ▒██▀▀█▄  ▒██    ▒██ ░██░▓██▒  ▐▌██▒░██▄▄▄▄██ ▒██░
+#   ▒██▒ ░ ░▒████▒░██▓ ▒██▒▒██▒   ░██▒░██░▒██░   ▓██░ ▓█   ▓██▒░██████▒
+#   ▒ ░░   ░░ ▒░ ░░ ▒▓ ░▒▓░░ ▒░   ░  ░░▓  ░ ▒░   ▒ ▒  ▒▒   ▓▒█░░ ▒░▓  ░
+#     ░     ░ ░  ░  ░▒ ░ ▒░░  ░      ░ ▒ ░░ ░░   ░ ▒░  ▒   ▒▒ ░░ ░ ▒  ░
+#   ░         ░     ░░   ░ ░      ░    ▒ ░   ░   ░ ░   ░   ▒     ░ ░
+#             ░  ░   ░            ░    ░           ░       ░  ░    ░  ░
+#
+
+
+## Terminal Emulator
+# Rust-based terminal
+cask 'warp' if OS.mac?
+# Terminal Emulator for macOS
+cask 'iterm2' if OS.mac?
+# A GPU-accelerated cross-platform terminal emulator and multiplexer
+cask 'wezterm'
+
+## Terminal multiplexer
+# A terminal workspace with batteries included
+brew 'zellij'
+# Terminal multiplexer with VT100/ANSI terminal emulation
+brew 'screen'
+# A terminal multiplexer, allowing to access multiple separate terminal sessions
+brew 'tmux'
+# Reattach process (e.g., tmux) to background
+brew 'reattach-to-user-namespace'
+# Share your terminal as a web application
+tap 'sorenisanerd/gotty'
+brew 'gotty'
+
+
+
+#  ▄████▄   ▒█████   ███▄    █ ▄▄▄█████▓ ▄▄▄       ██▓ ███▄    █ ▓█████  ██▀███
+# ▒██▀ ▀█  ▒██▒  ██▒ ██ ▀█   █ ▓  ██▒ ▓▒▒████▄    ▓██▒ ██ ▀█   █ ▓█   ▀ ▓██ ▒ ██▒
+# ▒▓█    ▄ ▒██░  ██▒▓██  ▀█ ██▒▒ ▓██░ ▒░▒██  ▀█▄  ▒██▒▓██  ▀█ ██▒▒███   ▓██ ░▄█ ▒
+# ▒▓▓▄ ▄██▒▒██   ██░▓██▒  ▐▌██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░██░▓██▒  ▐▌██▒▒▓█  ▄ ▒██▀▀█▄
+# ▒ ▓███▀ ░░ ████▓▒░▒██░   ▓██░  ▒██▒ ░  ▓█   ▓██▒░██░▒██░   ▓██░░▒████▒░██▓ ▒██▒
+# ░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒   ▒ ░░    ▒▒   ▓▒█░░▓  ░ ▒░   ▒ ▒ ░░ ▒░ ░░ ▒▓ ░▒▓░
+#   ░  ▒     ░ ▒ ▒░ ░ ░░   ░ ▒░    ░      ▒   ▒▒ ░ ▒ ░░ ░░   ░ ▒░ ░ ░  ░  ░▒ ░ ▒░
+# ░        ░ ░ ░ ▒     ░   ░ ░   ░        ░   ▒    ▒ ░   ░   ░ ░    ░     ░░   ░
+# ░ ░          ░ ░           ░                ░  ░ ░           ░    ░  ░   ░
+# ░
+
+
+## Docker
+# Docker Community Edition for Mac
+cask 'docker'
+# A tool for exploring each layer in a docker image
+brew 'dive'
+# The lazier way to manage everything docker
+brew 'lazydocker'
+
+## Kubernetes
+# Kubernetes command-line interface
+brew 'kubernetes-cli'
+# Kubernetes CLI to manage cluters in style
+brew 'k9s'
+# The Kubernetes package manager
+tap 'helm/tap'
+brew 'helm'
+# A declarative spec for deploying Helm charts
+brew 'helmfile'
+# Hosting Helm Charts via GitHub Pages and Releases
+brew 'chart-releaser'
+# CLI tool for linting and testing Helm charts
+brew 'chart-testing'
+# Customization of kubernetes YAML configurations
+brew 'kustomize'
+# Tool for repeatable Kubernetes development
+brew 'skaffold'
+# Plugin manager for kubectl command-line tool
+brew 'krew'
+
+## Access Control
+# Tool that can switch between kubectl contexts easily and create aliases
+brew 'kubectx'
+# The single pane of glass for all of your kubeconfig files.
+tap 'danielfoehrkn/switch'
+brew 'switch'
+# Plugin for kubectl OpenID Connect authentication
+tap 'int128/kubelogin'
+brew 'kubelogin'
+# Kubernetes Native Policy Management
+brew 'kyverno'
+# Summarize Kubernetes RBAC roles for the specified subjects
+tap 'Ladicle/kubectl-bindrole'
+brew 'kubectl-rolesum'
+
+## Monitoring & Debugging
+# Kubernetes log viewer
+tap 'boz/repo'
+brew 'kail'
+# Multi pod and container log tailing for Kubernetes
+brew 'stern'
+# Bulk port forwarding Kubernetes services for local development
+tap 'txn2/tap'
+brew 'kubefwd'
+
+## Cluster Provisioning
+# Production Grade K8s Installation, Upgrades, and Management
+brew 'kops'
+# A single-node Kubernetes cluster inside a VM on your laptop
+brew 'minikube'
+
+
+
+# ▓█████▄ ▓█████ ██▒   █▓ ▒█████   ██▓███    ██████
+# ▒██▀ ██▌▓█   ▀▓██░   █▒▒██▒  ██▒▓██░  ██▒▒██    ▒
+# ░██   █▌▒███   ▓██  █▒░▒██░  ██▒▓██░ ██▓▒░ ▓██▄
+# ░▓█▄   ▌▒▓█  ▄  ▒██ █░░▒██   ██░▒██▄█▓▒ ▒  ▒   ██▒
+# ░▒████▓ ░▒████▒  ▒▀█░  ░ ████▓▒░▒██▒ ░  ░▒██████▒▒
+#  ▒▒▓  ▒ ░░ ▒░ ░  ░ ▐░  ░ ▒░▒░▒░ ▒▓▒░ ░  ░▒ ▒▓▒ ▒ ░
+#  ░ ▒  ▒  ░ ░  ░  ░ ░░    ░ ▒ ▒░ ░▒ ░     ░ ░▒  ░ ░
+#  ░ ░  ░    ░       ░░  ░ ░ ░ ▒  ░░       ░  ░  ░
+#    ░       ░  ░     ░      ░ ░                 ░
+#  ░                 ░
+
+
+## Terraform
+tap 'hashicorp/tap'
+# Tool to build, change, and version infrastructure
+# brew 'terraform'
+# A CLI tool to switch between different versions of terraform
+tap 'warrensbox/tap'
+brew 'tfswitch'
+# A Terraform Automation and Collaboration Software credentials helper
+tap 'tonedefdev/terracreds'
+brew 'terracreds'
+# Update version constraints in your Terraform configuration
+tap 'minamijoyo/tfupdate'
+brew 'tfupdate'
+# Interactivity select resource to plan / apply / destroy with target option
+tap 'future-architect/tap'
+brew 'tftarget'
+# Automatic Terraform moved blocks
+tap 'busser/tap'
+brew 'tfautomv'
+# Tool to generate documentation from Terraform modules
+brew 'terraform-docs'
+# A schema inspector for Terraform providers
+tap 'minamijoyo/tfschema'
+brew 'tfschema'
+# Display your Terraform module call stack in your terminal
+tap 'busser/tap'
+brew 'tftree'
+# Thin wrapper for Terraform e.g. for locking state
+brew 'terragrunt'
+# Terraform linter for detecting errors that can not be detected by `terraform plan`
+brew 'tflint'
+# Security scanner for your Terraform code
+brew 'tfsec'
+
+## Ansible
+# Automate deployment, configuration, and upgrading
+brew 'ansible'
+# Best practices checker for Ansible
+brew 'ansible-lint'
+# Molecule aids in the development and testing of Ansible roles
+# INFO: Install using pip
+# brew 'molecule'
+
+## Kubernetes
+tap 'argoproj/tap'
+# CLI for ArgoCD
+brew 'argocd'
+# CLI for Argo Workflow
+brew 'argo'
+brew 'kubectl-argo-rollouts'
+# Istio configuration command-line utility
+brew 'istioctl'
+
+## GitHub Actions
+# Run your GitHub Actions locally
+brew 'act'
+# Static checker for GitHub Actions workflow files
+brew 'actionlint'
+
+
+
+#  ███▄    █ ▓█████▄▄▄█████▓ █     █░ ▒█████   ██▀███   ██ ▄█▀
+#  ██ ▀█   █ ▓█   ▀▓  ██▒ ▓▒▓█░ █ ░█░▒██▒  ██▒▓██ ▒ ██▒ ██▄█▒
+# ▓██  ▀█ ██▒▒███  ▒ ▓██░ ▒░▒█░ █ ░█ ▒██░  ██▒▓██ ░▄█ ▒▓███▄░
+# ▓██▒  ▐▌██▒▒▓█  ▄░ ▓██▓ ░ ░█░ █ ░█ ▒██   ██░▒██▀▀█▄  ▓██ █▄
+# ▒██░   ▓██░░▒████▒ ▒██▒ ░ ░░██▒██▓ ░ ████▓▒░░██▓ ▒██▒▒██▒ █▄
+# ░ ▒░   ▒ ▒ ░░ ▒░ ░ ▒ ░░   ░ ▓░▒ ▒  ░ ▒░▒░▒░ ░ ▒▓ ░▒▓░▒ ▒▒ ▓▒
+# ░ ░░   ░ ▒░ ░ ░  ░   ░      ▒ ░ ░    ░ ▒ ▒░   ░▒ ░ ▒░░ ░▒ ▒░
+#    ░   ░ ░    ░    ░        ░   ░  ░ ░ ░ ▒    ░░   ░ ░ ░░ ░
+#          ░    ░  ░            ░        ░ ░     ░     ░  ░
+#
+
+
+## Analysis
+# The world’s foremost and widely-used network protocol analyzer
+cask 'wireshark'
+# Port scanning utility for large networks
+brew 'nmap'
+
+## Proxy & VPN
+# For an instant, secure URL to your localhost server through any NAT or firewall
+cask 'ngrok'
+
+### Utility
+# GNU utilities for networking
+brew 'inetutils'
+# MAC spoofing GUI for macOS
+cask 'linkliar' if OS.mac?
+
+
+#  █    ██ ▄▄▄█████▓ ██▓ ██▓      ██████
+#  ██  ▓██▒▓  ██▒ ▓▒▓██▒▓██▒    ▒██    ▒
+# ▓██  ▒██░▒ ▓██░ ▒░▒██▒▒██░    ░ ▓██▄
+# ▓▓█  ░██░░ ▓██▓ ░ ░██░▒██░      ▒   ██▒
+# ▒▒█████▓   ▒██▒ ░ ░██░░██████▒▒██████▒▒
+# ░▒▓▒ ▒ ▒   ▒ ░░   ░▓  ░ ▒░▓  ░▒ ▒▓▒ ▒ ░
+# ░░▒░ ░ ░     ░     ▒ ░░ ░ ▒  ░░ ░▒  ░ ░
+#  ░░░ ░ ░   ░       ▒ ░  ░ ░   ░  ░  ░
+#    ░               ░      ░  ░      ░
+#
+
+## Mac OS X
+# Mac App Store command line interface
+brew 'mas' if OS.mac?
+# System Utilities for macOS
+cask 'onyx' if OS.mac?
+# Swiss Army Knife for macOS
+brew 'm-cli' if OS.mac?
+
+## Mac OS X: Quick Look Plugins
+# An Application for Inspecting macOS Installer Packages
+cask 'suspicious-package' if OS.mac?
+
+
+# GNU File, Shell, and Text utilities
+brew 'coreutils'
+# Internet file retriever
+brew 'wget'
+
+
+## Filesystem
+# Modern replacement for `ls`
+brew 'eza'
+# Display directories as trees
+brew 'tree'
+# A new way to see and navigate directory trees
+brew 'broot'
+# A command-line fuzzy finder
+brew 'fzf'
+# A smarter `cd` command
+brew 'zoxide'
+# Clone of cat with syntax highlighting and Git integration
+brew 'bat'
+# Pager program similar to more
+brew 'less'
+# Simple, fast and user-friendly alternative to find
+brew 'fd'
+# An extremely fast alternative to grep that respects your gitignore
+brew 'ripgrep'
+# GNU awk utiliy
+brew 'gawk'
+# Disk Usage/Free Utility - a better 'df' alternative
+brew 'duf'
+# A more intuitive version of du in rust
+brew 'dust'
+
+## Compress
+# 7-Zip (high compression file archiver) implementation
+brew 'p7zip'
+# General-purpose data compression with high compression ratio
+brew 'xz'
+
+## Process
+# Executes a program periodically, showing output fullscreen
+brew 'watch'
+# A modern watch command. Time machine and pager etc
+brew 'viddy'
+# A modern replacement for ps written in Rust
+brew 'procs'
+# Command-line benchmarking tool
+brew 'hyperfine'
+
+## Monitoring
+# Yet another cross-platform graphical process/system monitor.
+brew 'bottom'
+# An interactive process viewer for Unix
+brew 'htop'
+# Display an interface's bandwidth usage
+brew 'iftop'
+# Top-like interface for container metrics
+brew 'ctop'
+# Glances an Eye on your system
+brew 'glances'
+
+## MISC
+# Manage your dotfiles across multiple diverse machines, securely
+brew 'chezmoi'
+# Load/unload environment variables based on $PWD
+brew 'direnv'
+# Personal information dashboard for your Terminal
+brew 'wtfutil'
+# Simplified and community-driven man pages
+brew 'tldr'
+# Create and view interactive cheatsheets on the command-line
+brew 'cheat'
+# Record and share your terminal sessions, the simple way
+brew 'asciinema'
+# The minimal, blazing-fast, and infinitely customizable prompt for any shell
+brew 'starship'

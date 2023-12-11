@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# {{ template "lib/logging" }}
+# Brewfile hash: {{ include "requirements/Brewfile" | sha256sum }}
+
+log_task "[brewfile]"
+log_info "[brewfile] Install - Start"
+
+brew bundle --file="{{ .chezmoi.workingTree }}/requirements/Brewfile"
+
+log_done "[brewfile] Install - Complete"
