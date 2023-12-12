@@ -47,6 +47,12 @@
   url: "https://github.com/Bash-it/bash-it/archive/refs/tags/{{ $bashItVersion }}.tar.gz"
   stripComponents: 1
 
+".local/share/omf":
+  type: archive
+  {{- $omfVersion := includeTemplate "get-github-latest-release" (list "oh-my-fish/oh-my-fish" $cfg) }}
+  url: "https://github.com/oh-my-fish/oh-my-fish/archive/refs/tags/{{ $omfVersion }}.tar.gz"
+  stripComponents: 1
+
 ".config/gitalias/gitalias.txt":
   type: file
   url: "https://github.com/GitAlias/gitalias/raw/main/gitalias.txt"
