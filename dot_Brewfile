@@ -69,6 +69,8 @@ brew 'git-lfs'
 brew 'gcc'
 # Next-generation compiler infrastructure
 brew 'llvm'
+# Tool for writing better scripts
+brew 'zx'
 
 
 # ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
