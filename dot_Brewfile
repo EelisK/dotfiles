@@ -71,6 +71,8 @@ brew 'gcc'
 brew 'llvm'
 # Tool for writing better scripts
 brew 'zx'
+# Static analysis and lint tool, for (ba)sh scripts
+brew 'shellcheck'
 
 
 # ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
