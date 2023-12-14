@@ -178,6 +178,10 @@ brew 'krew'
 brew 'kind'
 # SDK for building Kubernetes applications
 brew 'kubebuilder'
+# Check cluster for deprecated APIs
+brew 'kubent'
+# Object analysis tool for Kubernetes resources
+brew 'kube-score'
 
 ## Access Control
 # Tool that can switch between kubectl contexts easily and create aliases
