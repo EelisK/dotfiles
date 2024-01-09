@@ -11,6 +11,9 @@ local M = {}
 -- c Command-Line Mode
 -- l Insert + Command-Line + Lang-Arg Mode
 
+local end_of_line = { "$", "go to end of line" }
+local shared_mappings = { ["€"] = end_of_line, ["¤"] = end_of_line }
+
 M.disabled = {
 	n = {
 		-- disable default nvimtree toggle
@@ -37,6 +40,18 @@ M.general = {
 		[">"] = { ">gv", "indent" },
 		["<"] = { "<gv", "unindent" },
 	},
+	x = {},
+	s = {},
+	i = {},
+	l = {},
+	c = {},
+	o = {},
 }
+
+-- -- combine shared and general mappings
+M.general.n = vim.tbl_extend("keep", M.general.n, shared_mappings)
+M.general.v = vim.tbl_extend("keep", M.general.v, shared_mappings)
+M.general.x = vim.tbl_extend("keep", M.general.x, shared_mappings)
+M.general.s = vim.tbl_extend("keep", M.general.s, shared_mappings)
 
 return M
