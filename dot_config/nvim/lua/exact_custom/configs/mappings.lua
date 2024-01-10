@@ -35,6 +35,12 @@ M.general = {
 		["<leader>gg"] = { "<cmd>LazyGit<cr>", "open lazygit" },
 		["<leader>tt"] = { "<cmd>lua require('base46').toggle_theme()<cr>", "toggle theme" },
 		["<leader>aa"] = { "<cmd>FigCommentPrompt<cr>", "comment with ascii art" },
+		["<leader>i"] = {
+			function()
+				require("nvterm.terminal").toggle("float")
+			end,
+			"Toggle floating term",
+		},
 	},
 	v = {
 		[">"] = { ">gv", "indent" },
