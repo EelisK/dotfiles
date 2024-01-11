@@ -182,6 +182,9 @@ brew 'kubebuilder'
 brew 'kubent'
 # Object analysis tool for Kubernetes resources
 brew 'kube-score'
+# Kubernetes resource recommender
+tap 'robusta-dev/homebrew-krr'
+brew 'krr'
 
 ## Access Control
 # Tool that can switch between kubectl contexts easily and create aliases
