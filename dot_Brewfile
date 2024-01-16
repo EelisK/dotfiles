@@ -73,6 +73,8 @@ brew 'llvm'
 brew 'zx'
 # Static analysis and lint tool, for (ba)sh scripts
 brew 'shellcheck'
+# Load testing tool
+brew 'bzt'
 
 
 # ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
