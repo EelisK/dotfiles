@@ -187,6 +187,8 @@ brew 'kube-score'
 # Kubernetes resource recommender
 tap 'robusta-dev/homebrew-krr'
 brew 'krr'
+# Kubernetes configuration validator
+brew 'kubeconform'
 
 ## Access Control
 # Tool that can switch between kubectl contexts easily and create aliases
