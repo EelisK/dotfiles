@@ -25,7 +25,7 @@ setw -q -g utf8 on
 set -g history-limit 5000                 # boost history
 
 # reload configuration
-bind r run 'tmux source "#{TMUX_CONF}"' \; display "#{TMUX_CONF} sourced"
+bind r run 'tmux source ~/.tmux.conf' \; display "~/.tmux.conf sourced"
 
 
 # -- display -------------------------------------------------------------------
