@@ -69,9 +69,8 @@ bind - split-window -v
 unbind '"'
 bind '"' split-window -v
 # split current window vertically
-bind _ split-window -h
-unbind %
-bind % split-window -h
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
 
 # new window
 unbind c
