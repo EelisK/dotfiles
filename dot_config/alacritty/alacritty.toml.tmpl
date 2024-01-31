@@ -1,0 +1,110 @@
+import = ["{{ .chezmoi.homeDir }}/.config/alacritty/themes/themes/gruvbox_dark.toml"]
+live_config_reload = true
+
+{{- $commandKey := "Control|Shift" }}
+{{- if eq .chezmoi.os "darwin" }}
+{{-   $commandKey = "Command" }}
+{{- end }}
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 10.0
+
+[font.bold]
+family = "Hack Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "Hack Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "Hack Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "Hack Nerd Font"
+style = "Regular"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "N"
+mods = "{{ $commandKey }}"
+
+[[keyboard.bindings]]
+action = "Quit"
+key = "Q"
+mods = "{{ $commandKey }}"
+
+[[keyboard.bindings]]
+action = "Quit"
+key = "W"
+mods = "{{ $commandKey }}"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "Paste"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "Copy"
+
+[[keyboard.bindings]]
+action = "ClearLogNotice"
+key = "L"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+chars = "\f"
+key = "L"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "ScrollPageUp"
+key = "PageUp"
+mode = "~Alt"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollPageDown"
+key = "PageDown"
+mode = "~Alt"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollToTop"
+key = "Home"
+mode = "~Alt"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollToBottom"
+key = "End"
+mode = "~Alt"
+mods = "Shift"
+
+[scrolling]
+history = 10000
+multiplier = 10
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = "|:\"' {}()[]<>"
+
+[window]
+decorations = "none"
+opacity = 1.0
+startup_mode = "Maximized"
+
+[window.padding]
+x = 5
+y = 5
