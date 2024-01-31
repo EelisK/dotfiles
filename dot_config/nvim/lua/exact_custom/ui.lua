@@ -10,7 +10,7 @@ M.cheatsheet = {
 	theme = "grid",
 }
 M.statusline = {
-	theme = "vscode",
+	theme = "minimal",
 }
 
 -- Highlight overrides
@@ -22,8 +22,15 @@ M.hl_override = {
 		italic = true,
 	},
 }
+M.tabufline = {
+	show_numbers = false,
+	enabled = true,
+	lazyload = false,
+}
 M.hl_add = {
 	NvimTreeOpenedFolderName = { fg = "green", bold = true },
 }
+
+M.transparency = true
 
 return M
