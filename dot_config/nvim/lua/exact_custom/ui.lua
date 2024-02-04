@@ -1,7 +1,7 @@
 ---@type UIConfig
 local M = {}
 M.theme = "tomorrow_night"
-M.theme_toggle = { "tomorrow_night", "gruvbox" }
+M.theme_toggle = { "tomorrow_night", "tokyonight" }
 
 M.nvdash = {
 	load_on_startup = false,
@@ -26,6 +26,9 @@ M.tabufline = {
 	show_numbers = false,
 	enabled = true,
 	lazyload = false,
+}
+M.statusline = {
+	theme = "vscode",
 }
 M.hl_add = {
 	NvimTreeOpenedFolderName = { fg = "green", bold = true },
