@@ -268,6 +268,8 @@ brew 'terragrunt'
 brew 'tflint'
 # Security scanner for your Terraform code
 brew 'tfsec'
+# Terraform version manager
+brew 'tfenv'
 
 ## Ansible
 # Automate deployment, configuration, and upgrading
