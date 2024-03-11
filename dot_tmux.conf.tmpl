@@ -149,6 +149,32 @@ set -g @resurrect-strategy-nvim 'session'
 set -g pane-active-border-style 'fg=magenta,bg=default'
 set -g pane-border-style 'fg=brightblack,bg=default'
 set -g @catppuccin_flavour 'mocha'
+
+# -- colors --------------------------------------------------------------------
+# Inspiration from: https://www.hover.dev/css-color-palette-generator
+
+color_primary="#ffd100"
+color_primary_dark="#cca700"
+color_primary_content="#000000"
+
+color_secondary="#000000"
+color_secondary_dark="#000000"
+color_secondary_content="#808080"
+
+set -g @catppuccin_window_default_color "$color_secondary_content" # text color
+set -g @catppuccin_window_default_background "$color_secondary"
+
+set -g @catppuccin_window_current_color "$color_primary" # text color
+set -g @catppuccin_window_current_background "$color_primary_content"
+
+set -g @catppuccin_session_color "#{?client_prefix,$color_primary_dark,$color_primary}"
+set -g @catppuccin_directory_color "$color_primary"
+set -g @catppuccin_date_time_color "$color_primary"
+
+set -g @catppuccin_pane_border_style "fg=$color_primary_content"
+set -g @catppuccin_pane_active_border_style "fg=$color_secondary_content"
+set -g @catppuccin_session_icon ""
+
 set -g @catppuccin_window_left_separator ""
 set -g @catppuccin_window_right_separator " "
 set -g @catppuccin_window_middle_separator " █"
