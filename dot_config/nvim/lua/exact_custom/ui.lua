@@ -1,16 +1,13 @@
 ---@type UIConfig
 local M = {}
-M.theme = "tomorrow_night"
-M.theme_toggle = { "tomorrow_night", "tokyonight" }
+M.theme = "melange"
+M.theme_toggle = { "melange", "wombat" }
 
 M.nvdash = {
 	load_on_startup = false,
 }
 M.cheatsheet = {
 	theme = "grid",
-}
-M.statusline = {
-	theme = "minimal",
 }
 
 -- Highlight overrides
