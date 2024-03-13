@@ -1,4 +1,3 @@
----@type NvPluginSpec
 local M = {
 	"kdheepak/lazygit.nvim",
 	lazy = false,

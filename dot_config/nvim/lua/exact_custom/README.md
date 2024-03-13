@@ -1,1 +1,0 @@
-# NVChad custom configs

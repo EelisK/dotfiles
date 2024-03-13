@@ -1,5 +1,8 @@
-local on_attach = require("plugins.configs.lspconfig").on_attach
-local capabilities = require("plugins.configs.lspconfig").capabilities
+local configs = require("nvchad.configs.lspconfig")
+
+local on_attach = configs.on_attach
+local on_init = configs.on_init
+local capabilities = configs.capabilities
 
 local lspconfig = require("lspconfig")
 
@@ -11,6 +14,7 @@ local servers = { "html", "cssls", "tsserver", "clangd" }
 
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
+		on_init = on_init,
 		on_attach = on_attach,
 		capabilities = capabilities,
 	})
@@ -18,6 +22,7 @@ end
 
 -- if you want to override the default config then use the setup function
 lspconfig.pyright.setup({
+	on_init = on_init,
 	on_attach = on_attach,
 	capabilities = capabilities,
 	-- configure virtual environments
@@ -46,6 +51,7 @@ lspconfig.pyright.setup({
 })
 
 lspconfig.solargraph.setup({
+	on_init = on_init,
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -56,11 +62,13 @@ lspconfig.solargraph.setup({
 })
 
 lspconfig.rubocop.setup({
+	on_init = on_init,
 	on_attach = on_attach,
 	capabilities = capabilities,
 })
 
 lspconfig.rust_analyzer.setup({
+	on_init = on_init,
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -79,6 +87,7 @@ lspconfig.rust_analyzer.setup({
 })
 
 lspconfig.gopls.setup({
+	on_init = on_init,
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -93,12 +102,14 @@ lspconfig.gopls.setup({
 })
 
 lspconfig.terraformls.setup({
+	on_init = on_init,
 	on_attach = on_attach,
 	capabilities = capabilities,
 	filetypes = { "terraform", "tf" },
 })
 
 lspconfig.ansiblels.setup({
+	on_init = on_init,
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = { "ansible-language-server", "--stdio" },
