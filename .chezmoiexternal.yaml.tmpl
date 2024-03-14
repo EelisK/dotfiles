@@ -2,11 +2,17 @@
 {{- $cacheDir := joinPath .chezmoi.cacheDir "custom/external"  -}}
 {{- $cfg := dict "chezmoi" .chezmoi "cacheDir" $cacheDir "cacheExpiration" (mul 60 60 24) -}}
 
-"{{ .fontDir }}":
+{{- $fontDir := .fontDir }}
+{{- $nerdFonts := list "FiraCode" "Hack" }}
+{{- $hackNerdFontVersion := includeTemplate "get-github-latest-release" (list "ryanoasis/nerd-fonts" $cfg) }}
+
+{{- range $nerdFonts }}
+{{- $currentFontDir := printf "%s/%s" $fontDir . }}
+"{{ $currentFontDir }}":
   type: archive
-  {{- $hackNerdFontVersion := includeTemplate "get-github-latest-release" (list "ryanoasis/nerd-fonts" $cfg) }}
-  url: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ $hackNerdFontVersion }}/Hack.zip"
-  exclude: ["LICENSE.md", "README.md"]
+  url: {{ printf "https://github.com/ryanoasis/nerd-fonts/releases/download/%s/%s.zip" $hackNerdFontVersion . }}
+  exclude: ["LICENSE.md", "README.md", "LICENCE"]
+{{- end }}
 
 ".oh-my-zsh":
   type: archive
