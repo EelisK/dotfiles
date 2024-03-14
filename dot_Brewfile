@@ -75,6 +75,10 @@ brew 'zx'
 brew 'shellcheck'
 # Load testing tool
 brew 'bzt'
+# Font cask
+tap 'homebrew/cask-fonts'
+# Monospace font for programming and terminal
+cask 'font-fira-code'
 
 
 # ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
