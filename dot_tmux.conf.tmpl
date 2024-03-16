@@ -41,17 +41,12 @@ set -g set-titles on          # set terminal title
 set -g display-panes-time 800 # slightly longer pane indicators display time
 set -g display-time 1000      # slightly longer status messages display time
 
-set -g status-interval 10     # redraw status line every 10 seconds
-
 # clear both screen and history
 bind -n C-l send-keys C-l \; run 'sleep 0.2' \; clear-history
 
 # activity
 set -g monitor-activity on
 set -g visual-activity off
-
-# status line
-set -g status-position bottom
 
 # -- navigation ----------------------------------------------------------------
 
@@ -136,7 +131,6 @@ set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'tmux-plugins/tmux-cpu'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @plugin 'catppuccin/tmux'
 
 set -g @sessionx-window-height '85%'
 set -g @sessionx-window-width '75%'
@@ -148,52 +142,31 @@ set -g @continuum-restore 'on'
 
 set -g @resurrect-strategy-nvim 'session'
 
-set -g pane-active-border-style 'fg=magenta,bg=default'
-set -g pane-border-style 'fg=brightblack,bg=default'
-set -g @catppuccin_flavour 'mocha'
+# -- status line ----------------------------------------------------------------
 
-# -- colors --------------------------------------------------------------------
-# Inspiration from: https://www.hover.dev/css-color-palette-generator
+set -g status-position bottom
+# Update Interval
+set -g status-interval 1
 
-color_primary="#ffd100"
-color_primary_dark="#cca700"
-color_primary_content="#000000"
+# default statusbar colors
+#――――――――――――――――――――――――――――――――
+set-option -g status-bg default
+set-option -g status-fg colour240
+set -g status-utf8 on
 
-color_secondary="#000000"
-color_secondary_dark="#000000"
-color_secondary_content="#808080"
+# default window title colors
+#―――――――――――――――――――――――――――――――
+set-window-option -g window-status-style fg=magenta
+set-window-option -g window-status-style bg=default
 
-set-option -g status-style bg=default
+set -g status-left-length 85
 
-set -g @catppuccin_window_default_color "$color_secondary_content" # text color
-set -g @catppuccin_window_default_background "$color_secondary"
-
-set -g @catppuccin_window_current_color "$color_primary" # text color
-set -g @catppuccin_window_current_background "$color_primary_content"
-
-set -g @catppuccin_session_color "#{?client_prefix,$color_primary_dark,$color_primary}"
-set -g @catppuccin_directory_color "$color_primary"
-set -g @catppuccin_date_time_color "$color_primary"
-
-set -g @catppuccin_pane_border_style "fg=$color_primary_content"
-set -g @catppuccin_pane_active_border_style "fg=$color_secondary_content"
-set -g @catppuccin_session_icon ""
-
-set -g @catppuccin_window_left_separator ""
-set -g @catppuccin_window_right_separator " "
-set -g @catppuccin_window_middle_separator " █"
-set -g @catppuccin_window_number_position "right"
-set -g @catppuccin_window_default_fill "number"
-set -g @catppuccin_window_default_text "#W"
-set -g @catppuccin_window_current_fill "number"
-set -g @catppuccin_window_current_text "#W#{?window_zoomed_flag,(),}"
-set -g @catppuccin_status_modules_right "directory date_time"
-set -g @catppuccin_status_modules_left "session"
-set -g @catppuccin_status_left_separator  " "
-set -g @catppuccin_status_right_separator " "
-set -g @catppuccin_status_right_separator_inverse "no"
-set -g @catppuccin_status_fill "icon"
-set -g @catppuccin_status_connect_separator "no"
+# Icons: https://www.nerdfonts.com/cheat-sheet
+set -g status-left "#[fg=colour244,bg=default] #{?client_prefix,󱤳,}  #S "
+set -g window-status-format "#[fg=colour245,bg=colour237] #{window_index} #[fg=colour248,bg=default] #W "
+set -g window-status-current-format "#[fg=colour252,bg=colour239] #{window_index} #[fg=colour248,bg=default] #W "
+set -g status-right "#[fg=colour244,bg=default] 󰃰 %Y-%m-%d %H:%M %p "
+set -g status-justify left
 
 # -- tpm -----------------------------------------------------------------------
 
