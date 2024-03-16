@@ -2,7 +2,7 @@ local M = {}
 
 M.ui = {
 
-	theme = "wombat",
+	theme = "melange",
 
 	nvdash = { load_on_startup = false },
 	cheatsheet = { theme = "grid" },
