@@ -33,6 +33,20 @@ fi
 ##  PATH                                                      ##
 #==============================================================#
 
+# {{- if eq .chezmoi.os "darwin" }}
+if [ -d "/usr/local/opt/coreutils/libexec/gnubin" ]; then
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+fi
+
+if [ -d "/opt/homebrew/bin" ]; then
+    export PATH="/opt/homebrew/bin:${PATH}"
+fi
+
+if [ -d "/opt/homebrew/sbin" ]; then
+    export PATH="/opt/homebrew/sbin:${PATH}"
+fi
+# {{- end }}
+
 if [ -d "${HOME}/.deno/bin" ]; then
     export DENO_INSTALL="${HOME}/.deno"
     export PATH="${DENO_INSTALL}/bin:${PATH}"
@@ -78,20 +92,6 @@ fi
 if [ -d "${HOME}/.nix-profile/bin" ]; then
     export PATH="${HOME}/.nix-profile/bin:${PATH}"
 fi
-
-# {{- if eq .chezmoi.os "darwin" }}
-if [ -d "/usr/local/opt/coreutils/libexec/gnubin" ]; then
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-fi
-
-if [ -d "/opt/homebrew/bin" ]; then
-    export PATH="/opt/homebrew/bin:${PATH}"
-fi
-
-if [ -d "/opt/homebrew/sbin" ]; then
-    export PATH="/opt/homebrew/sbin:${PATH}"
-fi
-# {{- end }}
 
 #==============================================================#
 ##  FUNCTIONS                                                 ##
