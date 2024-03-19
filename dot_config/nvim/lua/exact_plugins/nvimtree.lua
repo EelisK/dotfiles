@@ -1,24 +1,12 @@
 -- File Explorer
 local M = {
 	"nvim-tree/nvim-tree.lua",
-	opts = {
-		git = {
-			enable = true,
-			ignore = false,
-		},
-
-		renderer = {
-			highlight_git = true,
-			icons = {
-				show = {
-					git = true,
-				},
-			},
-		},
-		filters = {
-			dotfiles = false,
-		},
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
 	},
+	config = function()
+		require("configs.nvimtree")
+	end,
 }
 
 return M
