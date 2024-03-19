@@ -117,6 +117,12 @@
   url: "https://github.com/rbenv/ruby-build/archive/refs/tags/{{ $rubyBuildVersion }}.tar.gz"
   stripComponents: 1
 
+".pyenv":
+  type: archive
+  {{- $pyenvVersion := includeTemplate "get-github-latest-release" (list "pyenv/pyenv" $cfg) }}
+  url: "https://github.com/pyenv/pyenv/archive/refs/tags/{{ $pyenvVersion }}.tar.gz"
+  stripComponents: 1
+
 "go":
   type: archive
   {{- $golangVersion := (index (fromJsonc (includeTemplate "get-external-resource" (list "https://go.dev/dl/?mode=json" $cfg))) 0).version }}
