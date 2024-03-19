@@ -12,11 +12,12 @@ end, { desc = "File Format with conform" })
 map("n", "<leader>fr", function()
 	require("spectre").toggle()
 end, { desc = "Toggle spectre" })
+map("n", "<leader>tr", "<cmd>TroubleToggle<cr>", { desc = "Toggle trouble diagnostics" })
 
 map("v", "<", "<gv", { desc = "Indent left" })
 map("v", ">", ">gv", { desc = "Indent right" })
 
-map({ "n", "i", "v", "o" }, "€", "$", { desc = "Go to end of line" })
-map({ "n", "i", "v", "o" }, "¤", "$", { desc = "Go to end of line" })
+map({ "n", "v", "o" }, "€", "$", { desc = "Go to end of line" })
+map({ "n", "v", "o" }, "¤", "$", { desc = "Go to end of line" })
 
 map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
