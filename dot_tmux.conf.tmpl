@@ -163,8 +163,8 @@ set -g status-left-length 85
 
 # Icons: https://www.nerdfonts.com/cheat-sheet
 set -g status-left "#[fg=colour244,bg=default] #{?client_prefix,󱤳,}  #S "
-set -g window-status-format "#[fg=colour245,bg=colour237] #{window_index} #[fg=colour248,bg=default] #W "
-set -g window-status-current-format "#[fg=colour252,bg=colour239] #{window_index} #[fg=colour248,bg=default] #W "
+set -g window-status-format "#[fg=colour245,bg=colour237] #{window_index} #[bg=default,fg=colour237] #[fg=colour248,bg=default] #W "
+set -g window-status-current-format "#[fg=colour252,bg=colour239] #{window_index} #[bg=default,fg=colour239] #[fg=colour248,bg=default] #W "
 set -g status-right "#[fg=colour244,bg=default] 󰃰 %Y-%m-%d %H:%M %p "
 set -g status-justify left
 
