@@ -9,6 +9,7 @@ local M = {
 			-- shell
 			"shellcheck",
 			"beautysh",
+			"bash-language-server",
 			"shfmt",
 			-- lua
 			"lua-language-server",
