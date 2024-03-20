@@ -1,4 +1,4 @@
-require("nvchad.mappings")
+require "nvchad.mappings"
 
 local map = vim.keymap.set
 
@@ -7,10 +7,10 @@ map("n", "<C-t>", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle nvimtree" })
 map("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Lazygit" })
 map("n", "<leader>aa", "<cmd>FigCommentPrompt<cr>", { desc = "Create ascii art comment" })
 map("n", "<leader>fm", function()
-	require("conform").format()
+  require("conform").format()
 end, { desc = "File Format with conform" })
 map("n", "<leader>fr", function()
-	require("spectre").toggle()
+  require("spectre").toggle()
 end, { desc = "Toggle spectre" })
 map("n", "<leader>tr", "<cmd>TroubleToggle<cr>", { desc = "Toggle trouble diagnostics" })
 

@@ -1,37 +1,37 @@
 local cmd = vim.api.nvim_create_user_command
 
 cmd("FormatDisable", function(args)
-	if args.bang then
-		-- FormatDisable! will disable formatting just for this buffer
-		vim.b.disable_autoformat = true
-	else
-		vim.g.disable_autoformat = true
-	end
+  if args.bang then
+    -- FormatDisable! will disable formatting just for this buffer
+    vim.b.disable_autoformat = true
+  else
+    vim.g.disable_autoformat = true
+  end
 end, {
-	desc = "Disable autoformat-on-save",
-	bang = true,
+  desc = "Disable autoformat-on-save",
+  bang = true,
 })
 
 cmd("FormatEnable", function()
-	vim.b.disable_autoformat = false
-	vim.g.disable_autoformat = false
+  vim.b.disable_autoformat = false
+  vim.g.disable_autoformat = false
 end, {
-	desc = "Re-enable autoformat-on-save",
+  desc = "Re-enable autoformat-on-save",
 })
 
 -- close all buffers and exit
 cmd("Q", function()
-	vim.cmd("qa")
+  vim.cmd "qa"
 end, {
-	desc = "Close all buffers and exit",
+  desc = "Close all buffers and exit",
 })
 
 cmd("FigCommentPrompt", function()
-	vim.ui.input({
-		prompt = "Comment: ",
-	}, function(value)
-		vim.cmd("FigComment " .. value)
-	end)
+  vim.ui.input({
+    prompt = "Comment: ",
+  }, function(value)
+    vim.cmd("FigComment " .. value)
+  end)
 end, {
-	desc = "Prompt for an input",
+  desc = "Prompt for an input",
 })
