@@ -34,13 +34,3 @@ local nvchad_overrides = {
 }
 local options = vim.tbl_deep_extend("force", nvchad_options, nvchad_overrides)
 nvim_tree.setup(options)
-
-vim.cmd [[
-  hi NvimTreeFolderName guifg=#8f8f8f
-  hi NvimTreeEmptyFolderName guifg=#8f8f8f
-  hi NvimTreeOpenedFolderName guifg=#8f8f8f
-  hi NvimTreeFolderIcon guifg=#8f8f8f
-  hi NvimTreeBookmarkIcon guifg=#8f8f8f
-  hi NvimTreeGitFileIgnoredIcon guifg=#656565
-  hi NvimTreeGitFileIgnoredHL guifg=#656565
-]]
