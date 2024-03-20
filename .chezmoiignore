@@ -36,3 +36,4 @@ requirements/
 # Development tools
 .pre-commit-config.yaml
 .shellcheckrc
+.stylua.toml

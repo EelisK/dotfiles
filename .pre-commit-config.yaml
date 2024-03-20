@@ -20,3 +20,8 @@ repos:
         args: ["--severity=warning"]
         types: ["file"]
         files: .*(\.sh|\.zsh|profile|bashrc|zshrc)(\.tmpl)?
+  - repo: https://github.com/JohnnyMorganz/StyLua
+    rev: v0.20.0
+    hooks:
+      - id: stylua
+        files: .*\.(lua|nlua)$
