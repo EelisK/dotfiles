@@ -28,7 +28,6 @@ elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
     eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
 fi
 
-
 #==============================================================#
 ##  PATH                                                      ##
 #==============================================================#
@@ -84,7 +83,7 @@ fi
 if [ -d "${HOME}/.pyenv" ]; then
     export PYENV_ROOT="${HOME}/.pyenv"
     export PATH="${PYENV_ROOT}/bin:${PATH}"
-    eval "$(pyenv init -)" || true
+    eval "$(pyenv init --path)" || true
 fi
 
 if [ -d "${HOME}/bin" ]; then
@@ -109,8 +108,8 @@ ask() {
         read -r reply </dev/stdin
         # Check if the reply is valid
         case "$reply" in
-            Y*|y*) return 0 ;;
-            N*|n*) return 1 ;;
+        Y* | y*) return 0 ;;
+        N* | n*) return 1 ;;
         esac
     done
 }
@@ -125,9 +124,9 @@ dotfiles() {
     if (cd "$(chezmoi source-path)" && nvim "$@"); then
         difference="$(chezmoi diff)"
         # shellcheck disable=SC3060
-        if [ -n "${difference// }" ] \
-            && echo "${difference}" \
-            && ask "Apply changes" </dev/stdin; then
+        if [ -n "${difference// /}" ] &&
+            echo "${difference}" &&
+            ask "Apply changes" </dev/stdin; then
             chezmoi apply
         fi
     fi
@@ -135,23 +134,23 @@ dotfiles() {
 
 extract() {
     case $1 in
-        *.tar.gz|*.tgz) tar xzvf "$1" ;;
-        *.tar.xz) tar Jxvf "$1" ;;
-        *.zip) unzip "$1" ;;
-        *.lzh) lha e "$1" ;;
-        *.tar.bz2|*.tbz) tar xjvf "$1" ;;
-        *.tar.Z) tar zxvf "$1" ;;
-        *.gz) gzip -d "$1" ;;
-        *.bz2) bzip2 -dc "$1" ;;
-        *.Z) uncompress "$1" ;;
-        *.tar) tar xvf "$1" ;;
-        *.arj) unarj "$1" ;;
-        *) echo "'$1' cannot be extracted via extract()" ;;
+    *.tar.gz | *.tgz) tar xzvf "$1" ;;
+    *.tar.xz) tar Jxvf "$1" ;;
+    *.zip) unzip "$1" ;;
+    *.lzh) lha e "$1" ;;
+    *.tar.bz2 | *.tbz) tar xjvf "$1" ;;
+    *.tar.Z) tar zxvf "$1" ;;
+    *.gz) gzip -d "$1" ;;
+    *.bz2) bzip2 -dc "$1" ;;
+    *.Z) uncompress "$1" ;;
+    *.tar) tar xvf "$1" ;;
+    *.arj) unarj "$1" ;;
+    *) echo "'$1' cannot be extracted via extract()" ;;
     esac
 }
 
 randstr() {
-    LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w "${1:-32}" | head -n 1
+    LC_ALL=C tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w "${1:-32}" | head -n 1
 }
 
 #==============================================================#
