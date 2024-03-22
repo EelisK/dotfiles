@@ -81,6 +81,8 @@ bind -r k select-pane -U  # move up
 bind -r l select-pane -R  # move right
 bind > swap-pane -D       # swap current pane with the next one
 bind < swap-pane -U       # swap current pane with the previous one
+bind b break-pane         # detach pane into new window
+bind B break-pane -d      # detach pane into new window in the background
 
 # pane resizing
 bind -r H resize-pane -L 2
