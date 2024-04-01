@@ -123,12 +123,6 @@
   url: "https://github.com/pyenv/pyenv/archive/refs/tags/{{ $pyenvVersion }}.tar.gz"
   stripComponents: 1
 
-"go":
-  type: archive
-  {{- $golangVersion := (index (fromJsonc (includeTemplate "get-external-resource" (list "https://go.dev/dl/?mode=json" $cfg))) 0).version }}
-  url: "https://go.dev/dl/{{ $golangVersion }}.{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-  stripComponents: 1
-
 ".tmux/plugins/tpm":
   type: archive
   {{- $tpmVersion := includeTemplate "get-github-head-revision" (list "tmux-plugins/tpm" $cfg) }}

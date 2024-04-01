@@ -80,6 +80,12 @@ tap 'homebrew/cask-fonts'
 # Monospace font for programming and terminal
 cask 'font-fira-code'
 
+# Golang
+# The Go programming language
+brew 'go'
+# Go programming language tools
+brew 'golangci-lint'
+
 
 # ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
 # ▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▒████▄    ▓██▒
