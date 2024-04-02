@@ -72,6 +72,6 @@ autocmd("TextYankPost", {
 
 -- apply dotenv changes automatically on save
 autocmd("BufWritePost", {
-  pattern = "~/.local/share/chezmoi/*",
-  command = '! chezmoi apply --source-path "%"',
+  pattern = vim.fn.expand "~" .. "/.local/share/chezmoi/*",
+  command = 'silent ! chezmoi apply --source-path "%"',
 })
