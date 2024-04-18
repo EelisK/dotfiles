@@ -1,6 +1,6 @@
 # -- general -------------------------------------------------------------------
 
-set -g default-terminal "screen-256color"
+set -g default-terminal "xterm-256color"
 set -g terminal-overrides ',xterm-256color:RGB'
 
 setw -g xterm-keys on
@@ -131,44 +131,29 @@ set -g @plugin 'omerxx/tmux-sessionx'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'tmux-plugins/tmux-cpu'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
 
 set -g @sessionx-window-height '85%'
 set -g @sessionx-window-width '75%'
 set -g @sessionx-zoxide-mode 'on'
 set -g @sessionx-bind 'o'
-set -g @sessionx-custom-paths '{{ .chezmoi.homeDir }}/workspace,{{ .chezmoi.sourceDir }}'
-
-set -g @continuum-restore 'on'
-
-set -g @resurrect-strategy-nvim 'session'
 
 # -- status line ----------------------------------------------------------------
 
 set -g status-position bottom
+set -g status-justify left
 # Update Interval
 set -g status-interval 1
 
 # default statusbar colors
 #――――――――――――――――――――――――――――――――
-set-option -g status-bg default
-set-option -g status-fg colour240
-set -g status-utf8 on
-
-# default window title colors
-#―――――――――――――――――――――――――――――――
-set-window-option -g window-status-style fg=magenta
-set-window-option -g window-status-style bg=default
-
-set -g status-left-length 85
+set-option -g status-style bg=default,fg=colour244
+set-option -g status-left-length 85
 
 # Icons: https://www.nerdfonts.com/cheat-sheet
 set -g status-left "#[fg=colour244,bg=default] #{?client_prefix,󱤳,#{?window_zoomed_flag,,}}  #S "
 set -g window-status-format "#[bg=default,fg=colour242] #[fg=colour232,bg=colour242] #{window_index} #[bg=default,fg=colour242] #[fg=colour244,bg=default] #W "
 set -g window-status-current-format "#[bg=default,fg=colour202] #[fg=colour232,bg=colour202] #{window_index} #[bg=default,fg=colour202] #[fg=colour202,bg=default] #W "
 set -g status-right "#[fg=colour244,bg=default] 󰃰 %Y-%m-%d %H:%M %p "
-set -g status-justify left
 
 # -- tpm -----------------------------------------------------------------------
 
