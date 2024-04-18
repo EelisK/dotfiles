@@ -43,7 +43,10 @@ autocmd({ "BufEnter", "CmdLineLeave" }, {
 local autoimportformatgo = augroup("autoimportformatgo", { clear = true })
 autocmd("BufWritePre", {
   pattern = "*.go",
-  callback = function()
+  callback = function(event)
+    if vim.g.disable_autoformat or vim.b[event.buf].disable_autoformat then
+      return
+    end
     local params = vim.lsp.util.make_range_params()
     params.context = { only = { "source.organizeImports" } }
     local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
