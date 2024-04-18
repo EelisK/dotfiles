@@ -41,6 +41,13 @@ local M = {
       end,
       desc = "CopilotChat - Help actions",
     },
+    {
+      "<leader>cco",
+      function()
+        require("CopilotChat").open()
+      end,
+      desc = "CopilotChat - Open chat",
+    },
   },
 }
 
