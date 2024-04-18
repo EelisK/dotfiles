@@ -107,9 +107,10 @@ ask() {
         printf '%s [y/n] ' "${1}"
         read -r reply </dev/stdin
         # Check if the reply is valid
-        case "$reply" in
+        case "${reply}" in
         Y* | y*) return 0 ;;
         N* | n*) return 1 ;;
+        *) echo 'Please answer yes or no.' ;;
         esac
     done
 }
@@ -119,17 +120,7 @@ work() {
 }
 
 dotfiles() {
-    # shellcheck disable=SC3043
-    local difference
-    if (cd "$(chezmoi source-path)" && nvim "$@"); then
-        difference="$(chezmoi diff)"
-        # shellcheck disable=SC3060
-        if [ -n "${difference// /}" ] &&
-            echo "${difference}" &&
-            ask "Apply changes" </dev/stdin; then
-            chezmoi apply
-        fi
-    fi
+    (cd "$(chezmoi source-path)" && nvim "$@") || true
 }
 
 extract() {
