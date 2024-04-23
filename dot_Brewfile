@@ -190,6 +190,7 @@ brew 'krew'
 brew 'kind'
 # SDK for building Kubernetes applications
 brew 'kubebuilder'
+brew 'operator-sdk'
 # Check cluster for deprecated APIs
 brew 'kubent'
 # Object analysis tool for Kubernetes resources
