@@ -115,9 +115,6 @@ bind -T copy-mode-vi ¤ send -X end-of-line
 
 # -- plugins -------------------------------------------------------------------
 
-set -g @fzf-url-fzf-options '-p 60%,30% --prompt="   " --border-label=" Open URL "'
-set -g @fzf-url-history-limit '2000'
-
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-yank'
@@ -125,7 +122,6 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'fcsonline/tmux-thumbs'
 set -g @plugin 'sainnhe/tmux-fzf'
-set -g @plugin 'wfxr/tmux-fzf-url'
 set -g @plugin 'omerxx/tmux-sessionx'
 
 set -g @plugin 'tmux-plugins/tmux-sensible'
@@ -141,19 +137,36 @@ set -g @sessionx-bind 'o'
 
 set -g status-position bottom
 set -g status-justify left
-# Update Interval
 set -g status-interval 1
 
 # default statusbar colors
-#――――――――――――――――――――――――――――――――
-set-option -g status-style bg=default,fg=colour244
-set-option -g status-left-length 85
-
 # Icons: https://www.nerdfonts.com/cheat-sheet
-set -g status-left "#[fg=colour244,bg=default] #{?client_prefix,󱤳,#{?window_zoomed_flag,,}}  #S "
-set -g window-status-format "#[bg=default,fg=colour242] #[fg=colour232,bg=colour242] #{window_index} #[bg=default,fg=colour242] #[fg=colour244,bg=default] #W "
-set -g window-status-current-format "#[bg=default,fg=colour202] #[fg=colour232,bg=colour202] #{window_index} #[bg=default,fg=colour202] #[fg=colour202,bg=default] #W "
-set -g status-right "#[fg=colour244,bg=default] 󰃰 %Y-%m-%d %H:%M %p "
+#――――――――――――――――――――――――――――――――
+
+set -g status-bg default
+set -g status-fg default
+set -g status-style bg=default,fg=colour244
+set -g status-left-length 85
+
+set -g status-left "#{?client_prefix,󱤳,#{?window_zoomed_flag,,}}  #S "
+set -g status-right "󰃰 %Y-%m-%d %H:%M %p "
+
+# Window status colors
+set -g window-status-style bg=default,fg=colour244
+set -g window-status-current-style bg=default,fg=colour202
+set -g window-status-last-style bg=default,fg=colour244
+
+set -g window-status-bell-style bg=default,fg=colour244
+set -g window-status-activity-style bg=default,fg=colour244
+set -g window-status-separator ''
+
+set -g window-status-format " #[reverse] #{window_index} #[none]  #W "
+set -g window-status-current-format " #[reverse] #{window_index} #[none]  #W "
+
+# Hooks to ensure consistent updates
+set-hook -g after-select-window "refresh-client -S"
+set-hook -g after-new-window "refresh-client -S"
+set-hook -g after-kill-window "refresh-client -S"
 
 # -- tpm -----------------------------------------------------------------------
 
