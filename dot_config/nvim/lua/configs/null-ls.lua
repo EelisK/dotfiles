@@ -13,6 +13,7 @@ local settings = {
     b.formatting.goimports,
     b.formatting.gofmt,
     b.formatting.golines,
+    b.diagnostics.golangci_lint,
 
     -- ruby
     b.formatting.rubocop.with {

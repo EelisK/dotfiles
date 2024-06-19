@@ -34,6 +34,7 @@ local settings = {
     "gopls",
     "goimports",
     "golines",
+    "golangci-lint",
     -- ansible
     "ansible-language-server",
     "ansible-lint",
