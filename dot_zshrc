@@ -1,4 +1,5 @@
-# shellcheck shell=zsh
+# shellcheck shell=bash
+# shellcheck disable=SC2296,SC2034,SC1090
 
 # Performance profiling
 if [ "$ZSHRC_PROFILE" != "" ]; then
@@ -47,6 +48,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_CUSTOM="${ZSH}/custom"
 
 zstyle ':omz:update' mode disabled
+zstyle ':omz:lib:theme-and-appearance' aliases no
 
 plugins=(
     git
