@@ -10,6 +10,12 @@
     <p>My personal system configurations all bootstrapped with a single command ✨ </p>
 </div>
 
+---
+
+<div align="center">
+    <img raw=true alt=“Zsh" src="./docs/zsh.png" />
+</div>
+
 ## Setup 💻
 
 Simply run:
