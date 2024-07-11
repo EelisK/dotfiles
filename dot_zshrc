@@ -62,6 +62,9 @@ plugins=(
     sudo
     zsh-autosuggestions
     gcloud
+    rust
+    pyenv
+    rbenv
     # completions from chezmoi externals
     external-completions
     # need to load last
