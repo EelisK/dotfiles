@@ -33,6 +33,9 @@ local settings = {
     -- ansible
     b.diagnostics.ansiblelint,
 
+    -- scala
+    b.formatting.scalafmt,
+
     -- terraform
     b.diagnostics.terraform_validate,
     b.diagnostics.tfsec,
