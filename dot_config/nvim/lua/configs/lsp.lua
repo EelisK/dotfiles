@@ -85,6 +85,17 @@ lspconfig.rust_analyzer.setup {
   },
 }
 
+lspconfig.metals.setup {
+  on_init = on_init,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    ["metals"] = {
+      filetypes = { "sbt", "scala", "java" },
+    },
+  },
+}
+
 lspconfig.gopls.setup {
   on_init = on_init,
   on_attach = on_attach,
