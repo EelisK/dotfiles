@@ -161,11 +161,7 @@ set -g window-status-activity-style bg=default,fg=colour244
 set -g window-status-separator ''
 
 set -g window-status-format " #[reverse] #{window_index} #[none]  #W "
-
-# Hooks to ensure consistent updates
-set-hook -g after-select-window "refresh-client -S"
-set-hook -g after-new-window "refresh-client -S"
-set-hook -g after-kill-window "refresh-client -S"
+set -g window-status-current-format " #[reverse] #{window_index} #[none]  #W "
 
 # -- tpm -----------------------------------------------------------------------
 
