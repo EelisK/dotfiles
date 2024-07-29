@@ -97,14 +97,6 @@
   type: file
   url: "https://github.com/ahmetb/kubectx/raw/{{ $kubectxVersion }}/completion/_kubens.zsh"
 
-# Required by kubectx and kubens
-".local/bin/fzf":
-  type: archive-file
-  {{- $fzfVersion := includeTemplate "get-github-latest-release" (list "junegunn/fzf" $cfg) }}
-  url: "https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-{{ .chezmoi.os }}_{{ .chezmoi.arch }}.{{ if eq .chezmoi.os "darwin" }}zip{{ else }}tar.gz{{ end }}"
-  path: fzf
-  executable: true
-
 ".nvm":
   type: archive
   {{- $nvmVersion := includeTemplate "get-github-head-revision" (list "nvm-sh/nvm" $cfg) }}
