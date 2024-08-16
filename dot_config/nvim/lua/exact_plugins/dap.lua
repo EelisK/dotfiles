@@ -72,7 +72,7 @@ local M = {
         -- see mason-nvim-dap README for more information
         handlers = {},
 
-        ensure_installed = { "python", "bash", "node2" },
+        ensure_installed = { "python", "bash", "node2", "delve" },
       },
     },
     -- dap cmp source
