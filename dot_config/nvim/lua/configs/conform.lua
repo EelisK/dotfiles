@@ -9,6 +9,11 @@ local options = {
     shfmt = {
       prepend_args = { "-i", "4" },
     },
+    ruff_import = {
+      command = "ruff",
+      stdin = false,
+      args = { "check", "--select", "I", "--fix", "$FILENAME" },
+    },
   },
   formatters_by_ft = {
     javascript = { "prettier" },
@@ -25,7 +30,7 @@ local options = {
     lua = { "stylua" },
     python = function(bufnr)
       if conform.get_formatter_info("ruff_format", bufnr).available then
-        return { "ruff_format" }
+        return { "ruff_format", "ruff_import" }
       else
         return { "isort", "black" }
       end

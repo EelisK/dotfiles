@@ -63,19 +63,6 @@ autocmd("BufWritePre", {
   group = autoimportformatgo,
 })
 
--- Auto imports and format on save for python
-local autoimportformatpython = augroup("autoimportformatpython", { clear = true })
-autocmd("BufWritePre", {
-  pattern = "*.py",
-  callback = function(event)
-    if vim.g.disable_autoformat or vim.b[event.buf].disable_autoformat then
-      return
-    end
-    vim.cmd "PyrightOrganizeImports"
-  end,
-  group = autoimportformatpython,
-})
-
 -- Highlight on yank
 local yankhighlight = augroup("yankhighlight", { clear = true })
 autocmd("TextYankPost", {
