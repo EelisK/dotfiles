@@ -444,3 +444,5 @@ brew 'cheat'
 brew 'asciinema'
 # The minimal, blazing-fast, and infinitely customizable prompt for any shell
 brew 'starship'
+# Generic colorizer
+brew 'grc'
