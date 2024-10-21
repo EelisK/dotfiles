@@ -43,6 +43,7 @@ local options = {
     bash = { "beautysh", "shfmt" },
     sh = { "beautysh", "shfmt" },
     zsh = { "beautysh", "shfmt" },
+    sql = { "sqlfluff" },
     ["yaml.ansible"] = { "prettier", "ansible_lint" },
     -- Use the "*" filetype to run formatters on all filetypes.
     ["*"] = { "codespell" },

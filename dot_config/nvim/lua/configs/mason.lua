@@ -45,6 +45,8 @@ local settings = {
     -- ruby
     "rubocop",
     "solargraph",
+    -- sql
+    "sqlfluff",
   },
 }
 
