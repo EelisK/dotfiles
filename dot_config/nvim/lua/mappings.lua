@@ -19,5 +19,3 @@ map("v", ">", ">gv", { desc = "Indent right" })
 
 map({ "n", "v", "o" }, "€", "$", { desc = "Go to end of line" })
 map({ "n", "v", "o" }, "¤", "$", { desc = "Go to end of line" })
-
-map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
