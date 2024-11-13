@@ -19,3 +19,5 @@ map("v", ">", ">gv", { desc = "Indent right" })
 
 map({ "n", "v", "o" }, "€", "$", { desc = "Go to end of line" })
 map({ "n", "v", "o" }, "¤", "$", { desc = "Go to end of line" })
+map("n", "<leader>sph", "<cmd>split<cr>", { desc = "Split window horizontally" })
+map("n", "<leader>spv", "<cmd>vsplit<cr>", { desc = "Split window vertically" })
