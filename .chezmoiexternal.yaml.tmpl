@@ -65,7 +65,8 @@
 
 ".nvim":
   type: archive
-  url: "https://github.com/neovim/neovim/releases/download/stable/nvim-{{ if eq .chezmoi.os "linux" }}linux64{{ else }}macos{{ end }}.tar.gz"
+  {{- $nvimVersion := includeTemplate "get-github-latest-release" (list "neovim/neovim" $cfg) }}
+  url: "https://github.com/neovim/neovim/releases/download/{{ $nvimVersion }}/nvim-{{ if eq .chezmoi.os "linux" }}linux64{{ else }}macos-{{ .unix_arch }}{{ end }}.tar.gz"
   stripComponents: 1
 
 ".local/bin/kubecolor":
