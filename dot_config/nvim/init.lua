@@ -1,4 +1,4 @@
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/nvchad/base46/"
+vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46_cache/"
 vim.g.mapleader = " "
 
 -- bootstrap lazy and all plugins
@@ -28,9 +28,8 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
--- load theme
-local integrations = require("nvconfig").base46.integrations
-for _, v in pairs(integrations) do
+-- load all theme highlights at once
+for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
   dofile(vim.g.base46_cache .. v)
 end
 
