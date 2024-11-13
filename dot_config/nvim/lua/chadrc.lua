@@ -18,9 +18,48 @@ return {
   },
 
   ui = {
-    nvdash = { load_on_startup = false },
     tabufline = { show_numbers = false, enabled = true, lazyload = false },
     statusline = { theme = "vscode" },
+    cmp = {
+      icons_left = true, -- only for non-atom styles!
+      lspkind_text = true,
+      style = "flat_dark", -- default/flat_light/flat_dark/atom/atom_colored
+      format_colors = {
+        tailwind = true, -- will work for css lsp too
+        icon = "󱓻",
+      },
+    },
+  },
+
+  nvdash = {
+    load_on_startup = false,
+    header = {
+      "  ███▄    █ ██▒   █▓ ██▓ ███▄ ▄███▓",
+      "  ██ ▀█   █▓██░   █▒▓██▒▓██▒▀█▀ ██▒",
+      " ▓██  ▀█ ██▒▓██  █▒░▒██▒▓██    ▓██░",
+      " ▓██▒  ▐▌██▒ ▒██ █░░░██░▒██    ▒██ ",
+      " ▒██░   ▓██░  ▒▀█░  ░██░▒██▒   ░██▒",
+      " ░ ▒░   ▒ ▒   ░ ▐░  ░▓  ░ ▒░   ░  ░",
+      " ░ ░░   ░ ▒░  ░ ░░   ▒ ░░  ░      ░",
+      "    ░   ░ ░     ░░   ▒ ░░      ░   ",
+      "          ░      ░   ░         ░   ",
+      "                ░                  ",
+    },
+    buttons = {
+      { txt = "  Find File", keys = "ff", cmd = "Telescope find_files" },
+      { txt = "  Recent Files", keys = "fo", cmd = "Telescope oldfiles" },
+      { txt = "󰈭  Find Word", keys = "fw", cmd = "Telescope live_grep" },
+      { txt = "󱥚  Themes", keys = "th", cmd = ":lua require('nvchad.themes').open()" },
+      { txt = "  Mappings", keys = "ch", cmd = "NvCheatsheet" },
+      {
+        txt = function()
+          local stats = require("lazy").stats()
+          local ms = math.floor(stats.startuptime) .. " ms"
+          return "  Loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms
+        end,
+        no_gap = false,
+      },
+    },
   },
 
   cheatsheet = { theme = "grid" },
