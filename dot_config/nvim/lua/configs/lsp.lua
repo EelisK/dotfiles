@@ -9,7 +9,7 @@ local lspconfig = require "lspconfig"
 -- server_configurations.md
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
-local servers = { "html", "cssls", "tsserver", "clangd", "bashls" }
+local servers = { "html", "cssls", "ts_ls", "clangd", "bashls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
