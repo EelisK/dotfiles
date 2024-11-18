@@ -1,4 +1,15 @@
-local settings = {
+local M = {
+  ---@type '"prepend"' | '"append"' | '"skip"'
+  PATH = "prepend",
+
+  ui = {
+    icons = {
+      package_pending = " ",
+      package_installed = " ",
+      package_uninstalled = " ",
+    },
+  },
+
   ensure_installed = {
     -- general
     "semgrep",
@@ -48,6 +59,8 @@ local settings = {
     -- sql
     "sqlfluff",
   },
+
+  max_concurrent_installers = 10,
 }
 
-return settings
+return M

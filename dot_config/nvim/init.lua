@@ -1,7 +1,3 @@
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46_cache/"
-vim.g.mapleader = " "
-
--- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazypath) then
@@ -11,29 +7,15 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require "configs.lazy"
+require "options"
+require "keymaps"
+require "autocmds"
+require "cmds"
 
--- load plugins
-require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
-    config = function()
-      require "options"
-    end,
-  },
-
-  { import = "plugins" },
-}, lazy_config)
-
--- load all theme highlights at once
-for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
-  dofile(vim.g.base46_cache .. v)
+local status_ok, lazy = pcall(require, "lazy")
+if not status_ok then
+  vim.notify "Failed to load lazy.nvim"
+  return
 end
 
-require "cmds"
-require "autocmds"
-require "mappings"
-require "options"
+lazy.setup(require "plugins", require "configs.lazy")

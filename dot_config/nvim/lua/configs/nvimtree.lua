@@ -1,36 +1,32 @@
-local nvchad_options = require "nvchad.configs.nvimtree"
-local nvim_tree = require "nvim-tree"
-
-local nvchad_overrides = {
-  git = {
+return {
+  filters = { dotfiles = false },
+  disable_netrw = true,
+  hijack_cursor = true,
+  sync_root_with_cwd = true,
+  update_focused_file = {
     enable = true,
-    ignore = false,
+    update_root = false,
   },
-
-  filters = {
-    dotfiles = false,
+  view = {
+    width = 30,
+    preserve_window_proportions = true,
   },
   renderer = {
-    special_files = {},
+    root_folder_label = false,
     highlight_git = true,
-    indent_markers = {
-      enable = true,
-    },
+    indent_markers = { enable = true },
     icons = {
-      show = {
-        folder_arrow = false,
-        git = true,
-      },
       glyphs = {
-        symlink = "",
+        default = "󰈚",
         folder = {
-          default = "",
-          open = "",
-          symlink = "",
+          default = "",
+          empty = "",
+          empty_open = "",
+          open = "",
+          symlink = "",
         },
+        git = { unmerged = "" },
       },
     },
   },
 }
-local options = vim.tbl_deep_extend("force", nvchad_options, nvchad_overrides)
-nvim_tree.setup(options)
