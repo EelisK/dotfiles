@@ -27,6 +27,16 @@ local M = {
   },
 
   {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    event = "User FilePost",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = function()
+      return require "configs.bufferline"
+    end,
+  },
+
+  {
     "lukas-reineke/indent-blankline.nvim",
     event = "User FilePost",
     opts = function()
