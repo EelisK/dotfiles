@@ -41,8 +41,7 @@ local M = {
     "savq/melange-nvim",
     lazy = false,
     config = function()
-      vim.opt.termguicolors = true
-      vim.cmd.colorscheme "melange"
+      require "configs.melange"
     end,
   },
 
