@@ -2,7 +2,7 @@ local M = {}
 local map = vim.keymap.set
 
 -- export on_attach & capabilities
-local on_attach = function(_, bufnr)
+local function on_attach(_, bufnr)
   local function opts(desc)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
@@ -10,7 +10,14 @@ local on_attach = function(_, bufnr)
   map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
   map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
   map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
+
+  map("n", "<leader>lf", vim.diagnostic.open_float, opts "Open diagnostic float")
+  map("n", "<leader>ld", vim.diagnostic.goto_prev, opts "Go to previous diagnostic")
+  map("n", "<leader>ln", vim.diagnostic.goto_next, opts "Go to next diagnostic")
+  map("n", "<leader>lq", vim.diagnostic.setloclist, opts "Set loclist")
+
   map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
+
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
 
@@ -26,7 +33,7 @@ local on_attach = function(_, bufnr)
 end
 
 -- disable semanticTokens
-local on_init = function(client, _)
+local function on_init(client, _)
   if client.supports_method "textDocument/semanticTokens" then
     client.server_capabilities.semanticTokensProvider = nil
   end

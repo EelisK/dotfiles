@@ -15,52 +15,87 @@ local M = {
   "nvim-lua/plenary.nvim",
 
   -- UI stuff
-  "nvzone/volt",
-  "nvzone/menu",
-  { "nvzone/minty", cmd = { "Huefy", "Shades" } },
-
-  {
-    "nvim-tree/nvim-web-devicons",
-    opts = function()
-      return { override = require "icons.devicons" }
-    end,
-  },
-
   {
     "akinsho/bufferline.nvim",
     version = "*",
-    event = "User FilePost",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      {
+        "famiu/bufdelete.nvim",
+        cmd = { "Bdelete", "Bwipeout" },
+      },
+    },
+    keys = {
+      { "<Tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "bufferline next" } },
+      { "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "bufferline prev" } },
+      { "<leader>x", "<cmd>Bdelete<CR>", { desc = "bufferline close current" } },
+      { "<leader>X", "<cmd>Bwipeout<CR>", { desc = "bufferline clear others" } },
+    },
     opts = function()
       return require "configs.bufferline"
     end,
   },
 
   {
+    "savq/melange-nvim",
+    lazy = false,
+    config = function()
+      vim.opt.termguicolors = true
+      vim.cmd.colorscheme "melange"
+    end,
+  },
+
+  {
+    "nvim-lualine/lualine.nvim",
+    lazy = false,
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons" },
+      { "linrongbin16/lsp-progress.nvim" },
+    },
+    opts = function()
+      return require "configs.lualine"
+    end,
+  },
+
+  {
     "lukas-reineke/indent-blankline.nvim",
     event = "User FilePost",
-    opts = function()
-      return require "configs.ibl"
-    end,
-    config = function(_, opts)
+    config = function()
       local hooks = require "ibl.hooks"
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-      require("ibl").setup(opts)
     end,
   },
 
   -- file managing , picker etc
   {
-    "nvim-tree/nvim-tree.lua",
+    "nvim-neo-tree/neo-tree.nvim",
+    cmd = "Neotree",
+    deactivate = function()
+      vim.cmd [[Neotree close]]
+    end,
     dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+      "s1n7ax/nvim-window-picker",
+      "mrbjarksen/neo-tree-diagnostics.nvim",
     },
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     keys = {
-      { "<C-t>", "<cmd>NvimTreeToggle<cr>", desc = "Toggle Treesitter" },
+      {
+        "<C-t>",
+        function()
+          require("neo-tree.command").execute { toggle = true }
+        end,
+        desc = "Toggle NeoTree",
+      },
     },
     opts = function()
-      return require "configs.nvimtree"
+      return require "configs.neo-tree"
+    end,
+    config = function(_, opts)
+      require("neo-tree").setup(opts)
     end,
   },
 
@@ -116,19 +151,13 @@ local M = {
   },
 
   {
-    "max397574/better-escape.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
-    end,
-  },
-
-  {
     "pavanbhat1999/figlet.nvim",
     event = "User FilePost",
     dependencies = {
-      -- comment support
       "numToStr/Comment.nvim",
+    },
+    keys = {
+      { "<leader>aa", "<cmd>FigCommentPrompt<cr>", { desc = "Create ascii art comment" } },
     },
   },
   {
@@ -264,32 +293,32 @@ local M = {
     cmd = "Trouble",
     keys = {
       {
-        "<leader>xx",
+        "<C-xx>",
         "<cmd>Trouble diagnostics toggle<cr>",
         desc = "Diagnostics (Trouble)",
       },
       {
-        "<leader>xX",
+        "<C-xX>",
         "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
         desc = "Buffer Diagnostics (Trouble)",
       },
       {
-        "<leader>cs",
+        "<C-cs>",
         "<cmd>Trouble symbols toggle focus=false<cr>",
         desc = "Symbols (Trouble)",
       },
       {
-        "<leader>cl",
+        "<C-cl>",
         "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
         desc = "LSP Definitions / references / ... (Trouble)",
       },
       {
-        "<leader>xL",
+        "<C-xL>",
         "<cmd>Trouble loclist toggle<cr>",
         desc = "Location List (Trouble)",
       },
       {
-        "<leader>xQ",
+        "<C-xQ>",
         "<cmd>Trouble qflist toggle<cr>",
         desc = "Quickfix List (Trouble)",
       },

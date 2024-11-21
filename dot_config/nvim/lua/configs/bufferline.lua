@@ -4,16 +4,15 @@ local M = {}
 
 M.options = {
   mode = "buffers", -- set to "tabs" to only show tabpages instead
-  style_preset = bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
+  style_preset = bufferline.style_preset.minimal, -- or bufferline.style_preset.minimal,
   themable = true, -- true | false, -- allows highlight groups to be overridden i.e. sets highlights as default
   numbers = "none", -- "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
-  close_command = "bdelete! %d", -- can be a string | function, | false see "Mouse actions"
+  close_command = require("bufdelete").bufdelete,
   right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
   left_mouse_command = "buffer %d", -- can be a string | function, | false see "Mouse actions"
   middle_mouse_command = nil, -- can be a string | function, | false see "Mouse actions"
   indicator = {
-    icon = "▎", -- this should be omitted if indicator style is not 'icon'
-    style = "icon", -- | "underline" | "none",
+    style = "none", -- | "underline" | "none",
   },
   buffer_close_icon = "󰅖",
   modified_icon = "● ",
@@ -38,6 +37,18 @@ M.options = {
       text_align = "left", -- "left" | "center" | "right"
       separator = true,
     },
+    {
+      filetype = "neo-tree",
+      text = "File Explorer", -- | function ,
+      text_align = "left", -- "left" | "center" | "right"
+      separator = true,
+    },
+    {
+      filetype = "Dap",
+      text = "Debugger", -- | function ,
+      text_align = "left", -- "left" | "center" | "right"
+      separator = true,
+    },
   },
   color_icons = true, -- | false, -- whether or not to add the filetype icon highlights
   get_element_icon = function(element)
@@ -58,7 +69,7 @@ M.options = {
   move_wraps_at_ends = false, -- whether or not the move command "wraps" at the first or last position
   -- can also be a table containing 2 custom separators
   -- [focused and unfocused]. eg: { '|', '|' }
-  separator_style = "slant", -- | "slope" | "thick" | "thin" | { 'any', 'any' },
+  separator_style = "thin", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
   enforce_regular_tabs = false, -- | true,
   always_show_bufferline = true, -- | false,
   auto_toggle_bufferline = true, -- | false,

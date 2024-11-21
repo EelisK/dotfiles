@@ -47,30 +47,15 @@ local options = {
 
     fields = fields,
   },
-  window = {
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, -- "single",
-      winhighlight = "Normal:CmpDoc,FloatBorder:CmpDocBorder",
-    },
-    completion = {
-      scrollbar = false,
-      side_padding = 0, -- 1,
-      winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:None,FloatBorder:CmpBorder",
-      border = "none", -- "single",
-    },
-  },
   experimental = {
     ghost_text = false,
     native_menu = false,
   },
-  completion = { completeopt = "menu,menuone" },
-
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
     end,
   },
-
   mapping = {
     ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),

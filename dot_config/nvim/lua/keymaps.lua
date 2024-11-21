@@ -46,12 +46,7 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
 keymap("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 keymap("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
--- Navigate buffers
-keymap("n", "<Tab>", ":bnext<CR>", opts)
-keymap("n", "<S-Tab>", ":bprevious<CR>", opts)
-
 -- Insert --
-keymap("i", "jk", "<ESC>", opts)
 keymap("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })
 keymap("i", "<C-e>", "<End>", { desc = "move end of line" })
 keymap("i", "<C-h>", "<Left>", { desc = "move left" })
@@ -88,3 +83,7 @@ keymap("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 -- Comment
 keymap("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 keymap("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
+
+-- Navigation on nordic layout
+keymap({ "n", "v", "o" }, "€", "$", { desc = "Go to end of line" })
+keymap({ "n", "v", "o" }, "¤", "$", { desc = "Go to end of line" })

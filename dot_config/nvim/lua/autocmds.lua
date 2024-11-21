@@ -27,6 +27,23 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+  desc = "Make all backgrounds transparent",
+  group = vim.api.nvim_create_augroup("nobg", { clear = true }),
+  pattern = "*",
+  callback = function()
+    local groups = {
+      "Normal",
+      "NeoTreeNormal",
+      "NeoTreeNormalNC",
+      "BufferLineFill",
+    }
+    for _, group in ipairs(groups) do
+      vim.api.nvim_set_hl(0, group, { bg = nil, ctermbg = nil })
+    end
+  end,
+})
+
 local ansibleFTPatterns = {
   "*/playbooks/*.yml",
   "*/playbooks/*.yaml",

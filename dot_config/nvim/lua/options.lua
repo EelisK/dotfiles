@@ -20,7 +20,7 @@ o.smartindent = true                      -- make indenting smarter again
 o.splitbelow = true                       -- force all horizontal splits to go below current window
 o.splitright = true                       -- force all vertical splits to go to the right of current window
 o.swapfile = false                        -- creates a swapfile
--- o.termguicolors = true                    -- set term gui colors (most terminals support this)
+o.termguicolors = true                    -- set term gui colors (most terminals support this)
 o.timeoutlen = 1000                       -- time to wait for a mapped sequence to complete (in milliseconds)
 o.undofile = true                         -- enable persistent undo
 o.updatetime = 300                        -- faster completion (4000ms default)
@@ -33,9 +33,11 @@ o.number = true                           -- set numbered lines
 o.relativenumber = true                   -- set relative numbered lines
 o.numberwidth = 4                         -- set number column width to 2 {default 4}
 o.signcolumn = "yes"                      -- always show the sign column, otherwise it would shift the text each time
-o.wrap = false                            -- display lines as one long line
+o.wrap = true                             -- display lines as one long line
+o.fillchars = {eob = " "}                 -- hide ~ at end of buffer
 o.scrolloff = 8
 o.sidescrolloff = 8
+o.laststatus = 3                          -- always show the status line
 -- vim.opt.guifont = "monospace:h17"               -- the font used in graphical neovim applications
 -- stylua: ignore end
 
@@ -44,7 +46,8 @@ vim.keymap.set("", "<down>", "<nop>", { noremap = true })
 vim.keymap.set("i", "<up>", "<nop>", { noremap = true })
 vim.keymap.set("i", "<down>", "<nop>", { noremap = true })
 
-o.shortmess:append "c"
+-- disable startup message
+o.shortmess:append "I"
 
 -- whichwrap allows for birectional navigation between lines
 vim.cmd "set whichwrap+=<,>,[,],h,l"
