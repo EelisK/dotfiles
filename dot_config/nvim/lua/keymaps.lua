@@ -30,15 +30,16 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 keymap("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
 keymap("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
+keymap("n", "<leader>b", "<cmd>new<CR>", { desc = "general new buffer" })
 
 -- global lsp mappings
 keymap("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize +2<CR>", opts)
-keymap("n", "<C-Down>", ":resize -2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+keymap("n", "<A-Up>", ":resize +2<CR>", opts)
+keymap("n", "<A-Down>", ":resize -2<CR>", opts)
+keymap("n", "<A-Left>", ":vertical resize -2<CR>", opts)
+keymap("n", "<A-Right>", ":vertical resize +2<CR>", opts)
 
 -- Navigate windows
 keymap("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
