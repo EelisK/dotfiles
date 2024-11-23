@@ -26,10 +26,20 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply EelisK
 
 ## Tools 🛠️
 
-- [`NvChad`](https://nvchad.com/) - as an IDE
+- [`neovim`](https://neovim.io/) - Vim-fork focused on extensibility and usability
 - [`alacritty`](https://github.com/alacritty/alacritty) - OpenGL terminal emulator
 - [`tmux`](https://github.com/tmux/tmux) - terminal multiplexer
 - [`oh-my-zsh`](https://github.com/ohmyzsh/ohmyzsh/) - zsh configurations with omz
 - [`bash-it`](https://github.com/Bash-it/bash-it) - bash configurations with bash-it
 - [`homebrew`](https://github.com/Homebrew/brew) - Cross-platform package management with brew
 - and more! ✨
+
+## Screenshots 📸
+
+<div align="center">
+    <img raw=true alt=“neovim" src="./docs/nvim.png" />
+</div>
+
+<div align="center">
+    <img raw=true alt=“tmux" src="./docs/tmux.png" />
+</div>
