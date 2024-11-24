@@ -1,5 +1,10 @@
 local M = {}
 local map = vim.keymap.set
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
+local tactions = require "telescope.actions"
+local taction_state = require "telescope.actions.state"
+local conf = require("telescope.config").values
 
 -- export on_attach & capabilities
 local function on_attach(_, bufnr)
@@ -26,7 +31,38 @@ local function on_attach(_, bufnr)
   end, opts "List workspace folders")
 
   map("n", "<leader>D", vim.lsp.buf.type_definition, opts "Go to type definition")
-  map("n", "<leader>ra", require "lsp.renamer", opts "NvRenamer")
+  map("n", "<leader>ra", require "lsp.renamer", opts "Rename")
+  map("n", "<leader>rc", function()
+    local dropdown_opts = require("telescope.themes").get_dropdown {}
+    local cases = { "camelCase", "snake_case", "kebab-case", "PascalCase", "MACRO_CASE" }
+    local actions = {
+      camelCase = "to_camel_case",
+      snake_case = "to_snake_case",
+      ["kebab-case"] = "to_kebab_case",
+      PascalCase = "to_pascal_case",
+      MACRO_CASE = "to_constant_case",
+    }
+    local textcase = require "textcase"
+    pickers
+      .new(dropdown_opts, {
+        prompt_title = "Select case",
+        finder = finders.new_table {
+          results = cases,
+        },
+        sorter = conf.generic_sorter(dropdown_opts),
+        attach_mappings = function(prompt_bufnr)
+          tactions.select_default:replace(function()
+            tactions.close(prompt_bufnr)
+            local selection = taction_state.get_selected_entry()
+            local case = selection[1]
+            local action = actions[case]
+            textcase.lsp_rename(action)
+          end)
+          return true
+        end,
+      })
+      :find()
+  end, opts "Change case")
 
   map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
   map("n", "gr", vim.lsp.buf.references, opts "Show references")
