@@ -38,6 +38,7 @@ o.fillchars = {eob = " "}                 -- hide ~ at end of buffer
 o.scrolloff = 8
 o.sidescrolloff = 8
 o.laststatus = 3                          -- always show the status line
+o.fixendofline = true                     -- fix end of line
 -- vim.opt.guifont = "monospace:h17"               -- the font used in graphical neovim applications
 -- stylua: ignore end
 

@@ -364,93 +364,22 @@ local M = {
       { "<leader>ds", function() require("dap").session() end, desc = "Session" },
       { "<leader>dq", function() require("dap").terminate() end, desc = "Terminate" },
       { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+      { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
+      { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
     },
     dependencies = {
-      -- fancy UI for the debugger
-      {
-        "rcarriga/nvim-dap-ui",
-        dependencies = { "nvim-neotest/nvim-nio" },
-      -- stylua: ignore
-        keys = {
-          { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
-          { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
-        },
-        opts = {},
-        config = function(_, opts)
-          -- setup dap config by VsCode launch.json file
-          -- require("dap.ext.vscode").load_launchjs()
-          local dap = require "dap"
-          local dapui = require "dapui"
-          dapui.setup(opts)
-          dap.listeners.after.event_initialized["dapui_config"] = function()
-            dapui.open {}
-          end
-          dap.listeners.before.event_terminated["dapui_config"] = function()
-            dapui.close {}
-          end
-          dap.listeners.before.event_exited["dapui_config"] = function()
-            dapui.close {}
-          end
-        end,
-      },
       -- virtual text for the debugger
-      {
-        "theHamsta/nvim-dap-virtual-text",
-        opts = {},
-      },
-
-      -- which key integration
-      {
-        "folke/which-key.nvim",
-        optional = true,
-        keys = {
-          { "<leader>wK", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" } },
-          {
-            "<leader>wk",
-            function()
-              vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
-            end,
-            { desc = "whichkey query lookup" },
-          },
-        },
-        opts = {
-          defaults = {
-            ["<leader>d"] = { name = "+debug" },
-          },
-        },
-      },
-
+      { "theHamsta/nvim-dap-virtual-text" },
+      -- fancy UI for the debugger
+      { "rcarriga/nvim-dap-ui", dependencies = { "nvim-neotest/nvim-nio" } },
       --- languages
       {
         "jay-babu/mason-nvim-dap.nvim",
-        dependencies = "mason.nvim",
+        dependencies = { "williamboman/mason.nvim" },
         cmd = { "DapInstall", "DapUninstall" },
-        opts = {
-          -- Makes a best effort to setup the various debuggers with
-          -- reasonable debug configurations
-          automatic_installation = true,
-
-          -- You can provide additional configuration to the handlers,
-          -- see mason-nvim-dap README for more information
-          handlers = {},
-
-          ensure_installed = { "python", "bash", "node2", "delve" },
-        },
       },
       -- dap cmp source
-      {
-        "nvim-cmp",
-        dependencies = {
-          "rcarriga/cmp-dap",
-        },
-        opts = function()
-          require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-            sources = {
-              { name = "dap" },
-            },
-          })
-        end,
-      },
+      { "rcarriga/cmp-dap" },
     },
     config = function()
       require "configs.dap"
