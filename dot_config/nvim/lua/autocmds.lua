@@ -53,6 +53,11 @@ for _, pattern in ipairs(ansibleFTPatterns) do
   })
 end
 
+autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = "*/testdata/*.txt",
+  command = "setlocal filetype=testscript",
+})
+
 autocmd("LspAttach", {
   callback = function(args)
     vim.schedule(function()
