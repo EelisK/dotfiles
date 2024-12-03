@@ -27,6 +27,26 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
   end,
 })
 
+-- process chezmoi .tmpl files as they didn't have a .tmpl suffix
+autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = vim.fn.expand "~" .. "/.local/share/chezmoi/*.tmpl",
+  callback = function(args)
+    local file = vim.api.nvim_buf_get_name(args.buf):match ".*/(.*)"
+    -- ignore files with leading dot
+    if string.match(file, "^%.") then
+      return
+    end
+    local base_name = file:gsub(".tmpl$", "")
+    base_name = base_name:gsub("^dot_", ".")
+    if base_name then
+      local filetype = vim.filetype.match { filename = base_name }
+      if filetype then
+        vim.api.nvim_set_option_value("filetype", filetype, { buf = args.buf })
+      end
+    end
+  end,
+})
+
 autocmd({ "ColorScheme" }, {
   desc = "Make all backgrounds transparent",
   group = vim.api.nvim_create_augroup("nobg", { clear = true }),
