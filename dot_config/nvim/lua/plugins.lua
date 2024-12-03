@@ -41,7 +41,7 @@ local M = {
     "savq/melange-nvim",
     lazy = false,
     config = function()
-      require "configs.melange"
+      vim.cmd.colorscheme "melange"
     end,
   },
 

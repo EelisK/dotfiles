@@ -15,3 +15,13 @@ cmd("FigCommentPrompt", function()
 end, {
   desc = "Prompt for an input",
 })
+
+cmd("ColorSchemeToggle", function()
+  if vim.o.background == "dark" then
+    vim.opt.background = "light"
+  else
+    vim.opt.background = "dark"
+  end
+end, {
+  desc = "Toggle between light and dark color schemes",
+})
