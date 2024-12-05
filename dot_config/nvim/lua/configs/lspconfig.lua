@@ -75,6 +75,33 @@ local function on_init(client, _)
   end
 end
 
+--
+
+local border = {
+  { "┌", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "┐", "FloatBorder" },
+  { "│", "FloatBorder" },
+  { "┘", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "└", "FloatBorder" },
+  { "│", "FloatBorder" },
+}
+
+-- Add the border on hover and on signature help popup window
+local handlers = {
+  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+}
+
+-- Add border to the diagnostic popup window
+vim.diagnostic.config {
+  virtual_text = {
+    prefix = "■ ", -- Could be '●', '▎', 'x', '■', , 
+  },
+  float = { border = border },
+}
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.completion.completionItem = {
@@ -105,6 +132,7 @@ local servers = { "html", "cssls", "ts_ls", "clangd", "bashls", "rubocop" }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_init = on_init,
+    handlers = handlers,
     on_attach = on_attach,
     capabilities = capabilities,
   }
@@ -113,6 +141,7 @@ end
 lspconfig.lua_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   on_init = on_init,
   settings = {
     Lua = {
@@ -136,6 +165,7 @@ lspconfig.lua_ls.setup {
 lspconfig.pyright.setup {
   on_init = on_init,
   on_attach = on_attach,
+  handlers = handlers,
   capabilities = capabilities,
   -- configure virtual environments
   before_init = function(_, config)
@@ -165,6 +195,7 @@ lspconfig.pyright.setup {
 lspconfig.solargraph.setup {
   on_init = on_init,
   on_attach = on_attach,
+  handlers = handlers,
   capabilities = capabilities,
   settings = {
     solargraph = {
@@ -177,6 +208,7 @@ lspconfig.rust_analyzer.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   settings = {
     ["rust-analyzer"] = {
       checkOnSave = {
@@ -196,6 +228,7 @@ lspconfig.metals.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   settings = {
     ["metals"] = {
       filetypes = { "sbt", "scala", "java" },
@@ -207,6 +240,7 @@ lspconfig.gopls.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   settings = {
     gopls = {
       analyses = {
@@ -222,6 +256,7 @@ lspconfig.terraformls.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   filetypes = { "terraform", "tf" },
 }
 
@@ -229,6 +264,7 @@ lspconfig.ansiblels.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   cmd = { "ansible-language-server", "--stdio" },
   settings = {
     ansible = {
