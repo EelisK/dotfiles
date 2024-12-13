@@ -52,5 +52,3 @@ o.shortmess:append "I"
 
 -- whichwrap allows for birectional navigation between lines
 vim.cmd "set whichwrap+=<,>,[,],h,l"
--- dash-separated words are recognized as a word object
-vim.cmd [[set iskeyword+=-]]
