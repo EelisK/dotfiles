@@ -439,6 +439,7 @@ local M = {
     config = function()
       vim.g.copilot_no_tab_map = false
       vim.g.copilot_assume_mapped = true
+      vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
       vim.api.nvim_set_keymap("i", "<C-O>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
     end,
   },
