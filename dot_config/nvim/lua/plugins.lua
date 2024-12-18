@@ -79,6 +79,13 @@ local M = {
     },
   },
 
+  {
+    "davidmh/mdx.nvim",
+    config = true,
+    lazy = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+  },
+
   -- file managing , picker etc
   {
     "nvim-neo-tree/neo-tree.nvim",
