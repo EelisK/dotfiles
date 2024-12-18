@@ -70,7 +70,9 @@ local M = {
     "OXY2DEV/markview.nvim",
     lazy = false, -- Recommended
     -- ft = "markdown" -- If you decide to lazy-load anyway
-
+    opts = function()
+      return require "configs.markview"
+    end,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
