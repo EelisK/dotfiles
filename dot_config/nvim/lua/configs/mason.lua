@@ -58,6 +58,8 @@ local M = {
     "solargraph",
     -- sql
     "sqlfluff",
+    -- proto
+    "buf",
   },
 
   max_concurrent_installers = 10,

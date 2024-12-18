@@ -125,9 +125,9 @@ capabilities.textDocument.completion.completionItem = {
 local lspconfig = require "lspconfig"
 
 -- server_configurations.md
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 
-local servers = { "html", "cssls", "ts_ls", "clangd", "bashls", "rubocop" }
+local servers = { "html", "cssls", "ts_ls", "bashls", "rubocop", "buf_ls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -137,6 +137,14 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+lspconfig.clangd.setup {
+  on_init = on_init,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  handlers = handlers,
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+}
 
 lspconfig.lua_ls.setup {
   on_attach = on_attach,

@@ -47,6 +47,9 @@ local settings = {
 
     -- yaml
     b.diagnostics.yamllint,
+
+    -- proto
+    b.formatting.buf,
   },
 }
 
