@@ -79,6 +79,8 @@ brew 'bzt'
 tap 'homebrew/cask-fonts'
 # Monospace font for programming and terminal
 cask 'font-fira-code'
+# Diff tool
+brew 'difftastic'
 
 # Golang
 # The Go programming language
