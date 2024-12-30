@@ -60,6 +60,8 @@ local M = {
     "sqlfluff",
     -- proto
     "buf",
+    -- graphql
+    "graphql-language-service-cli",
   },
 
   max_concurrent_installers = 10,

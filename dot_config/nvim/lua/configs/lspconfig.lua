@@ -127,7 +127,7 @@ local lspconfig = require "lspconfig"
 -- server_configurations.md
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 
-local servers = { "html", "cssls", "ts_ls", "bashls", "rubocop", "buf_ls" }
+local servers = { "html", "cssls", "ts_ls", "bashls", "rubocop", "buf_ls", "graphql" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
