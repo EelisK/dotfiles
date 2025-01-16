@@ -51,6 +51,7 @@ local M = {
     "ansible-lint",
     -- yaml
     "yamllint",
+    "yaml-language-server",
     -- rust
     "rust-analyzer",
     -- ruby
