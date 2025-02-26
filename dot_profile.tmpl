@@ -55,6 +55,18 @@ if [ -d "${HOME}/.deno/bin" ]; then
     export PATH="${DENO_INSTALL}/bin:${PATH}"
 fi
 
+if [ -d "/opt/homebrew/opt/dotnet@8/libexec" ]; then
+    export DOTNET_ROOT="/opt/homebrew/opt/dotnet@8/libexec"
+fi
+
+if [ -d "/opt/homebrew/opt/dotnet@8/bin" ]; then
+    export PATH="/opt/homebrew/opt/dotnet@8/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/.dotnet/tools" ]; then
+    export PATH="${HOME}/.dotnet/tools:${PATH}"
+fi
+
 if [ -r "${HOME}/.sdkman/bin/sdkman-init.sh" ]; then
     export SDKMAN_DIR="${HOME}/.sdkman"
     # shellcheck disable=SC1091
