@@ -127,7 +127,16 @@ local lspconfig = require "lspconfig"
 -- server_configurations.md
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 
-local servers = { "html", "cssls", "ts_ls", "bashls", "rubocop", "buf_ls", "graphql" }
+local servers = {
+  "html",
+  "cssls",
+  "ts_ls",
+  "bashls",
+  "rubocop",
+  "buf_ls",
+  "graphql",
+  "csharp_ls",
+}
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -276,7 +285,7 @@ lspconfig.yamlls.setup {
   settings = {
     yaml = {
       schemas = {
-        kubernetes = "*.yaml",
+        kubernetes = "kubernetes/**/*.{yml,yaml,erb}",
         ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
         ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
         ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",

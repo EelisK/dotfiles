@@ -88,6 +88,10 @@ brew 'go'
 # Go programming language tools
 brew 'golangci-lint'
 
+# .NET
+# Free and open-source .NET SDK (>= 5)
+cask 'dotnet-sdk'
+
 
 # Scala
 ## Artifact Fetcher
