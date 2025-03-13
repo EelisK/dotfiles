@@ -190,6 +190,9 @@ local M = {
       },
     },
     event = { "BufReadPre", "BufNewFile" },
+    opts = function()
+      return require "configs.spectre"
+    end,
   },
   {
     "mg979/vim-visual-multi",
