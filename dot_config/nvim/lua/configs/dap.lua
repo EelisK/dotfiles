@@ -118,7 +118,7 @@ dap.adapters.delve = function(callback, config)
       port = "${port}",
       executable = {
         command = "dlv",
-        args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap" },
+        args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap", "--check-go-version=false" },
         detached = vim.fn.has "win32" == 0,
       },
     }
