@@ -1,45 +1,46 @@
 return {
-  -- Buffer types to ignore
-  buf_ignore = { "nofile" },
-  -- Delay, in milliseconds
-  -- to wait before a redraw occurs(after an event is triggered)
-  debounce = 50,
-  -- Filetypes where the plugin is enabled
-  filetypes = { "markdown", "quarto", "rmd" },
   -- Highlight groups to use
   -- "dynamic" | "light" | "dark"
   highlight_groups = "dark",
   -- Modes where hybrid mode is enabled
   hybrid_modes = nil,
-  -- Tree-sitter query injections
-  injections = {},
-  -- Initial plugin state,
-  -- true = show preview
-  -- falss = don't show preview
-  initial_state = true,
-  -- Max file size that is rendered entirely
-  max_file_length = 1000,
-  -- Modes where preview is shown
-  modes = { "n", "no", "c" },
-  -- Lines from the cursor to draw when the
-  -- file is too big
-  render_distance = 100,
-  -- Window configuration for split view
-  split_conf = {},
+  preview = {
+    -- Modes where preview is shown
+    modes = { "n", "no", "c" },
+    -- Lines from the cursor to draw when the
+    -- file is too big
+    draw_range = 100,
+    -- Max file size that is rendered entirely
+    max_buf_lines = 1000,
+    -- Filetypes where the plugin is enabled
+    filetypes = { "markdown", "quarto", "rmd" },
+    -- Window configuration for split view
+    splitview_winopts = {},
+    -- Delay, in milliseconds
+    -- to wait before a redraw occurs(after an event is triggered)
+    debounce = 50,
+    -- Render configs
+    headings = {},
+    horizontal_rules = {},
+    list_items = {},
+    callbacks = {},
+    tables = {},
+    -- Initial plugin state,
+    -- true = show preview
+    -- falss = don't show preview
+    initial_state = true,
+    -- Buffer types to ignore
+    ignore_buftypes = { "nofile" },
+  },
 
   -- Rendering related configuration
   block_quotes = {},
-  callbacks = {},
   checkboxes = {},
   code_blocks = {},
   escaped = {},
   footnotes = {},
-  headings = {},
-  horizontal_rules = {},
   html = {},
   inline_codes = {},
   latex = {},
   links = {},
-  list_items = {},
-  tables = {},
 }
