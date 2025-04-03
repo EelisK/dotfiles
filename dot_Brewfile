@@ -363,8 +363,6 @@ cask 'linkliar' if OS.mac?
 ## Mac OS X
 # Mac App Store command line interface
 brew 'mas' if OS.mac?
-# System Utilities for macOS
-cask 'onyx' if OS.mac?
 # Swiss Army Knife for macOS
 brew 'm-cli' if OS.mac?
 # Keyboard customizer for macOS
