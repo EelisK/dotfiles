@@ -18,16 +18,20 @@ backups/** # ignore the contents of backups folder but not the folder itself
 .oh-my-zsh/cache/*
 **/*.zwc
 
-# platform specific setups
-{{- if eq .chezmoi.os "linux"}}
-.chezmoiscripts/darwin/**
-.chezmoiscripts/windows/**
-{{- else if eq .chezmoi.os "darwin" }}
+# Linux-specific setups
+{{- if ne .chezmoi.os "linux"}}
 .chezmoiscripts/linux/**
-.chezmoiscripts/windows/**
-{{- else }}
-.chezmoiscripts/linux/**
+{{- end }}
+
+# Darwin-specific setups
+{{- if ne .chezmoi.os "darwin" }}
 .chezmoiscripts/darwin/**
+.config/karabiner
+{{- end }}
+
+# Windows-specific setups
+{{- if ne .chezmoi.os "windows" }}
+.chezmoiscripts/windows/**
 {{- end }}
 
 # Dependencies for different package managers
