@@ -8,7 +8,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
     if package.loaded["neo-tree"] then
       return
     else
-      local stats = vim.uv.fs_stat(vim.fn.argv(0))
+      local path = vim.fn.getcwd()
+      local stats = vim.uv.fs_stat(path)
       if stats and stats.type == "directory" then
         require "neo-tree"
       end
@@ -56,7 +57,7 @@ require("window-picker").setup {
       -- You can change the display string in status bar.
       -- It supports '%' printf style. Such as `return char .. ': %f'` to display
       -- buffer file path. See :h 'stl' for details.
-      selection_display = function(char, windowid)
+      selection_display = function(char, _)
         return "%=" .. char .. "%="
       end,
 
@@ -318,19 +319,15 @@ return {
                   return
                 end
 
-                vim.loop.fs_rename(
-                  source_file,
-                  target_file,
-                  vim.schedule(function(err)
-                    if err then
-                      print "Could not move the file"
-                      return
-                    else
-                      print("Moved " .. node.name .. " successfully")
-                      tree:render()
-                    end
-                  end)
-                )
+                vim.loop.fs_rename(source_file, target_file, function(err)
+                  if err then
+                    print "Could not move the file"
+                    return
+                  else
+                    print("Moved " .. node.name .. " successfully")
+                    tree:render()
+                  end
+                end)
               end)
               return true
             end,

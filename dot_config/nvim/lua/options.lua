@@ -39,6 +39,7 @@ o.scrolloff = 8
 o.sidescrolloff = 8
 o.laststatus = 3                          -- always show the status line
 o.fixendofline = true                     -- fix end of line
+o.winborder = "rounded"                   -- border style
 -- vim.opt.guifont = "monospace:h17"               -- the font used in graphical neovim applications
 -- stylua: ignore end
 

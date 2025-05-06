@@ -17,11 +17,16 @@ local function on_attach(_, bufnr)
   map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
 
   map("n", "<leader>lf", vim.diagnostic.open_float, opts "Open diagnostic float")
-  map("n", "<leader>ld", vim.diagnostic.goto_prev, opts "Go to previous diagnostic")
-  map("n", "<leader>ln", vim.diagnostic.goto_next, opts "Go to next diagnostic")
+  map("n", "<leader>ld", function()
+    vim.diagnostic.jump { count = -1, float = true }
+  end, opts "Go to previous diagnostic")
+  map("n", "<leader>ln", function()
+    vim.diagnostic.jump { count = 1, float = true }
+  end, opts "Go to next diagnostic")
   map("n", "<leader>lq", vim.diagnostic.setloclist, opts "Set loclist")
 
   map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
+  map("n", "K", vim.lsp.buf.hover, opts "Hover")
 
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
@@ -77,29 +82,11 @@ end
 
 --
 
-local border = {
-  { "┌", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "┐", "FloatBorder" },
-  { "│", "FloatBorder" },
-  { "┘", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "└", "FloatBorder" },
-  { "│", "FloatBorder" },
-}
-
--- Add the border on hover and on signature help popup window
-local handlers = {
-  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
-}
-
 -- Add border to the diagnostic popup window
 vim.diagnostic.config {
   virtual_text = {
     prefix = "■ ", -- Could be '●', '▎', 'x', '■', , 
   },
-  float = { border = border },
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -141,7 +128,6 @@ local servers = {
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_init = on_init,
-    handlers = handlers,
     on_attach = on_attach,
     capabilities = capabilities,
   }
@@ -151,14 +137,12 @@ lspconfig.clangd.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
-  handlers = handlers,
   filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 }
 
 lspconfig.lua_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  handlers = handlers,
   on_init = on_init,
   settings = {
     Lua = {
@@ -182,7 +166,6 @@ lspconfig.lua_ls.setup {
 lspconfig.pyright.setup {
   on_init = on_init,
   on_attach = on_attach,
-  handlers = handlers,
   capabilities = capabilities,
   -- configure virtual environments
   before_init = function(_, config)
@@ -212,7 +195,6 @@ lspconfig.pyright.setup {
 lspconfig.solargraph.setup {
   on_init = on_init,
   on_attach = on_attach,
-  handlers = handlers,
   capabilities = capabilities,
   settings = {
     solargraph = {
@@ -225,7 +207,6 @@ lspconfig.rust_analyzer.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
-  handlers = handlers,
   settings = {
     ["rust-analyzer"] = {
       checkOnSave = {
@@ -245,7 +226,6 @@ lspconfig.metals.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
-  handlers = handlers,
   settings = {
     ["metals"] = {
       filetypes = { "sbt", "scala", "java" },
@@ -257,7 +237,6 @@ lspconfig.gopls.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
-  handlers = handlers,
   settings = {
     gopls = {
       analyses = {
@@ -273,7 +252,6 @@ lspconfig.terraformls.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
-  handlers = handlers,
   filetypes = { "terraform", "tf" },
 }
 
@@ -281,7 +259,6 @@ lspconfig.yamlls.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
-  handlers = handlers,
   settings = {
     yaml = {
       schemas = {
@@ -307,7 +284,6 @@ lspconfig.ansiblels.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
-  handlers = handlers,
   cmd = { "ansible-language-server", "--stdio" },
   settings = {
     ansible = {

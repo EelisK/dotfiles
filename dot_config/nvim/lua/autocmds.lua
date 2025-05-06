@@ -123,7 +123,11 @@ autocmd("LspAttach", {
 -- reload neovim on save
 autocmd("BufWritePost", {
   pattern = vim.tbl_map(function(path)
-    return vim.fs.normalize(vim.uv.fs_realpath(path))
+    local realpath = vim.uv.fs_realpath(path)
+    if not realpath then
+      return path
+    end
+    return vim.fs.normalize(realpath)
   end, vim.fn.glob(vim.fn.stdpath "config" .. "/lua/**/*.lua", true, true, true)),
   group = augroup("ReloadNnvim", {}),
 
@@ -146,30 +150,6 @@ autocmd({ "BufEnter", "CmdLineLeave" }, {
     vim.opt.formatoptions:remove { "c", "r", "o" }
   end,
   group = disableautocomment,
-})
-
--- Auto imports and format on save for golang
-local autoimportformatgo = augroup("autoimportformatgo", { clear = true })
-autocmd("BufWritePre", {
-  pattern = "*.go",
-  callback = function(event)
-    if vim.g.disable_autoformat or vim.b[event.buf].disable_autoformat then
-      return
-    end
-    local params = vim.lsp.util.make_range_params()
-    params.context = { only = { "source.organizeImports" } }
-    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
-    for cid, res in pairs(result or {}) do
-      for _, r in pairs(res.result or {}) do
-        if r.edit then
-          local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-          vim.lsp.util.apply_workspace_edit(r.edit, enc)
-        end
-      end
-    end
-    vim.lsp.buf.format { async = false }
-  end,
-  group = autoimportformatgo,
 })
 
 -- Highlight on yank

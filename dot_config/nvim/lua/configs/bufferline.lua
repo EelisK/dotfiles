@@ -97,7 +97,9 @@ local function close_empty_unnamed_buffers()
     if
       vim.api.nvim_buf_is_loaded(bufnr)
       and vim.api.nvim_buf_get_name(bufnr) == ""
-      and vim.api.nvim_buf_get_option(bufnr, "buftype") == ""
+      and vim.api.nvim_get_option_value("buftype", {
+        buf = bufnr,
+      }) == ""
     then
       -- Get all lines in the buffer
       local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)

@@ -55,7 +55,12 @@ require("mason-nvim-dap").setup(dap_mason_opts)
 local cmp = require "cmp"
 cmp.setup {
   enabled = function()
-    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+    if vim.api.nvim_get_option_value("buftype", {
+      buf = 0,
+    }) == "prompt" then
+      return true
+    end
+    return require("cmp_dap").is_dap_buffer()
   end,
 }
 
@@ -148,7 +153,7 @@ require("nvim-dap-virtual-text").setup {
   all_references = false, -- show virtual text on all all references of the variable (not only definitions)
   clear_on_continue = false, -- clear virtual text on "continue" (might cause flickering when stepping)
   --- A callback that determines how a variable is displayed or whether it should be omitted
-  display_callback = function(variable, buf, stackframe, node, options)
+  display_callback = function(variable, _, _, _, options)
     -- by default, strip out new line characters
     if options.virt_text_pos == "inline" then
       return " = " .. variable.value:gsub("%s+", " ")
