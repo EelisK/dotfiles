@@ -15,6 +15,8 @@ export EDITOR="{{ .editor }}"
 
 export WORKSPACE_DIR="${HOME}/workspace"
 
+export TLDR_AUTO_UPDATE_DISABLED="true"
+
 # {{- if eq .chezmoi.os "darwin" }}
 SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 export SDKROOT
@@ -65,12 +67,6 @@ fi
 
 if [ -d "${HOME}/.dotnet/tools" ]; then
     export PATH="${HOME}/.dotnet/tools:${PATH}"
-fi
-
-if [ -r "${HOME}/.sdkman/bin/sdkman-init.sh" ]; then
-    export SDKMAN_DIR="${HOME}/.sdkman"
-    # shellcheck disable=SC1091
-    . "${HOME}/.sdkman/bin/sdkman-init.sh"
 fi
 
 if [ -d "${HOME}/.cargo/bin" ]; then
@@ -169,6 +165,8 @@ randstr() {
 #==============================================================#
 
 alias d="dotfiles"
+
+alias c="chezmoi"
 
 alias gs='git status'
 
