@@ -1,6 +1,6 @@
 [general]
 live_config_reload = true
-import = ["/Users/eelis/.config/alacritty/themes/metal.toml"]
+import = ["{{ .chezmoi.homeDir }}/.config/alacritty/themes/metal.toml"]
 
 {{- $commandKey := "Control|Shift" }}
 {{- if eq .chezmoi.os "darwin" }}
