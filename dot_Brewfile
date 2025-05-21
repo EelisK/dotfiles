@@ -371,7 +371,9 @@ brew 'coreutils'
 brew 'wget'
 # Get a file from an HTTP, HTTPS or FTP server
 brew 'curl'
-
+# GNU cryptographic tools
+brew 'gnupg'
+brew 'gnupg2'
 
 ## Filesystem
 # Modern replacement for `ls`
