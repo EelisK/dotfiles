@@ -12,8 +12,8 @@ end
 require "options"
 require "keymaps"
 
--- Load the external modules
-require "ext.lazy"
+-- Load the lazy.nvim plugin manager
+require "lazy_setup"
 
 -- Load the core modules
 require "commands"
