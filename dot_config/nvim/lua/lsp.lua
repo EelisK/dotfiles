@@ -122,22 +122,6 @@ local on_attach = function(event)
   end, "Go to next diagnostic")
   map("<leader>lq", vim.diagnostic.setloclist, "Open diagnostic Quickfix list")
 
-  -- Auto-completion
-  if client:supports_method "textDocument/completion" then
-    local chars = {}
-    for i = 32, 126 do
-      table.insert(chars, string.char(i))
-    end
-    client.server_capabilities.completionProvider.triggerCharacters = chars
-    vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
-
-    -- Use CTRL-space to trigger LSP completion.
-    -- Use CTRL-Y to select an item. |complete_CTRL-Y|
-    vim.keymap.set("i", "<c-space>", function()
-      vim.lsp.completion.get()
-    end)
-  end
-
   -- Symbol highlights
   -- Creates an autocmd to highlight the symbol under the cursor
   if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
