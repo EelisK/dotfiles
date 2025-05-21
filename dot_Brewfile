@@ -84,6 +84,11 @@ brew 'golangci-lint'
 # Free and open-source .NET SDK (>= 5)
 cask 'dotnet-sdk'
 
+# Java
+# Java SE Development Kit
+brew 'openjdk'
+# Oracle Java SE Development Kit
+cask 'oracle-jdk'
 
 # Scala
 ## Artifact Fetcher
