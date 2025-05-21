@@ -48,9 +48,6 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
 keymap("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 keymap("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
--- Theme
-keymap("n", "<leader>th", "<cmd>ColorSchemeToggle<CR>", { desc = "toggle color scheme" })
-
 -- Insert --
 keymap("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })
 keymap("i", "<C-e>", "<End>", { desc = "move end of line" })

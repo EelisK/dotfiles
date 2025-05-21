@@ -1,21 +1,21 @@
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+-- This is the main configuration file for Neovim.
 
-if not vim.loop.fs_stat(lazypath) then
-  local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
-end
-
-vim.opt.rtp:prepend(lazypath)
-
-require "options"
-require "keymaps"
-require "autocmds"
-require "cmds"
-
-local status_ok, lazy = pcall(require, "lazy")
-if not status_ok then
-  vim.notify "Failed to load lazy.nvim"
+if vim.fn.has "nvim-0.11" == 0 then
+  vim.api.nvim_echo({
+    { "This configuration requires Neovim 0.11 or higher.", "ErrorMsg" },
+    { "Please update your Neovim installation.", "ErrorMsg" },
+  }, true, {})
   return
 end
 
-lazy.setup(require "plugins", require "configs.lazy")
+-- Load options and keymaps
+require "options"
+require "keymaps"
+
+-- Load the external modules
+require "ext.lazy"
+
+-- Load the core modules
+require "commands"
+require "autocmds"
+require "lsp"

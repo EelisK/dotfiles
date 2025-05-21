@@ -105,21 +105,6 @@ autocmd({ "BufNewFile", "BufRead" }, {
   command = "setlocal filetype=testscript",
 })
 
-autocmd("LspAttach", {
-  callback = function(args)
-    vim.schedule(function()
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-      if client then
-        local signatureProvider = client.server_capabilities.signatureHelpProvider
-        if signatureProvider and signatureProvider.triggerCharacters then
-          require("lsp.signature").setup(client, args.buf)
-        end
-      end
-    end)
-  end,
-})
-
 -- reload neovim on save
 autocmd("BufWritePost", {
   pattern = vim.tbl_map(function(path)
@@ -168,6 +153,7 @@ autocmd("BufWritePost", {
   callback = function()
     local cmd = 'chezmoi apply --source-path "' .. vim.fn.expand "%:p" .. '"'
     local handle
+    ---@diagnostic disable-next-line: missing-fields
     handle, _ = vim.loop.spawn("sh", {
       args = { "-c", cmd },
       detach = true,
