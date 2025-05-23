@@ -43,6 +43,13 @@ return {
     TabNine = "",
     BladeNav = "",
   },
+  dap = {
+    Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
+    Breakpoint = " ",
+    BreakpointCondition = " ",
+    BreakpointRejected = { " ", "DiagnosticError" },
+    LogPoint = ".>",
+  },
   diagnostic = {
     text = {
       [vim.diagnostic.severity.ERROR] = "󰅙",
