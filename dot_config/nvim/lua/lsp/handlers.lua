@@ -8,7 +8,7 @@ function M.on_attach(event)
   ---@param method string
   ---@return boolean
   local function supports(method)
-    return client:supports_method(method, event.buf)
+    return client:supports_method(method)
   end
 
   -- Create a shortcut for checkhealth
@@ -16,7 +16,7 @@ function M.on_attach(event)
 
   -- Helper function for creating LSP keybindings
   local map = function(keys, func, desc)
-    vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "[LSP] " .. desc })
+    vim.keymap.set("n", keys, func, { desc = "[LSP] " .. desc })
   end
 
   -- settings for the LSP framework
@@ -79,9 +79,9 @@ function M.on_attach(event)
 
     vim.api.nvim_create_autocmd("LspDetach", {
       group = vim.api.nvim_create_augroup("eelisk.lsp.hl_detach", { clear = true }),
-      callback = function(event2)
+      callback = function(args)
         vim.lsp.buf.clear_references()
-        vim.api.nvim_clear_autocmds { group = "eelisk.lsp.hl", buffer = event2.buf }
+        vim.api.nvim_clear_autocmds { group = "eelisk.lsp.hl", buffer = args.buf }
       end,
     })
   end
@@ -89,11 +89,31 @@ function M.on_attach(event)
   -- Auto-format ("lint") on save.
   -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
   if not client:supports_method(m.textDocument_willSaveWaitUntil) and client:supports_method(m.textDocument_formatting) then
+    vim.api.nvim_create_user_command("LspFormat", function()
+      vim.lsp.buf.format { bufnr = event.buf, id = client.id, timeout_ms = 1000 }
+    end, { desc = "Format buffer" })
+
+    vim.api.nvim_create_user_command("LspFormatDisable", function(args)
+      if args.bang then
+        vim.b.disable_autoformat = true
+      else
+        vim.g.disable_autoformat = true
+      end
+    end, { desc = "(LSP) Disable auto-format on save" })
+
+    vim.api.nvim_create_user_command("LspFormatEnable", function()
+      vim.b.disable_autoformat = false
+      vim.g.disable_autoformat = false
+    end, { desc = "(LSP) Enable auto-format on save" })
+
     vim.api.nvim_create_autocmd("BufWritePre", {
-      group = vim.api.nvim_create_augroup("my.lsp", { clear = false }),
+      group = vim.api.nvim_create_augroup("eelisk.lsp.fmt", { clear = false }),
       buffer = event.buf,
-      callback = function()
-        vim.lsp.buf.format { bufnr = event.buf, id = client.id, timeout_ms = 1000 }
+      callback = function(args)
+        if vim.b.disable_autoformat or vim.g.disable_autoformat then
+          return
+        end
+        vim.lsp.buf.format { bufnr = args.buf, id = client.id, timeout_ms = 1000 }
       end,
     })
   end
