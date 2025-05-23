@@ -19,20 +19,6 @@ function M.on_attach(event)
     vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "[LSP] " .. desc })
   end
 
-  -- settings and mapping sfor the diagnostic framework
-  vim.diagnostic.config {
-    virtual_lines = { current_line = true },
-    float = {
-      border = "rounded",
-    },
-    virtual_text = { prefix = "" },
-    signs = {
-      text = require("icons").diagnostic.text,
-    },
-    underline = true,
-    update_in_insert = false,
-  }
-
   -- settings for the LSP framework
   if supports(m.textDocument_formatting) then
     map("<leader>fm", vim.lsp.buf.format, "Format buffer")

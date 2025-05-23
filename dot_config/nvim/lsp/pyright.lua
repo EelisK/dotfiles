@@ -35,23 +35,17 @@ return {
   },
   settings = {
     python = {
+      pyright = {
+        -- Using Ruff's import organizer
+        disableOrganizeImports = true,
+      },
       analysis = {
-        autoSearchPaths = true,
-        useLibraryCodeForTypes = true,
-        diagnosticMode = "openFilesOnly",
+        -- Ignore all files for analysis to exclusively use Ruff for linting
+        ignore = { "*" },
       },
     },
   },
-  on_attach = function(client, bufnr)
-    vim.api.nvim_buf_create_user_command(bufnr, "LspPyrightOrganizeImports", function()
-      client:exec_cmd {
-        title = "Organize Imports",
-        command = "pyright.organizeimports",
-        arguments = { vim.uri_from_bufnr(bufnr) },
-      }
-    end, {
-      desc = "Organize Imports",
-    })
+  on_attach = function(_, bufnr)
     vim.api.nvim_buf_create_user_command(bufnr, "LspPyrightSetPythonPath", set_python_path, {
       desc = "Reconfigure pyright with the provided python path",
       nargs = 1,

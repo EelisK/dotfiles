@@ -20,7 +20,7 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 
--- Better window navigation
+-- Window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
@@ -41,12 +41,6 @@ keymap("n", "<A-Up>", ":resize +2<CR>", opts)
 keymap("n", "<A-Down>", ":resize -2<CR>", opts)
 keymap("n", "<A-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<A-Right>", ":vertical resize +2<CR>", opts)
-
--- Navigate windows
-keymap("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
-keymap("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
-keymap("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
-keymap("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
 -- Insert --
 keymap("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })

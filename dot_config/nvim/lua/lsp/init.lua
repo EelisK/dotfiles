@@ -12,6 +12,7 @@
 --
 
 local handlers = require "lsp.handlers"
+local icons = require "icons"
 
 ---@return string[]
 local function get_lsp_servers()
@@ -41,6 +42,21 @@ vim.lsp.config("*", {
   },
   root_markers = { ".git" },
 })
+
+
+-- settings and mappings for the diagnostic framework
+vim.diagnostic.config {
+  virtual_lines = { current_line = true },
+  float = {
+    border = "rounded",
+  },
+  virtual_text = { prefix = "" },
+  signs = {
+    text = icons.diagnostic.text,
+  },
+  underline = true,
+  update_in_insert = false,
+}
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("eelisk.lsp", { clear = true }),
