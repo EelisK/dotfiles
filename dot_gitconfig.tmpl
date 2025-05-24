@@ -5,6 +5,7 @@
 [core]
   editor = {{ .editor | quote }}
   excludesfile = ~/.gitignore
+	checkStat = minimal
 
 [init]
   defaultBranch = main
@@ -42,3 +43,8 @@
 
 [include]
 path = ~/.config/gitalias/gitalias.txt
+
+# {{- if joinPath .chezmoi.homeDir ".gitconfig_work" }}
+[include]
+path = {{ joinPath .chezmoi.homeDir ".gitconfig_work" }}
+# {{- end }}
