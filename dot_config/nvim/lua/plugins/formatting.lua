@@ -6,12 +6,11 @@ local function conform()
   return _conform
 end
 
-
 local options = {
   log_level = vim.log.levels.ERROR,
   -- Conform will notify you when a formatter errors
   notify_on_error = true,
-  lsp_fallback = true,
+  lsp_fallback = "never",
   formatters = {
     shfmt = {
       prepend_args = { "-i", "4" },
@@ -71,7 +70,7 @@ local options = {
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
       return
     end
-    return { lsp_fallback = true, timeout_ms = 1500, async = false }
+    return { lsp_fallback = false, timeout_ms = 1500, async = false }
   end,
 }
 
@@ -83,9 +82,26 @@ return {
     {
       "<leader>fm",
       function()
-        conform().format { lsp_fallback = false }
+        conform().format()
       end,
       { desc = "general format file" },
     },
   },
+  config = function(_, opts)
+    conform().setup(opts)
+    vim.api.nvim_create_user_command("ConformFormat", function()
+      conform().format { lsp_fallback = false }
+    end, { desc = "Format file" })
+    vim.api.nvim_create_user_command("ConformDisable", function(args)
+      if args.bang then
+        vim.b.disable_autoformat = true
+      else
+        vim.g.disable_autoformat = true
+      end
+    end, { desc = "Disable auto-format on save" })
+    vim.api.nvim_create_user_command("ConformEnable", function()
+      vim.b.disable_autoformat = false
+      vim.g.disable_autoformat = false
+    end, { desc = "Enable auto-format on save" })
+  end,
 }

@@ -1,6 +1,6 @@
 vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   desc = "Make all backgrounds transparent",
-  group = vim.api.nvim_create_augroup("nobg", { clear = true }),
+  group = vim.api.nvim_create_augroup("eelisk/colorscheme/nobg", { clear = true }),
   pattern = "*",
   callback = function()
     if vim.o.background == "light" then

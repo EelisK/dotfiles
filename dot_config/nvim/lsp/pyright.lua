@@ -20,6 +20,16 @@ local function set_python_path(path)
   end
 end
 
+---@param _ vim.lsp.Client
+---@param bufnr number
+local function on_attach(_, bufnr)
+  vim.api.nvim_buf_create_user_command(bufnr, "LspPyrightSetPythonPath", set_python_path, {
+    desc = "Reconfigure pyright with the provided python path",
+    nargs = 1,
+    complete = "file",
+  })
+end
+
 ---@type vim.lsp.Config
 return {
   cmd = { "pyright-langserver", "--stdio" },
@@ -44,15 +54,9 @@ return {
         useLibraryCodeForTypes = true,
         diagnosticMode = "openFilesOnly",
         -- Ignore all files for analysis to exclusively use Ruff for linting
-        ignore = { '*' },
+        ignore = { "*" },
       },
     },
   },
-  on_attach = function(_, bufnr)
-    vim.api.nvim_buf_create_user_command(bufnr, "LspPyrightSetPythonPath", set_python_path, {
-      desc = "Reconfigure pyright with the provided python path",
-      nargs = 1,
-      complete = "file",
-    })
-  end,
+  on_attach = on_attach,
 }

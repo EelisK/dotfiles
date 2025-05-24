@@ -1,10 +1,5 @@
 -- Vim filetype plugin file
---
--- It is in Lua because Lua!
---
 -- Language:	Lua
--- Maintainer:	Theo P.
--- Last Change:	2025-04-13
 
 local indent = 2
 

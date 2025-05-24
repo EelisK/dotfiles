@@ -43,7 +43,6 @@ vim.lsp.config("*", {
   root_markers = { ".git" },
 })
 
-
 -- settings and mappings for the diagnostic framework
 vim.diagnostic.config {
   virtual_lines = { current_line = true },
@@ -59,7 +58,7 @@ vim.diagnostic.config {
 }
 
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("eelisk.lsp", { clear = true }),
+  group = vim.api.nvim_create_augroup("eelisk/lsp", { clear = true }),
   callback = handlers.on_attach,
 })
 
