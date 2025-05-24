@@ -32,14 +32,14 @@ o.cursorline = false                      -- highlight the current line
 o.number = true                           -- set numbered lines
 o.relativenumber = true                   -- set relative numbered lines
 o.numberwidth = 4                         -- set number column width to 2 {default 4}
+o.laststatus = 3                          -- always show the status line
 o.signcolumn = "yes"                      -- always show the sign column, otherwise it would shift the text each time
 o.wrap = true                             -- display lines as one long line
-o.fillchars = {eob = " "}                 -- hide ~ at end of buffer
-o.scrolloff = 8
-o.sidescrolloff = 8
-o.laststatus = 3                          -- always show the status line
+o.fillchars = { eob = " " }               -- hide ~ at end of buffer
 o.fixendofline = true                     -- fix end of line
 o.winborder = "rounded"                   -- border style
+o.scrolloff = 8
+o.sidescrolloff = 8
 -- vim.opt.guifont = "monospace:h17"               -- the font used in graphical neovim applications
 -- stylua: ignore end
 

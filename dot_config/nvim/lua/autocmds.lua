@@ -2,8 +2,9 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
 -- user event that loads after UIEnter + only if file buf is there
+local userfilepost = augroup("eelisk/events/UserFilePost", { clear = true })
 autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
-  group = vim.api.nvim_create_augroup("NvFilePost", { clear = true }),
+  group = userfilepost,
   callback = function(args)
     local file = vim.api.nvim_buf_get_name(args.buf)
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
@@ -14,7 +15,7 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
 
     if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
       vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
-      vim.api.nvim_del_augroup_by_name "NvFilePost"
+      vim.api.nvim_del_augroup_by_id(userfilepost)
 
       vim.schedule(function()
         vim.api.nvim_exec_autocmds("FileType", {})
@@ -28,8 +29,10 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
 })
 
 -- process chezmoi .tmpl files as they didn't have a .tmpl suffix
+local chezmoitmpl = augroup("eelisk/chezmoi/tmpl", { clear = true })
 autocmd({ "BufNewFile", "BufRead" }, {
   pattern = vim.fn.expand "~" .. "/.local/share/chezmoi/*.tmpl",
+  group = chezmoitmpl,
   callback = function(args)
     local file = vim.api.nvim_buf_get_name(args.buf):match ".*/(.*)"
     -- ignore files with leading dot
@@ -47,89 +50,36 @@ autocmd({ "BufNewFile", "BufRead" }, {
   end,
 })
 
-autocmd({ "ColorScheme" }, {
-  desc = "Make all backgrounds transparent",
-  group = vim.api.nvim_create_augroup("nobg", { clear = true }),
-  pattern = "*",
+-- apply dotenv changes automatically on save
+local chezmoisync = augroup("eelisk/chezmoi/sync", { clear = true })
+autocmd("BufWritePost", {
+  pattern = vim.fn.expand "~" .. "/.local/share/chezmoi/*",
+  group = chezmoisync,
   callback = function()
-    if vim.o.background == "light" then
-      return
-    end
-    local groups = {
-      "Normal",
-      "NeoTreeNormal",
-      "NeoTreeNormalNC",
-      "BufferLineFill",
-      "DiagnosticError",
-      "Float",
-      "NvimFloat",
-      "DiagnosticFloatingError",
-      "CocDiagnosticError",
-      "NormalFloat",
-    }
-    -- trying to make the popup opaque
-    for _, group in ipairs(groups) do
-      vim.api.nvim_set_hl(0, group, { bg = nil, ctermbg = nil })
-    end
-  end,
-})
-
-local ansibleFTPatterns = {
-  "*/playbooks/*.yml",
-  "*/playbooks/*.yaml",
-  "*/roles/*/tasks/*.yml",
-  "*/roles/*/tasks/*.yaml",
-  "*/roles/*/handlers/*.yml",
-  "*/roles/*/handlers/*.yaml",
-  "*/roles/*/meta/*.yml",
-  "*/roles/*/meta/*.yaml",
-  "*/roles/*/defaults/*.yml",
-  "*/roles/*/defaults/*.yaml",
-  "*/roles/*/vars/*.yml",
-  "*/roles/*/vars/*.yaml",
-  "*/group_vars/*.yml",
-  "*/group_vars/*.yaml",
-  "*/host_vars/*.yml",
-  "*/host_vars/*.yaml",
-}
-
-for _, pattern in ipairs(ansibleFTPatterns) do
-  autocmd({ "BufNewFile", "BufRead" }, {
-    pattern = pattern,
-    command = "setlocal filetype=yaml.ansible",
-  })
-end
-
-autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = "*/testdata/*.txt",
-  command = "setlocal filetype=testscript",
-})
-
-autocmd("LspAttach", {
-  callback = function(args)
-    vim.schedule(function()
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-      if client then
-        local signatureProvider = client.server_capabilities.signatureHelpProvider
-        if signatureProvider and signatureProvider.triggerCharacters then
-          require("lsp.signature").setup(client, args.buf)
-        end
-      end
+    local cmd = 'chezmoi apply --source-path "' .. vim.fn.expand "%:p" .. '"'
+    local handle
+    ---@diagnostic disable-next-line: missing-fields, undefined-field
+    handle, _ = vim.loop.spawn("sh", {
+      args = { "-c", cmd },
+      detach = true,
+    }, function()
+      handle:close()
     end)
   end,
 })
 
 -- reload neovim on save
+local reloadonsave = augroup("eelisk/actions/reload", { clear = true })
 autocmd("BufWritePost", {
+  group = reloadonsave,
   pattern = vim.tbl_map(function(path)
+    ---@diagnostic disable-next-line: undefined-field
     local realpath = vim.uv.fs_realpath(path)
     if not realpath then
       return path
     end
     return vim.fs.normalize(realpath)
   end, vim.fn.glob(vim.fn.stdpath "config" .. "/lua/**/*.lua", true, true, true)),
-  group = augroup("ReloadNnvim", {}),
 
   callback = function(opts)
     local fp = vim.fn.fnamemodify(vim.fs.normalize(vim.api.nvim_buf_get_name(opts.buf)), ":r") --[[@as string]]
@@ -143,7 +93,7 @@ autocmd("BufWritePost", {
 })
 
 -- Disable autocomment on enter
-local disableautocomment = augroup("disableautocomment", { clear = true })
+local disableautocomment = augroup("eelisk/actions/disableautocomment", { clear = true })
 autocmd({ "BufEnter", "CmdLineLeave" }, {
   pattern = "*",
   callback = function()
@@ -153,26 +103,11 @@ autocmd({ "BufEnter", "CmdLineLeave" }, {
 })
 
 -- Highlight on yank
-local yankhighlight = augroup("yankhighlight", { clear = true })
+local yankhighlight = augroup("eelisk/actions/yankhighlight", { clear = true })
 autocmd("TextYankPost", {
   pattern = "*",
   callback = function()
     vim.highlight.on_yank()
   end,
   group = yankhighlight,
-})
-
--- apply dotenv changes automatically on save
-autocmd("BufWritePost", {
-  pattern = vim.fn.expand "~" .. "/.local/share/chezmoi/*",
-  callback = function()
-    local cmd = 'chezmoi apply --source-path "' .. vim.fn.expand "%:p" .. '"'
-    local handle
-    handle, _ = vim.loop.spawn("sh", {
-      args = { "-c", cmd },
-      detach = true,
-    }, function()
-      handle:close()
-    end)
-  end,
 })

@@ -84,6 +84,11 @@ brew 'golangci-lint'
 # Free and open-source .NET SDK (>= 5)
 cask 'dotnet-sdk'
 
+# Java
+# Java SE Development Kit
+brew 'openjdk'
+# Oracle Java SE Development Kit
+cask 'oracle-jdk'
 
 # Scala
 ## Artifact Fetcher
@@ -374,6 +379,8 @@ brew 'curl'
 # GNU cryptographic tools
 brew 'gnupg'
 brew 'gnupg2'
+# Network utilities
+brew 'iproute2mac' if OS.mac?
 
 ## Filesystem
 # Modern replacement for `ls`

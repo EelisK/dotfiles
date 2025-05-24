@@ -1,22 +1,66 @@
-local M = {}
+-- LSP configuration using the built-in LSP client
+--
+--  ██▓      ██████  ██▓███
+-- ▓██▒    ▒██    ▒ ▓██░  ██▒
+-- ▒██░    ░ ▓██▄   ▓██░ ██▓▒
+-- ▒██░      ▒   ██▒▒██▄█▓▒ ▒
+-- ░██████▒▒██████▒▒▒██▒ ░  ░
+-- ░ ▒░▓  ░▒ ▒▓▒ ▒ ░▒▓▒░ ░  ░
+-- ░ ░ ▒  ░░ ░▒  ░ ░░▒ ░
+--   ░ ░   ░  ░  ░  ░░
+--     ░  ░      ░
+--
 
-M.diagnostic_config = function()
-  local x = vim.diagnostic.severity
+local handlers = require "lsp.handlers"
+local icons = require "icons"
 
-  vim.diagnostic.config {
-    virtual_text = { prefix = "" },
-    signs = { text = { [x.ERROR] = "󰅙", [x.WARN] = "", [x.INFO] = "󰋼", [x.HINT] = "󰌵" } },
-    underline = true,
-    float = { border = "single" },
-  }
+---@return string[]
+local function get_lsp_servers()
+  local lsp_dir = vim.fn.stdpath "config" .. "/lsp"
+  local lsp_servers = {}
 
-  -- Default border style
-  local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-  function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = "rounded"
-    return orig_util_open_floating_preview(contents, syntax, opts, ...)
+  if vim.fn.isdirectory(lsp_dir) == 1 then
+    for _, file in ipairs(vim.fn.readdir(lsp_dir)) do
+      if file:match "%.lua$" and file ~= "init.lua" then
+        local server_name = file:gsub("%.lua$", "")
+        table.insert(lsp_servers, server_name)
+      end
+    end
   end
+
+  return lsp_servers
 end
 
-return M
+-- Neovim will call config() for the merged tables in `nvim/lsp/<name>.lua` as well as explicit calls
+vim.lsp.config("*", {
+  capabilities = {
+    textDocument = {
+      semanticTokens = {
+        multilineTokenSupport = true,
+      },
+    },
+  },
+  root_markers = { ".git" },
+})
+
+-- settings and mappings for the diagnostic framework
+vim.diagnostic.config {
+  virtual_lines = { current_line = true },
+  float = {
+    border = "rounded",
+  },
+  virtual_text = { prefix = "" },
+  signs = {
+    text = icons.diagnostic.text,
+  },
+  underline = true,
+  update_in_insert = false,
+}
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("eelisk/lsp", { clear = true }),
+  callback = handlers.on_attach,
+})
+
+-- Enable the servers!
+vim.lsp.enable(get_lsp_servers())
