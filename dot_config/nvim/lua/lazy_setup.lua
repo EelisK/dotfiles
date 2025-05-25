@@ -16,11 +16,13 @@ local config = {
   },
   spec = {
     { import = "plugins" },
+    { import = "plugins.ai" },
   },
 }
 
 local lazypath = config.root .. "/lazy.nvim"
 
+---@diagnostic disable-next-line: undefined-field
 if not vim.loop.fs_stat(lazypath) then
   local repo = "https://github.com/folke/lazy.nvim.git"
   vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
