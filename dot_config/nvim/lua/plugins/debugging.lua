@@ -52,6 +52,7 @@ M.dependencies = {
     cmd = { "DapInstall", "DapUninstall" },
   },
   -- dap cmp source
+  { "hrsh7th/nvim-cmp" },
   { "rcarriga/cmp-dap" },
 }
 
