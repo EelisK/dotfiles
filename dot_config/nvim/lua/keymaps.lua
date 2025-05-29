@@ -74,7 +74,8 @@ keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
-keymap("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
+keymap("t", "<C-x>", "<C-\\><C-N>", term_opts)
+keymap("t", "<Esc>", "<C-\\><C-N>", term_opts)
 
 -- Comment
 keymap("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
