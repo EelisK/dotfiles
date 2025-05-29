@@ -53,6 +53,10 @@ return {
     BreakpointRejected = { " ", "DiagnosticError" },
     LogPoint = ".>",
   },
+  gitsigns = {
+    delete = { text = "󰍵" },
+    changedelete = { text = "󱕖" },
+  },
   diagnostic = {
     text = {
       [vim.diagnostic.severity.ERROR] = "󰅙",

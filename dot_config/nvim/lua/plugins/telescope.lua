@@ -23,8 +23,18 @@ return {
       "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
       { desc = "telescope find all files" },
     },
+    {
+      "<leader>ft",
+      "<cmd>Telescope colorscheme<CR>",
+      { desc = "telescope find colorscheme", nowait = true },
+    },
   },
   opts = {
+    pickers = {
+      colorscheme = {
+        enable_preview = true,
+      },
+    },
     defaults = {
       prompt_prefix = "   ",
       selection_caret = " ",

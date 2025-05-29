@@ -32,20 +32,30 @@ M.opts = {
       "fallback",
     },
   },
-  sources = {
-    providers = {
-      lsp = {
-        name = "LSP",
-        module = "blink.cmp.sources.lsp",
-        transform_items = function(_, items)
-          return vim.tbl_filter(function(item)
-            return item.kind ~= require("blink.cmp.types").CompletionItemKind.Keyword
-          end, items)
-        end,
-      },
-    },
-  },
+
+  -- sources = {
+  --   providers = {
+  --     lsp = {
+  --       name = "LSP",
+  --       module = "blink.cmp.sources.lsp",
+  --       transform_items = function(_, items)
+  --         return vim.tbl_filter(function(item)
+  --           return item.kind ~= require("blink.cmp.types").CompletionItemKind.Keyword
+  --         end, items)
+  --       end,
+  --     },
+  --   },
+  -- },
   completion = {
+
+    -- 'prefix' will fuzzy match on the text before the cursor
+    -- 'full' will fuzzy match on the text before _and_ after the cursor
+    -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
+    keyword = { range = "full" },
+
+    -- Disable auto brackets
+    -- NOTE: some LSPs may add auto brackets themselves anyway
+    accept = { auto_brackets = { enabled = false } },
     documentation = {
       auto_show = true,
       window = {

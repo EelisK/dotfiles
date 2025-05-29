@@ -1,3 +1,5 @@
+local icons = require "icons"
+
 local function on_attach(bufnr)
   local gitsigns = require "gitsigns"
   local map = vim.keymap.set
@@ -17,10 +19,7 @@ end
 
 local opts = {
   on_attach = on_attach,
-  signs = {
-    delete = { text = "󰍵" },
-    changedelete = { text = "󱕖" },
-  },
+  signs = icons.gitsigns,
   current_line_blame = true,
   current_line_blame_opts = {
     virt_text = true,
@@ -29,6 +28,7 @@ local opts = {
     ignore_whitespace = false,
     virt_text_priority = 100,
   },
+  max_file_length = 1e5, -- 100,000 lines
   current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
 }
 
