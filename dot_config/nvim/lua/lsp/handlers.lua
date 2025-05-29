@@ -13,10 +13,35 @@ function M.on_attach(event)
 
   -- Create a shortcut for checkhealth
   vim.api.nvim_create_user_command("LspInfo", ":checkhealth vim.lsp", { nargs = 0 })
+  -- Create a shortcut for restarting the LSP client
+  vim.api.nvim_create_user_command("LspRestart", function()
+    local clients = vim.lsp.get_clients { bufnr = event.buf }
+    for _, c in pairs(clients) do
+      vim.lsp.enable(c.name, false)
+    end
+    ---@diagnostic disable-next-line: undefined-field
+    local timer = assert(vim.uv.new_timer())
+    timer:start(500, 0, function()
+      for _, c in ipairs(clients) do
+        vim.schedule_wrap(function(x)
+          vim.lsp.enable(x)
+        end)(c.name)
+      end
+    end)
+  end, { nargs = 0, desc = "Restart LSP client" })
+  -- Create a shortcut for showing the LSP client logs
+  vim.api.nvim_create_user_command("LspLogs", function()
+    local log_path = vim.lsp.get_log_path()
+    if log_path then
+      vim.cmd("edit " .. log_path)
+    else
+      vim.notify("No LSP logs found", vim.log.levels.WARN)
+    end
+  end, { nargs = 0, desc = "Show LSP logs" })
 
   -- Helper function for creating LSP keybindings
   local map = function(keys, func, desc)
-    vim.keymap.set("n", keys, func, { desc = "[LSP] " .. desc })
+    vim.keymap.set("n", keys, func, { desc = "[LSP] " .. desc, buffer = event.buf, silent = true })
   end
 
   -- settings for the LSP framework
@@ -34,9 +59,6 @@ function M.on_attach(event)
   end
   if supports(m.textDocument_references) then
     map("gr", vim.lsp.buf.references, "Go to references")
-  end
-  if supports(m.textDocument_formatting) then
-    map("<leader>fm", vim.lsp.buf.format, "Format buffer")
   end
   if supports(m.textDocument_hover) then
     map("K", vim.lsp.buf.hover, "Hover")

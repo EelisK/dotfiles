@@ -4,6 +4,7 @@
 --- Language server for the ansible configuration management tool.
 ---
 
+---@type vim.lsp.Config
 return {
   cmd = { "ansible-language-server", "--stdio" },
   root_markers = {
