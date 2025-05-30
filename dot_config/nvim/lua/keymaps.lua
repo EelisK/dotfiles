@@ -1,5 +1,4 @@
 local opts = { noremap = true, silent = true }
-
 local term_opts = { silent = true }
 
 -- Shorten function name
@@ -32,6 +31,8 @@ keymap("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
 keymap("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 keymap("n", "<leader>b", "<cmd>new<CR>", { desc = "general new buffer" })
 keymap("n", "<leader>B", "<cmd>vnew<CR>", { desc = "general new buffer vertical" })
+keymap("n", "<leader>tb", "<cmd>belowright split | terminal<CR>", { desc = "open terminal in new buffer" })
+keymap("n", "<leader>tB", "<cmd>belowright vnew | terminal<CR>", { desc = "open terminal in new buffer vertical" })
 
 -- global lsp mappings
 keymap("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
