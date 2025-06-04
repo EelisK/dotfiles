@@ -28,6 +28,15 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
   end,
 })
 
+local termopen = augroup("eelisk/events/TermOpen", { clear = true })
+autocmd("TermOpen", {
+  group = termopen,
+  callback = function(args)
+    -- set buffer as unlisted
+    vim.api.nvim_set_option_value("buflisted", false, { buf = args.buf })
+  end,
+})
+
 -- process chezmoi .tmpl files as they didn't have a .tmpl suffix
 local chezmoitmpl = augroup("eelisk/chezmoi/tmpl", { clear = true })
 autocmd({ "BufNewFile", "BufRead" }, {
