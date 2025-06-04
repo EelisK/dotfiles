@@ -16,6 +16,7 @@ local config = {
   },
   spec = {
     { import = "plugins" },
+    { import = "plugins.diagnostics" },
     { import = "plugins.ai" },
   },
 }
