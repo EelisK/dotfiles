@@ -20,8 +20,10 @@ export TLDR_AUTO_UPDATE_DISABLED="true"
 export MANPAGER='nvim +Man!'
 
 # {{- if eq .chezmoi.os "darwin" }}
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
-export SDKROOT
+if command -v xcrun >/dev/null 2>&1; then
+    SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+    export SDKROOT
+fi
 # {{- end }}
 
 if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
@@ -35,6 +37,10 @@ fi
 #==============================================================#
 ##  PATH                                                      ##
 #==============================================================#
+
+
+export PATH=":${PATH}:/usr/sbin:/sbin"
+
 
 # {{- if eq .chezmoi.os "darwin" }}
 if [ -d "/opt/homebrew/opt/coreutils/libexec/gnubin" ]; then
@@ -188,3 +194,21 @@ alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
 alias nowtime=now
 alias nowdate='date +"%d-%m-%Y"'
+
+#==============================================================#
+##  Optional Sources                                          ##
+#==============================================================#
+
+if [ -f "${HOME}/.profile.local" ]; then
+    # shellcheck disable=SC1091
+    . "${HOME}/.profile.local"
+fi
+
+if [ -f "${HOME}/.profile.d" ]; then
+    for file in "${HOME}/.profile.d/"*.sh; do
+        if [ -f "${file}" ]; then
+            # shellcheck disable=SC1090
+            . "${file}"
+        fi
+    done
+fi
