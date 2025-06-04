@@ -42,5 +42,7 @@ BASH_IT_PROJECT_PATHS="${WORKSPACE_DIR}"
 export SCM_CHECK=true
 
 # Load Bash It
-# shellcheck disable=SC1091
-source "${BASH_IT}/bash_it.sh"
+if [[ -f "${BASH_IT}/bash_it.sh" ]]; then
+    # shellcheck disable=SC1091
+    source "${BASH_IT}/bash_it.sh"
+fi
