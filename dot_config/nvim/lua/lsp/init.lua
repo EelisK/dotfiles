@@ -73,6 +73,18 @@ local function setup_lsp(server)
       enabled_servers[server] = true
     end,
   })
+
+  vim.api.nvim_create_autocmd("BufWinLeave", {
+    group = group,
+    pattern = server_config.filetypes,
+    callback = function()
+      if not vim.fn.bufexists(vim.fn.bufnr()) then
+        local active_clients = vim.lsp.get_clients { name = server }
+        vim.lsp.stop_client(active_clients)
+        enabled_servers[server] = false
+      end
+    end,
+  })
 end
 
 -- Neovim will call config() for the merged tables in `nvim/lsp/<name>.lua` as well as explicit calls

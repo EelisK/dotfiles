@@ -44,7 +44,25 @@ function M.on_attach(event)
     vim.keymap.set("n", keys, func, { desc = "[LSP] " .. desc, buffer = event.buf, silent = true })
   end
 
-  -- settings for the LSP framework
+  if supports(m.textDocument_documentSymbol) then
+    map("<leader>ls", vim.lsp.buf.document_symbol, "document symbols")
+  end
+  if supports(m.workspace_symbol) then
+    map("<leader>ws", vim.lsp.buf.workspace_symbol, "workspace symbols")
+  end
+  if supports(m.textDocument_codeAction) then
+    map("<leader>ca", vim.lsp.buf.code_action, "code actions")
+  end
+  if supports(m.textDocument_codeLens) then
+    map("<leader>clr", vim.lsp.codelens.run, "code lens")
+    map("<leader>cll", vim.lsp.codelens.refresh, "code lens refresh")
+  end
+  if supports(m.textDocument_diagnostic) then
+    map("<leader>dl", vim.diagnostic.setloclist, "diagnostic loclist")
+  end
+  if supports(m.textDocument_incomingCalls) then
+    map("<leader>ci", vim.lsp.buf.incoming_calls, "incoming calls")
+  end
   if supports(m.textDocument_formatting) then
     map("<leader>fm", vim.lsp.buf.format, "Format buffer")
   end
