@@ -16,6 +16,7 @@ M.opts = {
     "query",
     "markdown",
     "markdown_inline",
+    "comment",
   },
 
   highlight = {
