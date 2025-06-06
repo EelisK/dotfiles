@@ -93,6 +93,10 @@ cask 'oracle-jdk'
 # Scala
 ## Artifact Fetcher
 brew 'coursier'
+## Language Server
+brew 'metals'
+## Language
+brew 'scala'
 
 
 # ▄▄▄█████▓▓█████  ██▀███   ███▄ ▄███▓ ██▓ ███▄    █  ▄▄▄       ██▓
