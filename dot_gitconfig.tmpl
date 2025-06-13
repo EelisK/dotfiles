@@ -1,3 +1,6 @@
+[include]
+path = ~/.config/gitalias/gitalias.txt
+
 [user]
   name = {{ .name | quote }}
   email = {{ .email | quote }}
@@ -22,6 +25,8 @@
   dlog = -c diff.external=difft log --ext-diff
   dshow = -c diff.external=difft show --ext-diff
   ddiff = -c diff.external=difft diff
+	# git fixup for interactively fixing commits
+	fixup = "!COMMIT=$(git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7); git commit --fixup=$COMMIT; git rebase -i --autosquash $COMMIT~1"
 
 [url "git@github.com:"]
   insteadOf = https://github.com/
@@ -41,10 +46,7 @@
   tool = difftastic
   external = difft
 
+# {{- if joinPath .chezmoi.homeDir ".gitconfig.local" }}
 [include]
-path = ~/.config/gitalias/gitalias.txt
-
-# {{- if joinPath .chezmoi.homeDir ".gitconfig_work" }}
-[include]
-path = {{ joinPath .chezmoi.homeDir ".gitconfig_work" }}
+path = {{ joinPath .chezmoi.homeDir ".gitconfig.local" }}
 # {{- end }}
