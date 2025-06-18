@@ -68,6 +68,7 @@ local options = {
   },
   format_on_save = function(bufnr)
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+      vim.notify("Auto-formatting is disabled for this buffer.", vim.log.levels.INFO, { title = "conform.nvim" })
       return
     end
     return { lsp_fallback = false, timeout_ms = 1500, async = false }

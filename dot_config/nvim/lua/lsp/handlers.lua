@@ -155,6 +155,7 @@ function M.on_attach(event)
       buffer = event.buf,
       callback = function(args)
         if vim.b.disable_lsp_autoformat or vim.g.disable_lsp_autoformat then
+          vim.notify("Auto-formatting is disabled for this buffer.", vim.log.levels.INFO, { title = "eelisk/lsp" })
           return
         end
         vim.lsp.buf.format { bufnr = args.buf, id = client.id, timeout_ms = 1000 }
