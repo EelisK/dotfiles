@@ -3,6 +3,20 @@ local term_opts = { silent = true }
 
 -- Shorten function name
 local keymap = vim.keymap.set
+-- Function to toggle fold on current line
+local function toggle_fold()
+  local line = vim.fn.line "."
+  local current_line_is_foldable = vim.fn.foldlevel(line) > 0
+  if not current_line_is_foldable then
+    return
+  end
+  local not_folded = vim.fn.foldclosed(line) == -1
+  if not_folded then
+    vim.cmd ":foldclose"
+  else
+    vim.cmd ":foldopen"
+  end
+end
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
@@ -42,6 +56,9 @@ keymap("n", "<Enter>", function()
 end, { expr = true, desc = "enter insert mode in buffers terminal" })
 keymap("n", "<leader>tb", "<cmd>belowright split | terminal<CR>", { desc = "open terminal in new buffer" })
 keymap("n", "<leader>tB", "<cmd>belowright vnew | terminal<CR>", { desc = "open terminal in new buffer vertical" })
+
+-- Folds
+keymap("n", "<Enter>", toggle_fold, { desc = "toggle fold on current line", remap = true })
 
 -- Resize with arrows
 keymap("n", "<A-Up>", ":resize +2<CR>", opts)

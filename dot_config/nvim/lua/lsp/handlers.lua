@@ -91,6 +91,11 @@ function M.on_attach(event)
   if supports(m.textDocument_completion) then
     vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
   end
+  -- Use LSP folding if supported
+  if supports(m.textDocument_foldingRange) then
+    local win = vim.api.nvim_get_current_win()
+    vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+  end
 
   -- diagnostic mappings
   map("<leader>lf", vim.diagnostic.open_float, "Open diagnostic float")
@@ -163,5 +168,19 @@ function M.on_attach(event)
     })
   end
 end
+
+-- LSP capabilities
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+-- Enable folding capabilities
+M.capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+-- Enable multiline semantic tokens
+M.capabilities.textDocument = vim.tbl_deep_extend("force", M.capabilities.textDocument, {
+  semanticTokens = {
+    multilineTokenSupport = true,
+  },
+})
 
 return M

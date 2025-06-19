@@ -89,13 +89,7 @@ end
 
 -- Neovim will call config() for the merged tables in `nvim/lsp/<name>.lua` as well as explicit calls
 vim.lsp.config("*", {
-  capabilities = {
-    textDocument = {
-      semanticTokens = {
-        multilineTokenSupport = true,
-      },
-    },
-  },
+  capabilities = handlers.capabilities,
   root_markers = { ".git" },
 })
 

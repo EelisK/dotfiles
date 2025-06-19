@@ -34,6 +34,10 @@ M.opts = {
   indent = {
     enable = true,
   },
+
+  fold = {
+    enable = true,
+  },
 }
 
 return M
