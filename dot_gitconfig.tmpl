@@ -46,7 +46,7 @@ path = ~/.config/gitalias/gitalias.txt
   tool = difftastic
   external = difft
 
-# {{- if joinPath .chezmoi.homeDir ".gitconfig.local" }}
+# {{- if joinPath .chezmoi.homeDir ".gitconfig.local" | lstat }}
 [include]
 path = {{ joinPath .chezmoi.homeDir ".gitconfig.local" }}
 # {{- end }}
