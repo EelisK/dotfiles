@@ -27,6 +27,7 @@ backups/** # ignore the contents of backups folder but not the folder itself
 {{- if ne .chezmoi.os "darwin" }}
 .chezmoiscripts/darwin/**
 .config/karabiner
+.Brewfile
 {{- end }}
 
 # Windows-specific setups
