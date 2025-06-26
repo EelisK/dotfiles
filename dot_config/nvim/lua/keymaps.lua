@@ -58,7 +58,7 @@ keymap("n", "<leader>tb", "<cmd>belowright split | terminal<CR>", { desc = "open
 keymap("n", "<leader>tB", "<cmd>belowright vnew | terminal<CR>", { desc = "open terminal in new buffer vertical" })
 
 -- Folds
-keymap("n", "<Enter>", toggle_fold, { desc = "toggle fold on current line", remap = true })
+keymap("n", "zf", toggle_fold, { desc = "toggle fold on current line", remap = true })
 
 -- Resize with arrows
 keymap("n", "<A-Up>", ":resize +2<CR>", opts)
