@@ -44,9 +44,6 @@ function M.on_attach(event)
     vim.keymap.set("n", keys, func, { desc = "[LSP] " .. desc, buffer = event.buf, silent = true })
   end
 
-  if supports(m.textDocument_documentSymbol) then
-    map("<leader>ls", vim.lsp.buf.document_symbol, "document symbols")
-  end
   if supports(m.workspace_symbol) then
     map("<leader>ws", vim.lsp.buf.workspace_symbol, "workspace symbols")
   end
@@ -63,8 +60,8 @@ function M.on_attach(event)
   if supports(m.textDocument_incomingCalls) then
     map("<leader>ci", vim.lsp.buf.incoming_calls, "incoming calls")
   end
-  if supports(m.textDocument_formatting) then
-    map("<leader>fm", vim.lsp.buf.format, "Format buffer")
+  if supports(m.textDocument_documentSymbol) then
+    map("gs", vim.lsp.buf.document_symbol, "document symbols")
   end
   if supports(m.textDocument_declaration) then
     map("gD", vim.lsp.buf.declaration, "Go to declaration")
