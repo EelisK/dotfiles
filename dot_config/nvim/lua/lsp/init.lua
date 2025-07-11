@@ -95,7 +95,7 @@ vim.lsp.config("*", {
 
 -- settings and mappings for the diagnostic framework
 vim.diagnostic.config {
-  virtual_lines = { current_line = true },
+  virtual_lines = false,
   float = {
     border = "rounded",
   },
