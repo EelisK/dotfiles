@@ -15,7 +15,6 @@ return {
     },
     { "<leader>fc", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" } },
     { "<leader>fg", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" } },
-    { "<leader>ft", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" } },
     { "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" } },
     {
       "<leader>fa",
@@ -47,7 +46,7 @@ return {
       },
     },
 
-    extensions_list = { "themes", "terms" },
+    extensions_list = { "themes" },
     extensions = {},
   },
 }
