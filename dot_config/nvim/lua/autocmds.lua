@@ -37,11 +37,11 @@ autocmd("TermOpen", {
   end,
 })
 
--- process chezmoi .tmpl files as they didn't have a .tmpl suffix
-local chezmoitmpl = augroup("eelisk/chezmoi/tmpl", { clear = true })
-autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = vim.fn.expand "~" .. "/.local/share/chezmoi/*.tmpl",
-  group = chezmoitmpl,
+local chezmoimanagedfile = vim.api.nvim_create_augroup("eelisk/chezmoi/ftdetect", { clear = true })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  group = chezmoimanagedfile,
+  pattern = vim.fn.expand "~" .. "/.local/share/chezmoi/**",
+  desc = "Detect and set the proper file type for dotfiles under chezmoi management.",
   callback = function(args)
     local file = vim.api.nvim_buf_get_name(args.buf):match ".*/(.*)"
     -- ignore files with leading dot
@@ -101,14 +101,14 @@ autocmd("BufWritePost", {
   end,
 })
 
--- Disable autocomment on enter
 local disableautocomment = augroup("eelisk/actions/disableautocomment", { clear = true })
-autocmd({ "BufEnter", "CmdLineLeave" }, {
+autocmd({ "BufEnter", "CmdLineLeave", "BufNewFile" }, {
   pattern = "*",
   callback = function()
     vim.opt.formatoptions:remove { "c", "r", "o" }
   end,
   group = disableautocomment,
+  desc = "Disable autocomment on enter",
 })
 
 -- Highlight on yank
