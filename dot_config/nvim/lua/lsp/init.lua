@@ -46,26 +46,27 @@ local function setup_lsp(server)
   end
 
   local group = vim.api.nvim_create_augroup("eelisk/lsp/enable/" .. server, { clear = true })
-  vim.api.nvim_create_autocmd({ "FileType" }, {
+  local attached_buffers = {}
+  vim.api.nvim_create_autocmd("LspAttach", {
     group = group,
-    pattern = server_config.filetypes,
-    callback = function()
-      if enabled_servers[server] then
-        return
-      end
-      vim.lsp.enable(server)
-      enabled_servers[server] = true
-    end,
-  })
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client and client.name == server then
+        attached_buffers[args.buf] = true
 
-  vim.api.nvim_create_autocmd("BufWinLeave", {
-    group = group,
-    pattern = server_config.filetypes,
-    callback = function()
-      if not vim.fn.bufexists(vim.fn.bufnr()) then
-        local active_clients = vim.lsp.get_clients { name = server }
-        vim.lsp.stop_client(active_clients)
-        enabled_servers[server] = false
+        vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
+          buffer = args.buf,
+          once = true,
+          callback = function()
+            attached_buffers[args.buf] = nil
+            -- If no more buffers are attached, stop the client
+            if next(attached_buffers) == nil then
+              local active_clients = vim.lsp.get_clients { name = server }
+              vim.lsp.stop_client(active_clients)
+              enabled_servers[server] = false
+            end
+          end,
+        })
       end
     end,
   })
