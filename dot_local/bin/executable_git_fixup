@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Interactive script to fix a commit using git's fixup feature.
+
+set -euo pipefail
+
+STASH_NAME="Stash before fixup"
+
+COMMIT=$(git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7)
+
+git commit --fixup="${COMMIT}"
+
+# Check if there are any unstaged changes
+# If there are, stash them for rebase to work correctly
+if ! git diff --quiet; then
+  git stash push -u -m "${STASH_NAME}"
+fi
+
+git rebase -i --autosquash "${COMMIT}~1"
+
+# If the stash was created, pop it after the rebase
+if git stash list | grep -q "${STASH_NAME}"; then
+  git stash pop
+fi

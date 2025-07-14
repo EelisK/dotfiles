@@ -25,8 +25,7 @@ path = ~/.config/gitalias/gitalias.txt
   dlog = -c diff.external=difft log --ext-diff
   dshow = -c diff.external=difft show --ext-diff
   ddiff = -c diff.external=difft diff
-	# git fixup for interactively fixing commits
-	fixup = "!COMMIT=$(git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7); git commit --fixup=$COMMIT; git rebase -i --autosquash $COMMIT~1"
+	fixup = "!git_fixup"
 
 [url "git@github.com:"]
   insteadOf = https://github.com/
