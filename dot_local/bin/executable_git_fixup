@@ -16,7 +16,7 @@ if ! git diff --quiet; then
   git stash push -u -m "${STASH_NAME}"
 fi
 
-git rebase -i --autosquash "${COMMIT}~1"
+git rebase --autosquash "${COMMIT}~1"
 
 # If the stash was created, pop it after the rebase
 if git stash list | grep -q "${STASH_NAME}"; then
