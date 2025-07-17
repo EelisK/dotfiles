@@ -3,7 +3,8 @@
 
 set -euo pipefail
 
-STASH_NAME="Stash before fixup"
+CANARY=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
+STASH_NAME="Stash before fixup - ${CANARY}"
 
 COMMIT=$(git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7)
 
