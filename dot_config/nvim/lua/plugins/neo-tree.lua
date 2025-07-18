@@ -386,7 +386,7 @@ return {
             --".git",
           },
           never_show_by_pattern = { -- uses glob style patterns
-            --".null-ls_*",
+            ".null-ls_*",
           },
         },
       },
