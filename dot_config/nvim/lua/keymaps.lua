@@ -56,6 +56,9 @@ keymap("n", "<Enter>", function()
 end, { expr = true, desc = "enter insert mode in buffers terminal" })
 keymap("n", "<leader>tb", "<cmd>belowright split | terminal<CR>", { desc = "open terminal in new buffer" })
 keymap("n", "<leader>tB", "<cmd>belowright vnew | terminal<CR>", { desc = "open terminal in new buffer vertical" })
+-- Center current line
+keymap("n", "n", "nzz", { desc = "next search result centered" })
+keymap("n", "N", "Nzz", { desc = "previous search result centered" })
 
 -- Folds
 keymap("n", "zf", toggle_fold, { desc = "toggle fold on current line", remap = true })
