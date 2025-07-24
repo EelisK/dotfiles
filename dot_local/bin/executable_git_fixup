@@ -5,6 +5,7 @@ set -euo pipefail
 
 CANARY=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
 STASH_NAME="Stash before fixup - ${CANARY}"
+CHANGES_STASHED=false
 
 COMMIT=$(git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7)
 
@@ -13,12 +14,13 @@ git commit --fixup="${COMMIT}"
 # Check if there are any unstaged changes
 # If there are, stash them for rebase to work correctly
 if ! git diff --quiet; then
-  git stash push -u -m "${STASH_NAME}"
+  git stash push --include-untracked --message "${STASH_NAME}"
+  CHANGES_STASHED=true
 fi
 
 git rebase --autosquash "${COMMIT}~1"
 
 # If the stash was created, pop it after the rebase
-if git stash list | grep -q "${STASH_NAME}"; then
+if ${CHANGES_STASHED}; then
   git stash pop
 fi
