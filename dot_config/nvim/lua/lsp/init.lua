@@ -45,22 +45,6 @@ local function setup_lsp(server)
     return
   end
 
-  -- Only handle servers with the `cmd` field is a non-empty table
-  if type(server_config.cmd) ~= "table" or #server_config.cmd == 0 then
-    vim.api.nvim_echo({
-      { ("LSP server '%s' is not configured properly: missing 'cmd' field"):format(server), "ErrorMsg" },
-    }, true, {})
-    return
-  end
-
-  local executable = server_config.cmd[1]
-  if not vim.fn.executable(executable) then
-    vim.api.nvim_echo({
-      { ("LSP server '%s' is not executable: %s"):format(server, executable), "ErrorMsg" },
-    }, true, {})
-    return
-  end
-
   local group = vim.api.nvim_create_augroup("eelisk/lsp/enable/" .. server, { clear = true })
   vim.api.nvim_create_autocmd({ "FileType" }, {
     group = group,
