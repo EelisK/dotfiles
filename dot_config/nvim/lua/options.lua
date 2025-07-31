@@ -38,6 +38,7 @@ o.wrap = true                             -- display lines as one long line
 o.fillchars:append { eob = " " }          -- hide ~ at end of buffer
 o.fixendofline = true                     -- fix end of line
 o.winborder = "rounded"                   -- border style
+o.background = "dark"                     -- set background to dark
 o.foldcolumn = '1'                        -- set fold column width to 1 {default 0}
 o.foldlevel = 99                          -- close few folds by default
 o.foldlevelstart = 99                     -- start new buffer with all folds open
