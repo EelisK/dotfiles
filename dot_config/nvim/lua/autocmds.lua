@@ -44,6 +44,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   desc = "Detect and set the proper file type for dotfiles under chezmoi management.",
   callback = function(args)
     local file = vim.api.nvim_buf_get_name(args.buf):match ".*/(.*)"
+    if not file then
+      return
+    end
     -- ignore files with leading dot
     if string.match(file, "^%.") then
       return
