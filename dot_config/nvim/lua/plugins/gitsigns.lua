@@ -15,6 +15,7 @@ local function on_attach(bufnr)
   map("n", "<leader>gr", gitsigns.reset_hunk, { buffer = bufnr, desc = "(gitsigns) Reset hunk" })
   map("n", "<leader>gp", gitsigns.preview_hunk, { buffer = bufnr, desc = "(gitsigns) Preview hunk" })
   map("n", "<leader>gb", gitsigns.blame_line, { buffer = bufnr, desc = "(gitsigns) Blame line" })
+  map("n", "<leader>gB", gitsigns.blame, { buffer = bufnr, desc = "(gitsigns) Blame" })
 end
 
 local opts = {
