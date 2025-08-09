@@ -45,7 +45,19 @@ local function setup_lsp(server)
     return
   end
 
-  local group = vim.api.nvim_create_augroup("eelisk/lsp/enable/" .. server, { clear = true })
+  local group = vim.api.nvim_create_augroup("eelisk/lsp/" .. server, { clear = true })
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    group = group,
+    pattern = server_config.filetypes,
+    callback = function()
+      if enabled_servers[server] then
+        return
+      end
+      vim.lsp.enable(server)
+      enabled_servers[server] = true
+    end,
+  })
+
   local attached_buffers = {}
   vim.api.nvim_create_autocmd("LspAttach", {
     group = group,
