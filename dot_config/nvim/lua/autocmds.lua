@@ -119,7 +119,7 @@ local yankhighlight = augroup("eelisk/actions/yankhighlight", { clear = true })
 autocmd("TextYankPost", {
   pattern = "*",
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
   group = yankhighlight,
 })
