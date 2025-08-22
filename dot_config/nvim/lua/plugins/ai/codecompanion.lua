@@ -58,6 +58,15 @@ M.dependencies = {
   },
 }
 
+M.config = function(_, opts)
+  local codecompanion = require "codecompanion"
+  vim.api.nvim_create_user_command("CodeCompanionToggle", function()
+    codecompanion.toggle()
+  end, { force = true })
+
+  codecompanion.setup(opts)
+end
+
 -- Use '<leader>cc' as the prefix for all keymaps
 local prefix = "<leader>cc"
 M.keys = {
