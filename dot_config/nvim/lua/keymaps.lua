@@ -59,6 +59,13 @@ keymap("n", "<leader>tB", "<cmd>belowright vnew | terminal<CR>", { desc = "open 
 -- Center current line
 keymap("n", "n", "nzz", { desc = "next search result centered" })
 keymap("n", "N", "Nzz", { desc = "previous search result centered" })
+-- Replace current word
+keymap(
+  "n",
+  "<leader>s",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "search and replace current word" }
+)
 
 -- Folds
 keymap("n", "zf", toggle_fold, { desc = "toggle fold on current line", remap = true })
