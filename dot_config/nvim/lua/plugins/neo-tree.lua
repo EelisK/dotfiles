@@ -33,6 +33,7 @@ return {
           return
         else
           local path = vim.fn.getcwd()
+          ---@diagnostic disable-next-line: undefined-field
           local stats = vim.uv.fs_stat(path)
           if stats and stats.type == "directory" then
             require "neo-tree"
@@ -41,21 +42,9 @@ return {
       end,
     })
 
-    local scan = require "plenary.scandir"
-    local pickers = require "telescope.pickers"
-    local finders = require "telescope.finders"
-    local tactions = require "telescope.actions"
-    local taction_state = require "telescope.actions.state"
-    local conf = require("telescope.config").values
-    local manager = require "neo-tree.sources.manager"
     local cc = require "neo-tree.sources.common.commands"
     local fs = require "neo-tree.sources.filesystem"
     local utils = require "neo-tree.utils"
-
-    local function is_dir(name)
-      local stats = vim.loop.fs_stat(name)
-      return stats and stats.type == "directory"
-    end
 
     require("window-picker").setup {
       -- type of hints you want to get
@@ -177,8 +166,6 @@ return {
       },
     }
 
-    -- local sources =
-
     vim.cmd [[ let g:neo_tree_remove_legacy_commands = 1 ]]
     require("neo-tree").setup {
       close_if_last_window = true,
@@ -288,71 +275,10 @@ return {
           ["<CR>"] = function(state)
             cc.open_with_window_picker(state, utils.wrap(fs.toggle_directory, state))
           end,
-          -- ["<Tab>"] = function(state)
-          --   local cmd = require "neo-tree.command"
-          --   local index = {}
-          --   local sources = state.sources
-          --   for k, v in pairs(sources) do
-          --     index[v] = k
-          --   end
-          --   local next_source_index = (index[state.current_position] + 1) % #sources
-          --   local next_source = sources[next_source_index]
-          --   cmd.execute { action = "focus", source = next_source }
-          -- end,
           ["S"] = "split_with_window_picker",
           ["s"] = "vsplit_with_window_picker",
           ["."] = "set_root",
           ["<bs>"] = "navigate_up",
-          ["m"] = function(state)
-            local node = state.tree:get_node()
-            local tree = state.tree
-            local cwd = manager.get_cwd(state)
-            local dirs = scan.scan_dir(cwd, { only_dirs = true })
-            local relative_dirs = {}
-            for _, dir in ipairs(dirs) do
-              local relative_dir = dir:gsub(cwd, "")
-              table.insert(relative_dirs, relative_dir)
-            end
-
-            local opts = require("telescope.themes").get_dropdown {}
-            pickers
-              .new(opts, {
-                prompt_title = "Target directory",
-                finder = finders.new_table {
-                  results = relative_dirs,
-                },
-                sorter = conf.generic_sorter(opts),
-                attach_mappings = function(prompt_bufnr)
-                  tactions.select_default:replace(function()
-                    tactions.close(prompt_bufnr)
-                    local selection = taction_state.get_selected_entry()
-
-                    local source_file = node.path
-                    local target_dir = cwd .. selection[1]
-                    target_dir = target_dir .. "/"
-                    target_dir = target_dir:gsub("//", "/")
-                    local target_file = target_dir .. node.name
-
-                    if not is_dir(target_dir) then
-                      vim.notify "Target is not a directory"
-                      return
-                    end
-
-                    vim.loop.fs_rename(source_file, target_file, function(err)
-                      if err then
-                        print "Could not move the file"
-                        return
-                      else
-                        print("Moved " .. node.name .. " successfully")
-                        tree:render()
-                      end
-                    end)
-                  end)
-                  return true
-                end,
-              })
-              :find()
-          end,
           ["P"] = { "toggle_preview", config = { use_float = true } },
           ["<esc>"] = "revert_preview",
         },
