@@ -51,9 +51,6 @@ M.dependencies = {
     dependencies = { "williamboman/mason.nvim" },
     cmd = { "DapInstall", "DapUninstall" },
   },
-  -- dap cmp source
-  { "hrsh7th/nvim-cmp" },
-  { "rcarriga/cmp-dap" },
 }
 
 function M.config()
@@ -106,27 +103,6 @@ function M.config()
     ensure_installed = { "python", "bash", "delve" },
   }
   require("mason-nvim-dap").setup(dap_mason_opts)
-
-  -------------------
-  -- DAP CMP SOURCE -
-  -------------------
-  local cmp = require "cmp"
-  cmp.setup {
-    enabled = function()
-      if vim.api.nvim_get_option_value("buftype", {
-        buf = 0,
-      }) == "prompt" then
-        return true
-      end
-      return require("cmp_dap").is_dap_buffer()
-    end,
-  }
-
-  cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-    sources = {
-      { name = "dap" },
-    },
-  })
 
   -----------------------
   -- DAP CONFIGURATIONS -
