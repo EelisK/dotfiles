@@ -1,5 +1,12 @@
 local wezterm = require "wezterm"
 local gpus = wezterm.gui.enumerate_gpus()
+local mux = wezterm.mux
+
+wezterm.on("gui-startup", function(_)
+  local _, pane, window = mux.spawn_window {}
+  local gui_window = window:gui_window()
+  gui_window:perform_action(wezterm.action.ToggleFullScreen, pane)
+end)
 
 local config = {
   font = wezterm.font "FiraCode Nerd Font",
