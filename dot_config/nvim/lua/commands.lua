@@ -9,3 +9,33 @@ cmd("ColorSchemeToggle", function()
 end, {
   desc = "Toggle between light and dark color schemes",
 })
+
+cmd("SetCase", function(args)
+  local case = args.args
+  local word = vim.fn.expand "<cword>"
+  if word == "" then
+    print "No word under cursor"
+    return
+  end
+
+  local textcase = require "textcase"
+  local converted = textcase.convert(word, case)
+
+  if converted then
+    vim.cmd(string.format("normal ciw%s", converted))
+  else
+    print("Invalid case: " .. case)
+  end
+end, {
+  desc = "Set the case of the current word",
+  nargs = 1,
+  complete = function()
+    return {
+      "snake_case",
+      "camelCase",
+      "PascalCase",
+      "kebab-case",
+      "MACRO_CASE",
+    }
+  end,
+})
