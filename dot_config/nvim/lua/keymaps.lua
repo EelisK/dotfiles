@@ -62,38 +62,10 @@ keymap(
 keymap("n", "<leader>gy", function()
   local absolute_path = vim.fn.expand "%:p"
   local current_line = vim.fn.line "."
-  local blame_info =
-    vim.fn.systemlist("git blame -L " .. current_line .. "," .. current_line .. " --porcelain " .. absolute_path)
-  if blame_info == "" then
+  local url = vim.fn.systemlist("git blame-link " .. current_line .. " " .. absolute_path)[1]
+  if url == "" then
     return
   end
-
-  -- Format eg. "1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0 4 1"
-  local sha, original_line, _ = blame_info[1]:match "^(%S+)%s+(%d+)%s+(%d+)"
-  if sha == nil or sha:match "^0+$" then
-    -- uncommitted line
-    vim.api.nvim_echo({
-      { "Line is not committed yet", "WarningMsg" },
-    }, false, {})
-    return
-  end
-
-  -- get remote url
-  local remote_url = vim.fn.systemlist("git config --get remote.origin.url")[1]
-
-  -- Convert SSH URL to HTTPS URL if necessary
-  if remote_url:match "^git@" then
-    remote_url = remote_url:gsub(":", "/")
-    remote_url = remote_url:gsub("^git@", "https://")
-  end
-
-  -- Remove .git suffix if present
-  remote_url = remote_url:gsub("%.git$", "")
-
-  -- Construct the URL to the specific line in the file
-  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
-  local file_path = absolute_path:sub(#git_root + 2)
-  local url = string.format("%s/blob/%s/%s#L%d", remote_url, sha, file_path, original_line)
 
   -- Copy the URL to the clipboard
   vim.fn.setreg("+", url)
