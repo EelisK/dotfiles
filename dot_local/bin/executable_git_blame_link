@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# git blame-link: Generate an GitHub HTTPS link to the blame view of a specific line in a file.
+
+if [[ "$#" -ne 2 ]]; then
+  echo "Usage: $0 <line-number> <file-path>"
+  exit 1
+fi
+
+line_number=$1
+file_path=$2
+blame_args="-L ${line_number},${line_number} --porcelain ${file_path}"
+
+# shellcheck disable=SC2312,SC2086
+blame_info=$(git blame ${blame_args} | head -n 1)
+commit_hash=$(echo "${blame_info}" | awk '{print $1}')
+original_line_number=$(echo "${blame_info}" | awk '{print $2}')
+
+# Get original file path
+# shellcheck disable=SC2312,SC2086
+file_path=$(git blame ${blame_args} | grep "^filename " | awk '{print $2}')
+
+# Get remote URL and convert to HTTPS if necessary
+remote_url=$(git config --get remote.origin.url)
+if [[ "${remote_url}" == git@* ]]; then
+  remote_url=${remote_url/://}
+  remote_url=${remote_url/git@/https:\/\/}
+fi
+
+# Construct the upstream link
+upstream_link="${remote_url%.*}/blob/${commit_hash}/${file_path}#L${original_line_number}"
+
+echo "${upstream_link}"
