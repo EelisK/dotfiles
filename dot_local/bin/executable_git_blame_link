@@ -2,7 +2,7 @@
 # git blame-link: Generate an GitHub HTTPS link to the blame view of a specific line in a file.
 
 if [[ "$#" -ne 2 ]]; then
-  echo "Usage: $0 <line-number> <file-path>"
+  echo >&2 "Usage: $0 <line-number> <file-path>"
   exit 1
 fi
 
@@ -13,6 +13,11 @@ blame_args="-L ${line_number},${line_number} --porcelain ${file_path}"
 # shellcheck disable=SC2312,SC2086
 blame_info=$(git blame ${blame_args} | head -n 1)
 commit_hash=$(echo "${blame_info}" | awk '{print $1}')
+if [[ "${commit_hash}" == "0000000000000000000000000000000000000000" ]]; then
+  echo >&2 "Error: The specified line is not committed yet."
+  exit 1
+fi
+
 original_line_number=$(echo "${blame_info}" | awk '{print $2}')
 
 # Get original file path
