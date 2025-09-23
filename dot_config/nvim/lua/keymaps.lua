@@ -62,15 +62,19 @@ keymap(
 keymap("n", "<leader>gy", function()
   local absolute_path = vim.fn.expand "%:p"
   local current_line = vim.fn.line "."
-  local url = vim.fn.systemlist("git blame-link " .. current_line .. " " .. absolute_path)[1]
-  if url == "" then
+  local url_or_error = vim.fn.systemlist("git blame-link " .. current_line .. " " .. absolute_path)[1]
+  local is_url = url_or_error:match "^https?://"
+  if not is_url then
+    vim.api.nvim_echo({
+      { url_or_error, "ErrorMsg" },
+    }, false, {})
     return
   end
 
   -- Copy the URL to the clipboard
-  vim.fn.setreg("+", url)
+  vim.fn.setreg("+", url_or_error)
   vim.api.nvim_echo({
-    { "Copied to clipboard: " .. url, "Normal" },
+    { "Copied to clipboard: " .. url_or_error, "Normal" },
   }, false, {})
 end, { desc = "copy link to upstream version control" })
 
