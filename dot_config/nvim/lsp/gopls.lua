@@ -69,7 +69,4 @@ return {
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
   root_dir = root_dir,
   on_attach = on_attach,
-  on_exit = function()
-    vim.api.nvim_clear_autocmds { group = "eelisk/lsp/gopls/autoimport" }
-  end,
 }
