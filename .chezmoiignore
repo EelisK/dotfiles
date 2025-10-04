@@ -2,6 +2,8 @@ README.md
 install.sh
 Dockerfile
 .dockerignore
+Containerfile
+.containerignore
 .github
 docs
 
