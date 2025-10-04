@@ -71,20 +71,20 @@
 ".nvim":
   type: archive
   {{- $nvimVersion := includeTemplate "get-github-latest-release" (list "neovim/neovim" $cfg) }}
-  url: "https://github.com/neovim/neovim/releases/download/{{ $nvimVersion }}/nvim-{{ if eq .chezmoi.os "darwin" }}macos-{{ else }}linux-{{ end }}{{ .unix_arch }}.tar.gz"
+  url: "https://github.com/neovim/neovim/releases/download/{{ $nvimVersion }}/nvim-{{ if eq .chezmoi.os "darwin" }}macos-{{ else }}linux-{{ end }}{{ .unixArch }}.tar.gz"
   stripComponents: 1
 
 ".local/bin/kubecolor":
   type: archive-file
   {{- $kubecolorVersion := includeTemplate "get-github-latest-release" (list "hidetatz/kubecolor" $cfg) }}
-  url: "https://github.com/hidetatz/kubecolor/releases/download/{{ $kubecolorVersion }}/kubecolor_{{ substr 1 (len $kubecolorVersion) $kubecolorVersion }}_{{ .chezmoi.os | title  }}_{{ .unix_arch }}.tar.gz"
+  url: "https://github.com/hidetatz/kubecolor/releases/download/{{ $kubecolorVersion }}/kubecolor_{{ substr 1 (len $kubecolorVersion) $kubecolorVersion }}_{{ .chezmoi.os | title  }}_{{ .unixArch }}.tar.gz"
   path: kubecolor
   executable: true
 
 ".local/bin/kubectx":
   type: archive-file
   {{- $kubectxVersion := includeTemplate "get-github-latest-release" (list "ahmetb/kubectx" $cfg) }}
-  {{- $kubectxRelease := printf "%s_%s_%s"  $kubectxVersion .chezmoi.os .unix_arch }}
+  {{- $kubectxRelease := printf "%s_%s_%s"  $kubectxVersion .chezmoi.os .unixArch }}
   url: "https://github.com/ahmetb/kubectx/releases/download/{{ $kubectxVersion }}/kubectx_{{ $kubectxRelease }}.tar.gz"
   path: kubectx
   executable: true
@@ -142,7 +142,7 @@
 ".local/bin/lazygit":
   type: archive-file
   {{- $lazygitVersion := includeTemplate "get-github-latest-release" (list "jesseduffield/lazygit" $cfg) }}
-  url: "https://github.com/jesseduffield/lazygit/releases/download/{{ $lazygitVersion }}/lazygit_{{ substr 1 (len $lazygitVersion) $lazygitVersion }}_{{ .chezmoi.os | title }}_{{ .unix_arch }}.tar.gz"
+  url: "https://github.com/jesseduffield/lazygit/releases/download/{{ $lazygitVersion }}/lazygit_{{ substr 1 (len $lazygitVersion) $lazygitVersion }}_{{ .chezmoi.os | title }}_{{ .unixArch }}.tar.gz"
   path: lazygit
   executable: true
 
