@@ -105,6 +105,10 @@ if [ -d "${HOME}/.pyenv" ]; then
   eval "$(pyenv init --path)" || true
 fi
 
+if [ -d "${HOME}/.opencode/bin" ]; then
+  export PATH="${HOME}/.opencode/bin:${PATH}"
+fi
+
 if [ -d "${HOME}/bin" ]; then
   export PATH="${HOME}/bin:${PATH}"
 fi
