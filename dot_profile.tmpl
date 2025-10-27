@@ -210,7 +210,7 @@ if [ -f "${HOME}/.profile.local" ]; then
   . "${HOME}/.profile.local"
 fi
 
-if [ -f "${HOME}/.profile.d" ]; then
+if [ -d "${HOME}/.profile.d" ]; then
   for file in "${HOME}/.profile.d/"*.sh; do
     if [ -f "${file}" ]; then
       # shellcheck disable=SC1090
