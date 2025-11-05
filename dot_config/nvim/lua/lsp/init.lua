@@ -98,7 +98,12 @@ vim.diagnostic.config {
   },
   virtual_text = { prefix = "" },
   signs = {
-    text = icons.diagnostic.text,
+    text = {
+      [vim.diagnostic.severity.ERROR] = icons.diagnostic.error,
+      [vim.diagnostic.severity.WARN] = icons.diagnostic.warn,
+      [vim.diagnostic.severity.INFO] = icons.diagnostic.info,
+      [vim.diagnostic.severity.HINT] = icons.diagnostic.hint,
+    },
   },
   underline = true,
   update_in_insert = false,

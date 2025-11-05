@@ -58,12 +58,10 @@ return {
     changedelete = { text = "󱕖" },
   },
   diagnostic = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = "󰅙",
-      [vim.diagnostic.severity.WARN] = "",
-      [vim.diagnostic.severity.INFO] = "󰋼",
-      [vim.diagnostic.severity.HINT] = "󰌵",
-    },
+    error = "󰅙 ",
+    warn = " ",
+    info = "󰋼 ",
+    hint = "󰌵 ",
   },
   separators = {
     left = " ",
