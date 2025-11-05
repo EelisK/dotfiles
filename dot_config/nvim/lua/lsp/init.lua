@@ -93,10 +93,16 @@ vim.lsp.config("*", {
 -- settings and mappings for the diagnostic framework
 vim.diagnostic.config {
   virtual_lines = false,
+  virtual_text = {
+    prefix = "",
+    severity = { min = vim.diagnostic.severity.WARN },
+  },
   float = {
     border = "rounded",
   },
-  virtual_text = { prefix = "" },
+  underline = {
+    severity = { min = vim.diagnostic.severity.INFO },
+  },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = icons.diagnostic.error,
@@ -105,7 +111,6 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.HINT] = icons.diagnostic.hint,
     },
   },
-  underline = true,
   update_in_insert = false,
 }
 
