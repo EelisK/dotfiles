@@ -62,6 +62,22 @@ local function before_init(_, config)
   end
 end
 
+---@alias pyright.DiagnosticMode
+---| "off"
+---| "basic"
+---| "standard"
+---| "strict"
+
+---@alias pyright.DiagnosticSeverity
+---| "error"
+---| "warning"
+---| "information"
+---| "none"
+
+--- All available rules are defined in the documentation:
+--- https://microsoft.github.io/pyright/#/configuration?id=type-check-rule-overrides
+---@alias pyright.DiagnosticRule string
+
 ---@type vim.lsp.Config
 return {
   cmd = { "pyright-langserver", "--stdio" },
@@ -86,8 +102,13 @@ return {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "openFilesOnly",
-        ---@type "off" | "basic" | "standard" | "strict"
+        ---@type pyright.DiagnosticMode
         typeCheckingMode = "strict",
+        ---@type table<pyright.DiagnosticRule, pyright.DiagnosticSeverity>
+        diagnosticSeverityOverrides = {
+          reportPrivateUsage = "information",
+          reportDeprecated = "information",
+        },
       },
     },
   },
