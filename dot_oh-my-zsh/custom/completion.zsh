@@ -13,6 +13,7 @@ command -v chezmoi >/dev/null 2>&1 && source <(chezmoi completion zsh)
 command -v minikube >/dev/null 2>&1 && source <(minikube completion zsh)
 command -v stern >/dev/null 2>&1 && source <(stern --completion zsh)
 command -v podman >/dev/null 2>&1 && source <(podman completion zsh)
+command -v uv >/dev/null 2>&1 && source <(uv generate-shell-completion zsh)
 
 #==============================================================#
 ##          Custom completion                                 ##
