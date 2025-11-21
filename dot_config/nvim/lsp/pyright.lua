@@ -108,6 +108,7 @@ return {
         diagnosticSeverityOverrides = {
           reportPrivateUsage = "information",
           reportDeprecated = "information",
+          reportIncompatibleMethodOverride = "information",
         },
       },
     },
