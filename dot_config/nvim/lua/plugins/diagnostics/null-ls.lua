@@ -20,6 +20,19 @@ M.config = function()
       diagnostics.tfsec,
       -- python
       diagnostics.mypy.with {
+        env = function(params)
+          local mypy_path_env = params.cwd
+          ---@diagnostic disable-next-line: undefined-field
+          if vim.loop.fs_stat(mypy_path_env .. "/src") then
+            mypy_path_env = mypy_path_env .. "/src"
+          end
+          if vim.env.MYPYPATH then
+            mypy_path_env = vim.env.MYPYPATH .. ":" .. mypy_path_env
+          end
+          return {
+            MYPYPATH = mypy_path_env,
+          }
+        end,
         args = function(params)
           local opts = {
             -- default options
