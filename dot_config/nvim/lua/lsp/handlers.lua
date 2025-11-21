@@ -130,9 +130,7 @@ function M.on_attach(event)
 
   -- Auto-format ("lint") on save.
   -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
-  if
-    not client:supports_method(m.textDocument_willSaveWaitUntil) and client:supports_method(m.textDocument_formatting)
-  then
+  if not supports(m.textDocument_willSaveWaitUntil) and supports(m.textDocument_formatting) then
     -- disable auto-format by default
     vim.g.disable_lsp_autoformat = true
     vim.api.nvim_create_user_command("LspFormat", function()
