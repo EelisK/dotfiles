@@ -58,7 +58,6 @@ plugins=(
     helm
     npm
     command-not-found
-    common-aliases
     sudo
     zsh-autosuggestions
     gcloud
