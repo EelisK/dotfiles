@@ -31,7 +31,9 @@
   "mcp": {
     // BuildKite
     "bk": {
-      "enabled": true,
+      // Enable only when needed, as it's causing headaches
+      // with constant reauthentication requests.
+      "enabled": false,
       "type": "local",
       "command": ["npx", "-y", "mcp-remote", "https://mcp.buildkite.com/mcp/readonly"],
     },
