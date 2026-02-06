@@ -90,6 +90,11 @@ if [ -d "${HOME}/.nvm" ]; then
   fi
 fi
 
+if [ -d "${HOME}/Library/pnpm" ]; then
+  export PNPM_HOME="${HOME}/Library/pnpm"
+  export PATH="$PNPM_HOME:$PATH"
+fi
+
 if [ -d "${HOME}/.rbenv" ]; then
   export PATH="${HOME}/.rbenv/bin:${PATH}"
   export PATH="${HOME}/.rbenv/shims:${PATH}"
