@@ -31,6 +31,13 @@ if [[ "${remote_url}" == git@* ]]; then
   remote_url=${remote_url/git@/https:\/\/}
 fi
 
+# special case for markdown files:
+# show plain file instead of rendered file to correctly link to the line number,
+# since GitHub does not support line numbers in the rendered view of markdown files
+if [[ "${file_path}" == *.md ]]; then
+  file_path="${file_path}?plain=1"
+fi
+
 # Construct the upstream link
 upstream_link="${remote_url%.*}/blob/${commit_hash}/${file_path}#L${original_line_number}"
 
