@@ -1,0 +1,52 @@
+[environment]
+# Default to system Python for global checks
+python = "/usr/bin/python3"
+
+[src]
+include = ["src", "tests"]
+exclude = [
+  "scripts/",
+  "docs/",
+  "build/",
+  "dist/",
+  ".venv/",
+  "**/__pycache__/",
+]
+respect-ignore-files = true
+
+[rules]
+division-by-zero = "error"
+possibly-unresolved-reference = "error"
+invalid-argument-type = "error"
+missing-argument = "error"
+unsupported-operator = "error"
+unused-ignore-comment = "warn"
+redundant-cast = "warn"
+unresolved-import = "warn"
+
+[terminal]
+output-format = "full"
+error-on-warning = false
+
+# =============================================================================
+# TEST FILES - RELAXED RULES
+# =============================================================================
+# Test code legitimately uses mocks, dynamic fixtures, and intentional
+# type violations. We warn (not error) to surface issues without blocking commits.
+# See: https://docs.astral.sh/ty/configuration/#per-directory-rule-overrides
+[[overrides]]
+include = ["tests/**"]
+
+[overrides.rules]
+possibly-unresolved-reference = "warn"
+unresolved-import = "ignore"
+# Additional rules relaxed to warn (from test errors analysis)
+invalid-argument-type = "warn"
+not-subscriptable = "warn"
+unknown-argument = "warn"
+unresolved-attribute = "warn"
+invalid-assignment = "warn"
+unsupported-operator = "warn"
+missing-argument = "warn"
+not-iterable = "warn"
+division-by-zero = "warn"
