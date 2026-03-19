@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+
+import argparse
+import signal
+import sys
+import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from types import FrameType
+from typing import Any, ClassVar, Final, NoReturn, override
+
+HOP_BY_HOP_HEADERS: Final = frozenset(
+    {
+        "connection",
+        "keep-alive",
+        "transfer-encoding",
+        "te",
+        "trailer",
+        "upgrade",
+    }
+)
+SKIP_HEADERS: Final = frozenset(
+    {
+        "content-length",  # Will be set automatically based on actual body
+        "host",  # Meaningless in response
+        *HOP_BY_HOP_HEADERS,
+    }
+)
+
+
+class EchoArguments(argparse.Namespace):
+    port: int
+    host: str
+    status: int
+    delay: float
+
+
+class EchoHandler(BaseHTTPRequestHandler):
+    response_status: ClassVar[int] = 200
+    response_delay: ClassVar[float] = 0.0
+
+    def _handle_request(self) -> None:
+        try:
+            content_length = int(self.headers.get("Content-Length", 0))
+        except ValueError:
+            content_length = 0
+        request_body = self.rfile.read(content_length)
+
+        headers_str = "\r\n".join(f"{k}: {v}" for k, v in self.headers.items())
+        body_str = request_body.decode(errors="replace")
+        print(
+            f"{self.command} {self.path} {self.request_version}\r\n"
+            f"{headers_str}\r\n\r\n"
+            f"{body_str}",
+            flush=True,
+        )
+
+        if self.response_delay > 0:
+            time.sleep(self.response_delay)
+
+        self.send_response(self.response_status)
+        for key, value in self.headers.items():
+            if key.lower() not in SKIP_HEADERS:
+                self.send_header(key, value)
+        self.end_headers()
+        self.wfile.write(request_body)
+
+    do_GET: Final = _handle_request
+    do_PUT: Final = _handle_request
+    do_POST: Final = _handle_request
+    do_HEAD: Final = _handle_request
+    do_PATCH: Final = _handle_request
+    do_DELETE: Final = _handle_request
+    do_OPTIONS: Final = _handle_request
+
+    @override
+    def log_message(self, fmt: str, *args: Any) -> None:
+        """Override to disable default request logging."""
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Simple HTTP echo server")
+    parser.add_argument(
+        "-p",
+        "--port",
+        type=int,
+        default=8080,
+        help="Port to listen on (default: 8080)",
+    )
+    parser.add_argument(
+        "--host",
+        type=str,
+        default="",
+        help="Host to listen on (default: all interfaces)",
+    )
+    parser.add_argument(
+        "--status",
+        type=int,
+        default=200,
+        help="HTTP status code to return (default: 200)",
+    )
+    parser.add_argument(
+        "--delay",
+        type=float,
+        default=0.0,
+        help="Delay in seconds before responding (default: 0)",
+    )
+    args = parser.parse_args(namespace=EchoArguments())
+
+    EchoHandler.response_status = args.status
+    EchoHandler.response_delay = args.delay
+
+    server = HTTPServer((args.host, args.port), EchoHandler)
+    display_host = args.host or "0.0.0.0"
+    print(f"Listening on {display_host}:{args.port}", file=sys.stderr)
+
+    def shutdown(signum: int, frame: FrameType | None) -> NoReturn:
+        print("\nShutting down server...", file=sys.stderr, flush=True)
+        server.server_close()
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, shutdown)
+    signal.signal(signal.SIGTERM, shutdown)
+
+    server.serve_forever()
+
+
+if __name__ == "__main__":
+    main()
