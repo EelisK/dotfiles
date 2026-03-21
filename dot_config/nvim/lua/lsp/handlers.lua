@@ -13,22 +13,33 @@ function M.on_attach(event)
 
   -- Create a shortcut for checkhealth
   vim.api.nvim_create_user_command("LspInfo", ":checkhealth vim.lsp", { nargs = 0 })
-  -- Create a shortcut for restarting the LSP client
-  vim.api.nvim_create_user_command("LspRestart", function()
-    local clients = vim.lsp.get_clients { bufnr = event.buf }
+  -- Create a shortcut for restarting an LSP client
+  vim.api.nvim_create_user_command("LspRestart", function(opts)
+    local target_name = opts.args
+    local clients = vim.lsp.get_clients()
+    local found = false
     for _, c in pairs(clients) do
-      vim.lsp.enable(c.name, false)
-    end
-    ---@diagnostic disable-next-line: undefined-field
-    local timer = assert(vim.uv.new_timer())
-    timer:start(500, 0, function()
-      for _, c in ipairs(clients) do
-        vim.schedule_wrap(function(x)
-          vim.lsp.enable(x)
-        end)(c.name)
+      if c.name == target_name then
+        found = true
+        vim.lsp.enable(c.name, false)
+        vim.lsp.enable(c.name, true)
+        break
       end
-    end)
-  end, { nargs = 0, desc = "Restart LSP client" })
+    end
+    if not found then
+      vim.notify("No active LSP client named '" .. target_name .. "'", vim.log.levels.ERROR)
+    end
+  end, {
+    nargs = 1,
+    desc = "Restart LSP client",
+    complete = function(_, _, _)
+      local names = {}
+      for _, c in pairs(vim.lsp.get_clients()) do
+        table.insert(names, c.name)
+      end
+      return names
+    end,
+  })
   -- Create a shortcut for showing the LSP client logs
   vim.api.nvim_create_user_command("LspLogs", function()
     local log_path = vim.lsp.get_log_path()
