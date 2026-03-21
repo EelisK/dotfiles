@@ -38,7 +38,7 @@ fi
 ##  PATH                                                      ##
 #==============================================================#
 
-export PATH=":${PATH}:/usr/sbin:/sbin"
+export PATH="${PATH}:/usr/sbin:/sbin"
 
 # {{- if eq .chezmoi.os "darwin" }}
 if [ -d "/opt/homebrew/opt/coreutils/libexec/gnubin" ]; then
