@@ -29,6 +29,13 @@ path = ~/.config/gitalias/gitalias.txt
   ddiff = -c diff.external=difft diff
 	fixup = "!git_fixup"
 	blame-link = "!git_blame_link"
+	work = "!f() { \
+		if [ $# -ne 1 ]; then \
+			echo 'Usage: git work <branch-name>' >&2; \
+			return 1; \
+		fi; \
+		git worktree add \"$WORKSPACE_DIR/${1##*/}\" -b \"$1\"; \
+	}; f"
 
 [url "git@github.com:"]
   insteadOf = https://github.com/
