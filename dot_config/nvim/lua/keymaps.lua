@@ -58,6 +58,20 @@ keymap(
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
   { desc = "search and replace current word" }
 )
+-- Replace visual selection
+keymap("v", "<leader>s", function()
+  vim.cmd 'noau normal! "zy' -- Yank selection to register z
+  local selection = vim.fn.getreg "z"
+  if selection:find "\n" then
+    vim.notify("Multi-line selection not supported", vim.log.levels.WARN)
+    return
+  end
+  local search_escaped = vim.fn.escape(selection, [=[\/.*$^~[]]=])
+  local replace_escaped = vim.fn.escape(selection, [[\/&~]])
+  -- Build the substitute command and enter command-line mode
+  local cmd = ":%s/" .. search_escaped .. "/" .. replace_escaped .. "/gI"
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. "<Left><Left><Left>", true, false, true), "n", false)
+end, { desc = "search and replace visual selection" })
 -- Copy link to upstream version control
 keymap("n", "<leader>gy", function()
   local absolute_path = vim.fn.expand "%:p"
