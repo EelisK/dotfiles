@@ -1,0 +1,29 @@
+{{- /* chezmoi:modify-template vim: set ft=gotmpl: */ -}}
+{{ fromJson .chezmoi.stdin |
+    setValueAtPath "env.CLAUDE_CODE_USE_BEDROCK" "1" |
+    setValueAtPath "env.AWS_REGION" "eu-west-1" |
+    setValueAtPath "env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC" "1" |
+    setValueAtPath "env.CLAUDE_CODE_MAX_OUTPUT_TOKENS" "8096" |
+    setValueAtPath "env.MAX_THINKING_TOKENS" "4096" |
+    setValueAtPath "permissions.deny" (list
+        "Read(**/.env*)"
+        "Read(**/*.pem)"
+        "Read(**/*.key)"
+        "Read(**/*.p12)"
+        "Read(**/*.pfx)"
+        "Read(**/*.cer)"
+        "Read(**/*.crt)"
+        "Read(**/.ssh/**)"
+        "Read(**/*secret*)"
+        "Read(**/*credential*)"
+        "Read(**/.aws/credentials)"
+        "Edit(**/.env*)"
+        "Edit(**/*.pem)"
+        "Edit(**/*.key)"
+        "Edit(**/.ssh/**)"
+        "Bash(git commit:*)"
+        "Bash(git push:*)"
+    ) |
+    setValueAtPath "sandbox.enabled" true |
+    setValueAtPath "sandbox.allowUnsandboxedCommands" false |
+    toPrettyJson }}
