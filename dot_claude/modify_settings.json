@@ -24,6 +24,9 @@
         "Bash(git commit:*)"
         "Bash(git push:*)"
     ) |
+    setValueAtPath "statusLine.command" "~/.claude/statusline.py" |
+    setValueAtPath "statusLine.type" "command" |
+    setValueAtPath "statusLine.padding" 0 |
     setValueAtPath "sandbox.enabled" true |
     setValueAtPath "sandbox.allowUnsandboxedCommands" false |
     toPrettyJson }}
