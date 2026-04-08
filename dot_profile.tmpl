@@ -131,6 +131,10 @@ if [ -d "${HOME}/.nix-profile/bin" ]; then
   export PATH="${HOME}/.nix-profile/bin:${PATH}"
 fi
 
+if [ -d "${HOME}/.bun/bin" ]; then
+  export PATH="${HOME}/.bun/bin:${PATH}"
+fi
+
 if [ -d "${HOME}/Library/Application Support/Coursier/bin" ]; then
   export PATH="${HOME}/Library/Application Support/Coursier/bin:${PATH}"
 fi
