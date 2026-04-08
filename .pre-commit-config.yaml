@@ -26,3 +26,9 @@ repos:
     hooks:
       - id: stylua
         files: .*\.(lua|nlua)$
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.9
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
