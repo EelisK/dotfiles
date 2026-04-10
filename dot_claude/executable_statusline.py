@@ -154,7 +154,14 @@ def _format_context_usage(
 
 def _format_duration(session: ClaudeCodeSession) -> str:
     duration_sec = session["cost"]["total_duration_ms"] // 1000
-    mins, secs = duration_sec // 60, duration_sec % 60
+    days, remainder = divmod(duration_sec, 86400)
+    hours, remainder = divmod(remainder, 3600)
+    mins, secs = divmod(remainder, 60)
+
+    if days:
+        return f"{days}d {hours}h {mins}m"
+    if hours:
+        return f"{hours}h {mins}m {secs}s"
     return f"{mins}m {secs}s"
 
 
