@@ -2,3 +2,5 @@
 .null-ls_*
 .conform.*
 .factorypath
+.claude/*.local.json
+.claude/*.local.md
