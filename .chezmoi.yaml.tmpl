@@ -26,6 +26,8 @@
 
 {{- if hasKey . "name" -}}
 {{-   $name = .name -}}
+{{- else if (env "CHEZMOI_NAME") -}}
+{{-   $name = env "CHEZMOI_NAME" -}}
 {{- else if $interactive -}}
 {{-   range $i := until 99 -}}
 {{-     $question := "❔ What is your full name" -}}
@@ -48,6 +50,8 @@
 
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
+{{- else if (env "CHEZMOI_EMAIL") -}}
+{{-   $email = env "CHEZMOI_EMAIL" -}}
 {{- else if $interactive -}}
 {{-   range $i := until 99 -}}
 {{-     $question := "❔ What is your email" -}}
