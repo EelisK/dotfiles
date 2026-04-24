@@ -1,5 +1,9 @@
 {{- /* chezmoi:modify-template vim: set ft=gotmpl: */ -}}
-{{ fromJson .chezmoi.stdin |
+{{- $data := dict -}}
+{{- if ne .chezmoi.stdin "" -}}
+{{-   $data = fromJson .chezmoi.stdin -}}
+{{- end -}}
+{{ $data |
     setValueAtPath "env.CLAUDE_CODE_USE_BEDROCK" "1" |
     setValueAtPath "env.AWS_REGION" "eu-west-1" |
     setValueAtPath "env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC" "1" |
