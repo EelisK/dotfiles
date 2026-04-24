@@ -24,6 +24,13 @@ Simply run:
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply EelisK
 ```
 
+Or, if you just want to try it out, you can use an OCI-compatible runtime like `podman`:
+
+```sh
+podman build -t eelisk-dotfiles .
+podman run -it --rm eelisk-dotfiles
+```
+
 ## Tools 🛠️
 
 - [`neovim`](https://neovim.io/) - Vim-fork focused on extensibility and usability
