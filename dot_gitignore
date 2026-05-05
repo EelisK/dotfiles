@@ -4,3 +4,18 @@
 .factorypath
 .claude/*.local.json
 .claude/*.local.md
+
+# JVM LSP artifacts
+.metals/
+.bloop/
+.jdtls/
+.cache/jdtls/
+
+# Gradle
+.gradle/
+build/
+
+# Scala build
+target/
+project/target/
+project/project/
