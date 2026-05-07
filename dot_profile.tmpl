@@ -18,6 +18,10 @@ export WORKSPACE_DIR="${HOME}/workspace"
 
 export TLDR_AUTO_UPDATE_DISABLED="true"
 
+# {{- if eq .chezmoi.os "darwin" }}
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE="/var/run/docker.sock"
+# {{- end }}
+
 export MANPAGER='nvim +Man!'
 
 # {{- if eq .chezmoi.os "darwin" }}
