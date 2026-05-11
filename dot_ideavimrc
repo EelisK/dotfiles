@@ -1,0 +1,188 @@
+"" Base Settings
+"" ========================================================
+
+set scrolloff=8
+set sidescrolloff=8
+set number
+set relativenumber
+set showmode
+set showcmd
+
+set smartcase
+set ignorecase
+set incsearch
+set hlsearch
+
+set visualbell
+
+" Smart line joining
+set ideajoin
+
+" Use system clipboard
+set clipboard+=unnamed
+set clipboard+=ideaput
+
+" Leader key
+let mapleader = " "
+
+"" Plugins
+"" List: https://github.com/JetBrains/ideavim/wiki/IdeaVim-Plugins
+"" ========================================================
+
+Plug 'TheBlob42/idea-which-key'
+set which-key
+set notimeout
+set timeoutlen=5000
+
+Plug 'tpope/vim-surround'
+Plug 'machakann/vim-highlightedyank'
+Plug 'preservim/nerdtree'
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-commentary'
+
+"" Key Mappings
+"" ========================================================
+
+" Nordic keyboard layout
+noremap € $
+noremap ¤ $
+
+" Disable arrow keys
+noremap <up> <nop>
+noremap <down> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+
+" Clear search highlights (like nvim <Esc>)
+nnoremap <Esc> :noh<CR>
+
+" Save file
+nnoremap <C-s> :w<CR>
+inoremap <C-s> <Esc>:w<CR>a
+
+" Tab/buffer navigation
+nnoremap <Tab> :action NextTab<CR>
+nnoremap <S-Tab> :action PreviousTab<CR>
+
+" Close current buffer
+nnoremap <leader>x :action CloseContent<CR>
+
+" Search and replace current word
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+map <leader>s <action>(Replace)
+
+" Pane navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+" Easy visual indentation
+vnoremap < <gv
+vnoremap > >gv
+
+" Move text up and down in visual mode
+vmap <A-j> <action>(MoveLineDown)
+vmap <A-k> <action>(MoveLineUp)
+
+" Visual block move text
+xmap J <action>(MoveLineDown)
+xmap K <action>(MoveLineUp)
+xmap <A-j> <action>(MoveLineDown)
+xmap <A-k> <action>(MoveLineUp)
+
+" Search for visual selection with *
+vnoremap * y/\V<C-R>"<CR>
+
+" Don't yank on visual paste
+vnoremap p "_dP
+
+" Copy and show file path
+nmap <C-g> :action CopyContentRootPath<CR>:echo @+<CR>
+
+" NerdTree (file tree toggle)
+map <C-t> :NERDTreeToggle<CR>
+map <leader>e :NERDTreeFind<CR>
+let g:NERDTreeMapNewFile = 'a'
+let g:NERDTreeMapNewDir = 'A'
+
+" Comment lines
+nmap <leader>/ <action>(CommentByLineComment)
+vmap <leader>/ <action>(CommentByBlockComment)
+
+" Close active tab/buffer
+map <leader>x <action>(CloseContent)
+
+" Find
+map <leader>ff <action>(GotoFile)
+map <leader>fw <action>(FindInPath)
+map <leader>fW <action>(Find)
+map <leader>fa <action>(GotoFile)
+
+" LSP / Code Navigation
+nmap gd <action>(GotoDeclaration)
+nmap gD <action>(GotoDeclaration)
+nmap gi <action>(GotoImplementation)
+nmap gr <action>(ShowUsages)
+nmap gs <action>(FileStructurePopup)
+nmap K <action>(ShowHoverInfo)
+
+" Refactoring
+nmap <leader>ra <action>(RenameElement)
+map <leader>rm <action>(ExtractMethod)
+map <leader>rv <action>(IntroduceVariable)
+map <leader>rf <action>(IntroduceField)
+map <leader>rs <action>(ChangeSignature)
+map <leader>rr <action>(Refactorings.QuickListPopupAction)
+
+" Diagnostics
+map <leader>lf <action>(ShowErrorDescription)
+map <leader>ln <action>(GotoNextError)
+map <leader>ld <action>(GotoPreviousError)
+map <leader>tr <action>(ActivateProblemsViewToolWindow)
+map <leader>tR <action>(ActivateProblemsViewToolWindow)
+
+" Git
+map <leader>gg <action>(ActivateVersionControlToolWindow)
+map <leader>gb <action>(Annotate)
+map <leader>gB <action>(Annotate)
+map <leader>gn <action>(VcsShowNextChangeMarker)
+map <leader>gN <action>(VcsShowPrevChangeMarker)
+map <leader>gd <action>(Compare.SameVersion)
+map <leader>gp <action>(VcsShowCurrentChangeMarker)
+map <leader>gs <action>(Vcs.QuickListPopupAction)
+
+" Debugging
+map <leader>db <action>(ToggleLineBreakpoint)
+map <leader>dB <action>(AddConditionalBreakpoint)
+map <leader>dc <action>(Resume)
+map <leader>di <action>(StepInto)
+map <leader>do <action>(StepOut)
+map <leader>dO <action>(StepOver)
+map <leader>dC <action>(RunToCursor)
+map <leader>dp <action>(Pause)
+map <leader>dq <action>(Stop)
+map <leader>dr <action>(Debugger.EvaluateInConsole)
+map <leader>de <action>(EvaluateExpression)
+map <leader>du <action>(ActivateDebugToolWindow)
+
+" Formatting
+map <leader>fm <action>(ReformatCode)
+
+" Terminal
+nnoremap <leader>tb :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>tB :action Terminal.OpenInTerminal<CR>
+
+" Folding
+map <leader>zf <action>(ToggleCurrentRegion)
+
+" Insert mode navigation
+inoremap <C-b> <C-o>^
+inoremap <C-e> <End>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+
+" Reload IdeaVim configuration
+nnoremap <leader>vr :source ~/.ideavimrc<CR>
