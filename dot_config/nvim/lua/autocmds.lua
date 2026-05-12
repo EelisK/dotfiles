@@ -114,6 +114,41 @@ autocmd({ "BufEnter", "CmdLineLeave", "BufNewFile" }, {
   desc = "Disable autocomment on enter",
 })
 
+-- Handle jar file URIs
+-- eg. "jar:file:///path/to/src.zip!/java.base/java/util/Foo.java"
+local jarfile = augroup("eelisk/lsp/jarfile", { clear = true })
+autocmd("BufNew", {
+  group = jarfile,
+  pattern = "jar:file://*",
+  callback = function(args)
+    vim.bo[args.buf].buftype = "nofile"
+    vim.bo[args.buf].swapfile = false
+  end,
+})
+autocmd("BufReadCmd", {
+  group = jarfile,
+  pattern = "jar:file://*",
+  callback = function(args)
+    local buf_name = vim.api.nvim_buf_get_name(args.buf)
+    local zip_path, inner_path = buf_name:match "jar:file://(.-)!/(.*)"
+    if not zip_path or not inner_path then
+      return
+    end
+    local content = vim.fn.systemlist { "unzip", "-p", zip_path, inner_path }
+    if vim.v.shell_error ~= 0 then
+      vim.notify("Failed to extract " .. inner_path .. " from " .. zip_path, vim.log.levels.ERROR)
+      return
+    end
+    vim.api.nvim_buf_set_lines(args.buf, 0, -1, false, content)
+    vim.bo[args.buf].modifiable = false
+    vim.bo[args.buf].readonly = true
+    local filetype = vim.filetype.match { filename = inner_path }
+    if filetype then
+      vim.bo[args.buf].filetype = filetype
+    end
+  end,
+})
+
 -- Highlight on yank
 local yankhighlight = augroup("eelisk/actions/yankhighlight", { clear = true })
 autocmd("TextYankPost", {
