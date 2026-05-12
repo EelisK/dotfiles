@@ -92,6 +92,13 @@ keymap("n", "<leader>gy", function()
   }, false, {})
 end, { desc = "copy link to upstream version control" })
 
+-- Show and copy current file path
+keymap("n", "<C-g>", function()
+  vim.cmd "file" -- print file info (same as default C-g)
+  local rel_path = vim.fn.expand "%:."
+  vim.fn.setreg("+", rel_path)
+end, { desc = "show file info and copy relative path" })
+
 -- Folds
 keymap("n", "zf", toggle_fold, { desc = "toggle fold on current line", remap = true })
 
