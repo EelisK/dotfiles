@@ -112,6 +112,13 @@ function M.on_attach(event)
     vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
   end
 
+  if supports(m.textDocument_inlayHint) then
+    map("<leader>h", function()
+      local is_currently_enabled = vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }
+      vim.lsp.inlay_hint.enable(not is_currently_enabled, { bufnr = event.buf })
+    end, "Toggle inlay hints")
+  end
+
   -- diagnostic mappings
   map("<leader>lf", vim.diagnostic.open_float, "Open diagnostic float")
   map("<leader>ld", function()
