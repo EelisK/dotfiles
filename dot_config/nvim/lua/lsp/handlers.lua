@@ -64,6 +64,13 @@ function M.on_attach(event)
   if supports(m.textDocument_codeLens) then
     map("<leader>clr", vim.lsp.codelens.run, "code lens")
     map("<leader>cll", vim.lsp.codelens.refresh, "code lens refresh")
+
+    local codelens_group = vim.api.nvim_create_augroup("eelisk/lsp/codelens", { clear = true })
+    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+      buffer = event.buf,
+      group = codelens_group,
+      callback = vim.lsp.codelens.refresh,
+    })
   end
   if supports(m.textDocument_diagnostic) then
     map("<leader>dl", vim.diagnostic.setloclist, "diagnostic loclist")
