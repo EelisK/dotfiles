@@ -1,4 +1,5 @@
 # shellcheck shell=sh
+# vim: ft=sh
 
 #==============================================================#
 ##  ENVIRONMENT VARIABLES                                     ##
@@ -141,6 +142,11 @@ fi
 
 if [ -d "${HOME}/Library/Application Support/Coursier/bin" ]; then
   export PATH="${HOME}/Library/Application Support/Coursier/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/.sdkman" ]; then
+  export SDKMAN_DIR="$HOME/.sdkman"
+  export BLOOP_JAVA_HOME="${SDKMAN_DIR}/candidates/java/current"
 fi
 
 #==============================================================#
