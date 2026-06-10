@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Interactive script to reword a commit using git rebase.
+
+set -euo pipefail
+
+COMMIT=$(git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7)
+
+HEAD_SHORT=$(git rev-parse --short HEAD)
+if [[ "${HEAD_SHORT}" = "${COMMIT}" ]]; then
+  git commit --amend
+  exit 0
+fi
+
+PARENT=$(git rev-parse --verify "${COMMIT}^" 2>/dev/null || true)
+
+if [[ -z "${PARENT}" ]]; then
+  GIT_SEQUENCE_EDITOR="sed -i '' 's/^pick ${COMMIT}/reword ${COMMIT}/'" git rebase -i --root
+else
+  GIT_SEQUENCE_EDITOR="sed -i '' 's/^pick ${COMMIT}/reword ${COMMIT}/'" git rebase -i "${COMMIT}"~1
+fi
