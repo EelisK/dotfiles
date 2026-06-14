@@ -18,7 +18,13 @@ if ! git diff --quiet; then
   CHANGES_STASHED=true
 fi
 
-git rebase --autosquash "${COMMIT}~1"
+PARENT=$(git rev-parse --verify "${COMMIT}^" 2>/dev/null || true)
+
+if [[ -z "${PARENT}" ]]; then
+  git rebase --autosquash --root
+else
+  git rebase --autosquash "${COMMIT}~1"
+fi
 
 # If the stash was created, pop it after the rebase
 if ${CHANGES_STASHED}; then
