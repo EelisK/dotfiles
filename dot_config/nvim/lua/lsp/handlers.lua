@@ -42,7 +42,7 @@ function M.on_attach(event)
   })
   -- Create a shortcut for showing the LSP client logs
   vim.api.nvim_create_user_command("LspLogs", function()
-    local log_path = vim.lsp.get_log_path()
+    local log_path = vim.lsp.log.get_filename()
     if log_path then
       vim.cmd("edit " .. log_path)
     else
@@ -63,13 +63,14 @@ function M.on_attach(event)
   end
   if supports(m.textDocument_codeLens) then
     map("<leader>clr", vim.lsp.codelens.run, "code lens")
-    map("<leader>cll", vim.lsp.codelens.refresh, "code lens refresh")
-
+    vim.lsp.codelens.enable(true, { bufnr = event.buf })
     local codelens_group = vim.api.nvim_create_augroup("eelisk/lsp/codelens", { clear = true })
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
       buffer = event.buf,
       group = codelens_group,
-      callback = vim.lsp.codelens.refresh,
+      callback = function()
+        vim.lsp.codelens.run { client_id = client.id }
+      end,
     })
   end
   if supports(m.textDocument_diagnostic) then

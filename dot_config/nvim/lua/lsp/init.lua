@@ -74,7 +74,9 @@ local function setup_lsp(server)
             -- If no more buffers are attached, stop the client
             if next(attached_buffers) == nil then
               local active_clients = vim.lsp.get_clients { name = server }
-              vim.lsp.stop_client(active_clients)
+              for _, c in ipairs(active_clients) do
+                c:stop()
+              end
               enabled_servers[server] = false
             end
           end,
