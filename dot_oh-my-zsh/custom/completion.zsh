@@ -3,9 +3,6 @@
 ##          Completion                                        ##
 #==============================================================#
 
-command -v kubectl >/dev/null 2>&1 && source <(kubectl completion zsh)
-command -v kubectl >/dev/null 2>&1 && compdef kubecolor=kubectl
-command -v helm >/dev/null 2>&1 && source <(helm completion zsh)
 command -v kind >/dev/null 2>&1 && source <(kind completion zsh)
 command -v kubebuilder >/dev/null 2>&1 && source <(kubebuilder completion zsh)
 command -v operator-sdk >/dev/null 2>&1 && source <(operator-sdk completion zsh)
