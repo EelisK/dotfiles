@@ -1,6 +1,11 @@
 [environment]
-# Default to system Python for global checks
+{{- if stat "/opt/homebrew/bin/python3" }}
+python = "/opt/homebrew/bin/python3"
+{{- else if stat "/usr/local/bin/python3" }}
+python = "/usr/local/bin/python3"
+{{- else if stat "/usr/bin/python3" }}
 python = "/usr/bin/python3"
+{{- end }}
 
 [src]
 include = ["src", "tests"]
