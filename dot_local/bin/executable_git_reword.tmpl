@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
+# chezmoi:template:left-delimiter="#{{"
+# vim: set filetype=bash :
 # Interactive script to reword a commit using git rebase.
 
 set -euo pipefail
 
+#{{ includeTemplate "git-stash-push" }}
 COMMIT=$(git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7)
 
 HEAD_SHORT=$(git rev-parse --short HEAD)
@@ -18,3 +21,5 @@ if [[ -z "${PARENT}" ]]; then
 else
   GIT_SEQUENCE_EDITOR="sed -i '' 's/^pick ${COMMIT}/reword ${COMMIT}/'" git rebase -i "${COMMIT}"~1
 fi
+
+#{{ includeTemplate "git-stash-pop" }}

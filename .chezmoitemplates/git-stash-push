@@ -1,0 +1,10 @@
+CANARY=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
+STASH_NAME="Stash - ${CANARY}"
+CHANGES_STASHED=false
+
+# Check if there are any unstaged changes
+# If there are, stash them for rebase to work correctly
+if ! git diff --quiet; then
+  git stash push --include-untracked --message "${STASH_NAME}"
+  CHANGES_STASHED=true
+fi

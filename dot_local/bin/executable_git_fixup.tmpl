@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# chezmoi:template:left-delimiter="#{{"
+# vim: set filetype=bash :
+# Interactive script to fix a commit using git's fixup feature.
+
+set -euo pipefail
+
+COMMIT=$(git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7)
+
+git commit --fixup="${COMMIT}"
+
+#{{ includeTemplate "git-stash-push" }}
+PARENT=$(git rev-parse --verify "${COMMIT}^" 2>/dev/null || true)
+
+if [[ -z "${PARENT}" ]]; then
+  git rebase --autosquash --root
+else
+  git rebase --autosquash "${COMMIT}~1"
+fi
+#{{ includeTemplate "git-stash-pop" }}

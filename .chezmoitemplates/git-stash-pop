@@ -1,0 +1,4 @@
+# If the stash was created, pop it after the rebase
+if ${CHANGES_STASHED}; then
+  git stash pop
+fi
