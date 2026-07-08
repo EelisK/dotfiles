@@ -13,7 +13,7 @@ return {
     { "<Tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "bufferline next" } },
     { "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "bufferline prev" } },
     { "<leader>x", "<cmd>Bdelete<CR>", { desc = "bufferline close current" } },
-    { "<leader>X", "<cmd>Bwipeout<CR>", { desc = "bufferline clear others" } },
+    { "<leader>X", "<cmd>BufferLineCloseOthers<CR>", { desc = "bufferline clear others" } },
   },
   config = function()
     local bufferline = require "bufferline"
