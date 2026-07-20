@@ -12,6 +12,12 @@ local options = {
   notify_on_error = true,
   lsp_fallback = "never",
   formatters = {
+    codespell = {
+      prepend_args = {
+        "--config",
+        vim.fn.expand "~/.config/codespell/setup.cfg",
+      },
+    },
     shfmt = {
       prepend_args = { "-i", "4" },
     },
