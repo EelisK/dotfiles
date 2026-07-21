@@ -7,7 +7,7 @@ if [[ "$#" -ne 2 ]]; then
 fi
 
 line_number=$1
-file_path=$2
+file_path=$(realpath "$2")
 blame_args="-L ${line_number},${line_number} --porcelain ${file_path}"
 
 # shellcheck disable=SC2312,SC2086
