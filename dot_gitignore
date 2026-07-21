@@ -4,3 +4,4 @@
 .factorypath
 .claude/*.local.json
 .claude/*.local.md
+.claude/.cc-writes/
