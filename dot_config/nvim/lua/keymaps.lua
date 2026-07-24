@@ -120,6 +120,8 @@ keymap("i", "<C-k>", "<Up>", { desc = "move up" })
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
+keymap("v", "<Tab>", ">gv", opts)
+keymap("v", "<S-Tab>", "<gv", opts)
 
 -- Move text up and down
 keymap("v", "<A-j>", ":m .+1<CR>==", opts)
