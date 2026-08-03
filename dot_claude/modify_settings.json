@@ -3,6 +3,32 @@
 {{- if ne .chezmoi.stdin "" -}}
 {{-   $data = fromJson .chezmoi.stdin -}}
 {{- end -}}
+{{- $bellCmd := printf "%s/.claude/hooks/bell.sh" .chezmoi.homeDir -}}
+{{- $bellHook := dict
+      "type" "command"
+      "command" $bellCmd
+      "async" true
+      "timeout" 5
+-}}
+{{- $bellEvents := dict
+      "Notification" ""
+      "Stop" ""
+      "StopFailure" ""
+      "PreToolUse" "AskUserQuestion"
+-}}
+{{- range $event, $matcher := $bellEvents -}}
+{{-   $entries := dig "hooks" $event (list) $data -}}
+{{-   $present := false -}}
+{{-   range $entries -}}
+{{-     range .hooks -}}
+{{-       if eq .command $bellCmd -}}{{- $present = true -}}{{- end -}}
+{{-     end -}}
+{{-   end -}}
+{{-   if not $present -}}
+{{-     $bell := dict "matcher" $matcher "hooks" (list $bellHook) -}}
+{{-     $data = setValueAtPath (printf "hooks.%s" $event) (append $entries $bell) $data -}}
+{{-   end -}}
+{{- end -}}
 {{ $data |
     setValueAtPath "env.CLAUDE_CODE_USE_BEDROCK" "1" |
     setValueAtPath "env.AWS_REGION" "eu-west-1" |
