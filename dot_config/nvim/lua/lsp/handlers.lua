@@ -35,9 +35,9 @@ function M.on_attach(event)
     complete = function(_, _, _)
       local names = {}
       for _, c in pairs(vim.lsp.get_clients()) do
-        table.insert(names, c.name)
+        names[c.name] = true
       end
-      return names
+      return vim.tbl_keys(names)
     end,
   })
   -- Create a shortcut for showing the LSP client logs
