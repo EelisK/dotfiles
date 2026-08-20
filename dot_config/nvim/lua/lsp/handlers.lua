@@ -2,6 +2,28 @@ local M = {}
 
 local m = vim.lsp.protocol.Methods
 
+---@return string[]
+local function list_lsp_clients()
+  local names = {}
+  for _, c in pairs(vim.lsp.get_clients()) do
+    names[c.name] = true
+  end
+  return vim.tbl_keys(names)
+end
+
+---@param name string
+---@param callback fun(client: vim.lsp.Client)
+local function with_lsp_client(name, callback)
+  local clients = vim.lsp.get_clients()
+  for _, c in pairs(clients) do
+    if c.name == name then
+      callback(c)
+      return
+    end
+  end
+  vim.notify("No active LSP client named '" .. name .. "'", vim.log.levels.ERROR)
+end
+
 ---@param event vim.api.keyset.create_autocmd.callback_args
 function M.on_attach(event)
   local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
@@ -16,28 +38,28 @@ function M.on_attach(event)
   -- Create a shortcut for restarting an LSP client
   vim.api.nvim_create_user_command("LspRestart", function(opts)
     local target_name = opts.args
-    local clients = vim.lsp.get_clients()
-    local found = false
-    for _, c in pairs(clients) do
-      if c.name == target_name then
-        found = true
-        vim.lsp.enable(c.name, false)
-        vim.lsp.enable(c.name, true)
-        break
-      end
-    end
-    if not found then
-      vim.notify("No active LSP client named '" .. target_name .. "'", vim.log.levels.ERROR)
-    end
+    with_lsp_client(target_name, function(client)
+      vim.lsp.enable(client.name, false)
+      vim.lsp.enable(client.name, true)
+    end)
   end, {
     nargs = 1,
     desc = "Restart LSP client",
     complete = function(_, _, _)
-      local names = {}
-      for _, c in pairs(vim.lsp.get_clients()) do
-        names[c.name] = true
-      end
-      return vim.tbl_keys(names)
+      return list_lsp_clients()
+    end,
+  })
+  -- Create a shortcut for stopping an LSP client
+  vim.api.nvim_create_user_command("LspStop", function(opts)
+    local target_name = opts.args
+    with_lsp_client(target_name, function(client)
+      vim.lsp.enable(client.name, false)
+    end)
+  end, {
+    nargs = 1,
+    desc = "Stop LSP client",
+    complete = function(_, _, _)
+      return list_lsp_clients()
     end,
   })
   -- Create a shortcut for showing the LSP client logs
@@ -64,14 +86,6 @@ function M.on_attach(event)
   if supports(m.textDocument_codeLens) then
     map("<leader>clr", vim.lsp.codelens.run, "code lens")
     vim.lsp.codelens.enable(true, { bufnr = event.buf })
-    local codelens_group = vim.api.nvim_create_augroup("eelisk/lsp/codelens", { clear = true })
-    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
-      buffer = event.buf,
-      group = codelens_group,
-      callback = function()
-        vim.lsp.codelens.run { client_id = client.id }
-      end,
-    })
   end
   if supports(m.textDocument_diagnostic) then
     map("<leader>dl", vim.diagnostic.setloclist, "diagnostic loclist")
