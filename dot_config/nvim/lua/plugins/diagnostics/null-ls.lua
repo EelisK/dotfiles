@@ -11,6 +11,8 @@ M.config = function()
     sources = {
       -- general
       diagnostics.semgrep, -- code standards
+      -- prose
+      diagnostics.vale,
       -- ruby
       diagnostics.rubocop,
       -- ansible
