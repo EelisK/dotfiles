@@ -272,9 +272,7 @@ return {
       },
       window = {
         mappings = {
-          ["<CR>"] = function(state)
-            cc.open_with_window_picker(state, utils.wrap(fs.toggle_directory, state))
-          end,
+          ["<CR>"] = "open_with_window_picker",
           ["S"] = "split_with_window_picker",
           ["s"] = "vsplit_with_window_picker",
           ["."] = "set_root",
