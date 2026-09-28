@@ -2,6 +2,25 @@ local M = { "nvimtools/none-ls.nvim" }
 
 M.event = "User FilePost"
 
+local PROSE_FILETYPES = {
+  "markdown",
+  "tex",
+  "asciidoc",
+  "text",
+  "rst",
+  "gitcommit",
+  -- code comments
+  "go",
+  "python",
+  "java",
+  "scala",
+  "typescript",
+  "typescriptreact",
+  "javascript",
+  "javascriptreact",
+  "lua",
+}
+
 M.config = function()
   local null_ls = require "null-ls"
   --- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
@@ -12,7 +31,9 @@ M.config = function()
       -- general
       diagnostics.semgrep, -- code standards
       -- prose
-      diagnostics.vale,
+      diagnostics.vale.with {
+        filetypes = PROSE_FILETYPES,
+      },
       -- ruby
       diagnostics.rubocop,
       -- ansible
