@@ -17,9 +17,9 @@ fi
 PARENT=$(git rev-parse --verify "${COMMIT}^" 2>/dev/null || true)
 
 if [[ -z "${PARENT}" ]]; then
-  GIT_SEQUENCE_EDITOR="sed -i '' 's/^pick ${COMMIT}/reword ${COMMIT}/'" git rebase -i --root
+  GIT_SEQUENCE_EDITOR="sed -i.bak 's/^pick ${COMMIT}/reword ${COMMIT}/'" git rebase -i --root
 else
-  GIT_SEQUENCE_EDITOR="sed -i '' 's/^pick ${COMMIT}/reword ${COMMIT}/'" git rebase -i "${COMMIT}"~1
+  GIT_SEQUENCE_EDITOR="sed -i.bak 's/^pick ${COMMIT}/reword ${COMMIT}/'" git rebase -i "${COMMIT}"~1
 fi
 
 #{{ includeTemplate "git-stash-pop" }}
