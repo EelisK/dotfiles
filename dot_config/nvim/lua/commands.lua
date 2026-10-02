@@ -1,4 +1,5 @@
 local cmd = vim.api.nvim_create_user_command
+local textcase = require "textcase"
 
 cmd("Q", function(args)
   vim.cmd(args.bang and "qa!" or "qa")
@@ -18,7 +19,6 @@ cmd("SetCase", function(args)
     return
   end
 
-  local textcase = require "textcase"
   local converted = textcase.convert(word, case)
 
   if converted then
@@ -30,13 +30,7 @@ end, {
   desc = "Set the case of the current word",
   nargs = 1,
   complete = function()
-    return {
-      "snake_case",
-      "camelCase",
-      "PascalCase",
-      "kebab-case",
-      "MACRO_CASE",
-    }
+    return vim.tbl_values(textcase.CaseType)
   end,
 })
 

@@ -59,6 +59,15 @@ end
 
 local M = {}
 
+---@enum TextCase.CaseType
+M.CaseType = {
+  SNAKE = "snake_case",
+  CAMEL = "camelCase",
+  PASCAL = "PascalCase",
+  KEBAB = "kebab-case",
+  MACRO = "MACRO_CASE",
+}
+
 local is_upper = function(char)
   if vim.fn.toupper(char) == vim.fn.tolower(char) then
     return false
@@ -213,17 +222,17 @@ function M.to_kebab_case(str)
   return untrim_str(result, trim_info)
 end
 
----@param str string
----@param case_type "snake_case" | "camelCase" | "PascalCase" | "kebab-case" | "MACRO_CASE"
-function M.convert(str, case_type)
-  local case_funcs = {
-    snake_case = M.to_snake_case,
-    camelCase = M.to_camel_case,
-    PascalCase = M.to_pascal_case,
-    ["kebab-case"] = M.to_kebab_case,
-    MACRO_CASE = M.to_macro_case,
-  }
+local case_funcs = {
+  [M.CaseType.SNAKE] = M.to_snake_case,
+  [M.CaseType.CAMEL] = M.to_camel_case,
+  [M.CaseType.PASCAL] = M.to_pascal_case,
+  [M.CaseType.KEBAB] = M.to_kebab_case,
+  [M.CaseType.MACRO] = M.to_macro_case,
+}
 
+---@param str string
+---@param case_type TextCase.CaseType
+function M.convert(str, case_type)
   local func = case_funcs[case_type]
   if func == nil then
     error("Invalid case type: " .. tostring(case_type))
