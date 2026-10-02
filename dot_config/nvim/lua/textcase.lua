@@ -119,12 +119,19 @@ end
 function M.to_parts(str)
   local parts = {}
   local new_part = true
-  for _, char in ipairs(split_string_into_chars(str)) do
+  local chars = split_string_into_chars(str)
+  for i, char in ipairs(chars) do
     if is_special(char) then
       new_part = true
     else
       if is_upper(char) and has_lower(str) then
-        new_part = true
+        local prev_char = chars[i - 1]
+        local next_char = chars[i + 1]
+        if not (prev_char and is_upper(prev_char)) then
+          new_part = true
+        elseif next_char and not is_special(next_char) and not is_upper(next_char) then
+          new_part = true
+        end
       end
 
       if new_part then
