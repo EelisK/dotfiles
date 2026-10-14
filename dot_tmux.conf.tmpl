@@ -105,6 +105,8 @@ bind -r C-o run-shell 'popuptmux'
 
 # -- copy mode -----------------------------------------------------------------
 
+setw -g mode-keys vi
+
 bind Enter copy-mode # enter copy mode
 
 bind -T copy-mode-vi v send -X begin-selection
