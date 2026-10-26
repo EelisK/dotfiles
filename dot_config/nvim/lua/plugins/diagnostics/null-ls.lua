@@ -19,6 +19,7 @@ local PROSE_FILETYPES = {
   "javascript",
   "javascriptreact",
   "lua",
+  "sql",
 }
 
 M.config = function()
@@ -91,6 +92,23 @@ M.config = function()
   }
 
   null_ls.setup(settings)
+
+  local function complete_sources(arg_lead)
+    local names = {}
+    for _, source in ipairs(null_ls.get_sources()) do
+      if vim.startswith(source.name, arg_lead) and not vim.tbl_contains(names, source.name) then
+        table.insert(names, source.name)
+      end
+    end
+    return names
+  end
+
+  vim.api.nvim_create_user_command("NullLsDisable", function(opts)
+    null_ls.disable { name = opts.args }
+  end, { nargs = 1, complete = complete_sources })
+  vim.api.nvim_create_user_command("NullLsEnable", function(opts)
+    null_ls.enable { name = opts.args }
+  end, { nargs = 1, complete = complete_sources })
 end
 
 return M
