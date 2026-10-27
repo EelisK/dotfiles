@@ -35,6 +35,7 @@
     setValueAtPath "env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC" "1" |
     setValueAtPath "env.CLAUDE_CODE_MAX_OUTPUT_TOKENS" "8096" |
     setValueAtPath "env.MAX_THINKING_TOKENS" "4096" |
+    setValueAtPath "env.CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN" "1" |
     setValueAtPath "awaySummaryEnabled" false |
     setValueAtPath "outputStyle" "Concise" |
     setValueAtPath "permissions.deny" (list
