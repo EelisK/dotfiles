@@ -20,6 +20,7 @@ local PROSE_FILETYPES = {
   "javascriptreact",
   "lua",
   "sql",
+  "proto",
 }
 
 M.config = function()
