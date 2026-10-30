@@ -35,7 +35,12 @@ path = ~/.config/gitalias/gitalias.txt
 			echo 'Usage: git work <branch-name>' >&2; \
 			return 1; \
 		fi; \
-		git worktree add \"$WORKSPACE_DIR/${1##*/}\" -b \"$1\"; \
+		git worktree add \".worktrees/${1}\" -b \"$1\" || return; \
+		if ! git check-ignore -q \".worktrees/${1}\"; then \
+			exclude=\"$(git rev-parse --git-common-dir)/info/exclude\"; \
+			mkdir -p \"$(dirname \"$exclude\")\"; \
+			echo \"/.worktrees/${1}/\" >> \"$exclude\"; \
+		fi; \
 	}; f"
 
 [url "git@github.com:"]
