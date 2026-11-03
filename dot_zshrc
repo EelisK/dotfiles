@@ -50,7 +50,6 @@ plugins=(
     kubectl
     helm
     npm
-    command-not-found
     sudo
     zsh-autosuggestions
     gcloud
