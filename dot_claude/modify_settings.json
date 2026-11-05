@@ -54,7 +54,6 @@
         "Edit(**/*.pem)"
         "Edit(**/*.key)"
         "Edit(**/.ssh/**)"
-        "Bash(git commit:*)"
         "Bash(git push:*)"
     ) |
     setValueAtPath "statusLine.command" "~/.claude/statusline.py" |
