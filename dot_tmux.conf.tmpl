@@ -136,8 +136,11 @@ set -g status-fg default
 set -g status-style bg=default,fg=colour244
 set -g status-left-length 85
 
+set-hook -g alert-bell 'run-shell "[ #{session_attached} -eq 0 ] && tmux set -t =#{hook_session_name}: @bell 1"'
+set-hook -g client-session-changed 'set -u @bell'
+set-hook -g client-attached 'set -u @bell'
 set -g status-left "#{?client_prefix,󱤳,#{?window_zoomed_flag,,}}  #S "
-set -g status-right "󰃰 %Y-%m-%d %H:%M %p "
+set -g status-right "#{S:#{?@bell,#[fg=colour196]#[bold]󰂞 #S #[default],}}󰃰 %Y-%m-%d %H:%M %p "
 
 # Window status colors
 set -g window-status-style bg=default,fg=colour244
