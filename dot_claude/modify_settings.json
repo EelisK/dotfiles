@@ -54,6 +54,8 @@
         "Edit(**/*.pem)"
         "Edit(**/*.key)"
         "Edit(**/.ssh/**)"
+    ) |
+    setValueAtPath "permissions.ask" (list
         "Bash(git push:*)"
     ) |
     setValueAtPath "statusLine.command" "~/.claude/statusline.py" |
