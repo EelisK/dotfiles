@@ -84,7 +84,7 @@ function M.on_attach(event)
     map("<leader>ca", vim.lsp.buf.code_action, "code actions")
   end
   if supports(m.textDocument_codeLens) then
-    map("<leader>clr", vim.lsp.codelens.run, "code lens")
+    map("<leader>cl", vim.lsp.codelens.run, "code lens")
     vim.lsp.codelens.enable(true, { bufnr = event.buf })
   end
   if supports(m.textDocument_diagnostic) then
